@@ -1,0 +1,9 @@
+Symbol,Name,Asset Class,Quantity,Price,Market Value,Currency
+AAPL,Apple Inc,Equity,120,220.50,26460,USD
+MSFT,Microsoft Corp,Equity,60,430.00,25800,USD
+NVDA,NVIDIA Corp,Equity,80,1180.00,94400,USD
+VOO,Vanguard S&P 500 ETF,Equity,25,510.00,12750,USD
+BND,Vanguard Total Bond ETF,Fixed Income,80,72.00,5760,USD
+GLD,SPDR Gold Shares,Commodity,20,215.00,4300,USD
+BTC,Bitcoin,Crypto,1.0,60000.00,60000,USD
+CASH,Cash Savings,Cash,1,3500.00,3500,USD
