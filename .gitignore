@@ -26,3 +26,6 @@ coverage/
 # Temp
 tmp/
 *.tmp
+
+# Markdown docs are kept local, not pushed
+*.md
