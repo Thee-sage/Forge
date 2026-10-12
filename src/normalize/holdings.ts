@@ -23,9 +23,14 @@ export interface NormalizeHoldingResult {
 export function classifyAssetClass(raw: string): AssetClass {
   const t = raw.toLowerCase();
   if (/hedge|private equity|private|venture|alternative/.test(t)) return "alternative";
-  if (/equit|stock|share/.test(t)) return "equity";
-  if (/bond|fixed|treasur|gilt|debt|note/.test(t)) return "fixed_income";
-  if (/cash|money market|savings|deposit/.test(t)) return "cash";
+  // A mining or exploration company is an operating business, so a stake in it is equity
+  // however the commodity it digs up is named. Tested before the commodity branch for that
+  // reason: "Gold Miners ETF" holds companies, not metal.
+  if (/equit|stock|share|miner|mining/.test(t)) return "equity";
+  // Treasury paper is fixed income whichever abbreviation an export uses.
+  if (/bond|fixed|treasur|t[- ]?bill|gilt|debt|note/.test(t)) return "fixed_income";
+  // Transactional deposit accounts are cash, not an unknown instrument.
+  if (/cash|money market|savings|deposit|checking|chequing|current account/.test(t)) return "cash";
   if (/real[ _-]?estate|reit|property/.test(t)) return "real_estate";
   if (/gold|silver|oil|commodit|metal/.test(t)) return "commodity";
   if (/crypto|bitcoin|btc|eth|token/.test(t)) return "crypto";

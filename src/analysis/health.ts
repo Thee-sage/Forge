@@ -127,8 +127,15 @@ export function analyzeHealth(model: FinancialModel): AnalysisResult {
   if (runwayMonths !== undefined && runwayMonths < 1) {
     caps.push({ cap: 55, reason: `cash runway is under one month (${runwayMonths.toFixed(1)})` });
   }
-  if (flows.length >= 2 && positiveShare < 0.34) {
-    caps.push({ cap: 55, reason: `most months were cash-flow negative (${positiveMonths}/${flows.length})` });
+  // A household in deficit in more than half of its months is the condition D8 calls
+  // "majority of months cash-flow negative". The threshold is a strict majority of months
+  // (positiveShare < 0.5), not the stricter two-thirds the code applied until D21: a
+  // profile that is negative in four months out of seven is already the severe weakness
+  // the cap exists to surface, and must not read as "strong" on the strength of a healthy
+  // runway. See DECISIONS.md D21 for why the documented rule won over the implemented one.
+  if (flows.length >= 2 && positiveShare < 0.5) {
+    const negativeMonths = flows.length - positiveMonths;
+    caps.push({ cap: 55, reason: `most months were cash-flow negative (${negativeMonths}/${flows.length})` });
   }
   const cap = caps.reduce((min, c) => Math.min(min, c.cap), 100);
   const score = Math.min(Math.round(rawScore * 100), cap);

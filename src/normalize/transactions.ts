@@ -109,11 +109,13 @@ export function normalizeTransactions(
       return;
     }
 
-    // Category: explicit column, else keyword inference.
+    // Category: explicit column, else keyword inference. The direction is already resolved
+    // above, so the categoriser is told it: an outflow can never be income, whatever word
+    // the description happens to contain (categorize.ts rule 3).
     const explicitCategory = cellString(row, cols.category);
     const category = explicitCategory
       ? explicitCategory.toLowerCase()
-      : categorize(description).category;
+      : categorize(description, direction).category;
 
     // Currency: an explicit column wins; else the currency the amount cell carries on its face
     // ("€20.00"); else the declared default. An unrecognised currency cell is never silently

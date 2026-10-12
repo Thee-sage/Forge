@@ -36,6 +36,20 @@ export function analyzeAnomalies(
   const variable = outflows.filter((t) => !recurring.has(roundKey(t.amount)));
   const variableAmounts = variable.map((t) => t.amount);
 
+  // A commitment does not stop being regular because its amount drifts. Groceries at 430,
+  // 437, 445, 452 … recur every month as surely as a fixed rent, but no two amounts are
+  // identical, so the rule above never saw them — and because such a category is often
+  // several times larger than a household's small discretionary spend, every month of it
+  // was reported as an anomaly (D22). A transaction is therefore also regular when it sits
+  // within the ordinary spread of its own recurring category, judged by the same modified
+  // z-score and the same threshold used for the portfolio-wide comparison.
+  //
+  // Only candidacy is narrowed here, never the baseline: an ordinary household's categories
+  // are nearly all monthly, so removing them from the baseline as well would leave too few
+  // amounts to form one. Keeping them is the conservative direction — it raises the median
+  // and flags less, so this cannot manufacture an anomaly.
+  const regularInOwnCategory = regularMembersOfRecurringCategories(variable, threshold);
+
   const med = median(variableAmounts);
   const deviations = variableAmounts.map((a) => Math.abs(a - med));
   const mad = median(deviations);
@@ -52,6 +66,7 @@ export function analyzeAnomalies(
         : 0;
 
   const scored = variable
+    .filter((t) => !regularInOwnCategory.has(t))
     .map((t) => ({ t, z: zOf(t.amount) }))
     .filter((s) => s.z > threshold)
     .sort((a, b) => b.z - a.z);
@@ -91,6 +106,49 @@ function largestAmount(txns: Transaction[]): number {
 
 function roundKey(amount: number): string {
   return amount.toFixed(2);
+}
+
+/**
+ * Transactions that are ordinary for their own category, where that category is itself a
+ * recurring commitment: it appears in at least three distinct months, the same minimum the
+ * identical-amount rule uses. "Ordinary" is the same modified z-score and threshold applied
+ * within the category, so a genuine blow-out inside a recurring category (a 2,600 grocery
+ * order among 450s) is still a candidate, while the 450s are not.
+ *
+ * Membership is returned by identity, not by amount, so two equal amounts in different
+ * categories are judged separately.
+ */
+function regularMembersOfRecurringCategories(
+  variable: Transaction[],
+  threshold: number,
+): Set<Transaction> {
+  const byCategory = new Map<string, Transaction[]>();
+  for (const t of variable) {
+    const group = byCategory.get(t.category);
+    if (group) group.push(t);
+    else byCategory.set(t.category, [t]);
+  }
+
+  const regular = new Set<Transaction>();
+  for (const group of byCategory.values()) {
+    const months = new Set(group.map((t) => t.date.slice(0, 7)));
+    if (months.size < 3) continue;
+    const groupAmounts = group.map((t) => t.amount);
+    const groupMedian = median(groupAmounts);
+    const groupDeviations = groupAmounts.map((a) => Math.abs(a - groupMedian));
+    const groupMad = median(groupDeviations);
+    const groupMeanAd = mean(groupDeviations);
+    for (const t of group) {
+      const z =
+        groupMad > 0
+          ? (0.6745 * (t.amount - groupMedian)) / groupMad
+          : groupMeanAd > 0
+            ? (t.amount - groupMedian) / (1.253314 * groupMeanAd)
+            : 0;
+      if (z <= threshold) regular.add(t);
+    }
+  }
+  return regular;
 }
 
 /** Amounts (rounded) that recur at least `minCount` times — treated as regular. */
