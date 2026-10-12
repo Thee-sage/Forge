@@ -30,6 +30,15 @@ export {
   assertSingleCurrencyModel,
   dataAvailability,
 } from "./analysis/index.js";
+export {
+  monthlyFlows,
+  spendByCategory,
+  outflowAmounts,
+  periodHalves,
+  totals,
+  type MonthlyFlow,
+  type HalfWindow,
+} from "./analysis/aggregates.js";
 export { reason, RULES } from "./reasoning/engine.js";
 export {
   simulate,

@@ -48,6 +48,51 @@ export function outflowAmounts(txns: Transaction[]): number[] {
   return txns.filter((t) => t.direction === "outflow").map((t) => t.amount);
 }
 
+/** One half of a period-over-period comparison. */
+export interface HalfWindow {
+  /** Month keys covered by this half, in order. */
+  months: string[];
+  inflow: number;
+  outflow: number;
+  net: number;
+  /** net / inflow; 0 when there was no inflow. */
+  savingsRate: number;
+  /** The lowest monthly net in the window; 0 when the window is empty. */
+  lowestNet: number;
+}
+
+/**
+ * Split a monthly series into an earlier and a recent half and total each side.
+ *
+ * The engine owns this derivation so that a period-over-period table is computed once,
+ * the same way, wherever it is shown (ARCHITECTURE.md §1). Returns `undefined` when
+ * there are fewer than two months, because a comparison would be meaningless.
+ */
+export function periodHalves(
+  flows: MonthlyFlow[],
+): { earlier: HalfWindow; recent: HalfWindow } | undefined {
+  if (flows.length < 2) return undefined;
+  const mid = Math.floor(flows.length / 2);
+  return {
+    earlier: halfWindow(flows.slice(0, mid)),
+    recent: halfWindow(flows.slice(mid)),
+  };
+}
+
+function halfWindow(flows: MonthlyFlow[]): HalfWindow {
+  const inflow = flows.reduce((a, f) => a + f.inflow, 0);
+  const outflow = flows.reduce((a, f) => a + f.outflow, 0);
+  const net = inflow - outflow;
+  return {
+    months: flows.map((f) => f.month),
+    inflow,
+    outflow,
+    net,
+    savingsRate: inflow === 0 ? 0 : net / inflow,
+    lowestNet: flows.length === 0 ? 0 : Math.min(...flows.map((f) => f.net)),
+  };
+}
+
 /** Total inflow / outflow / net for the whole model. */
 export function totals(model: FinancialModel): {
   inflow: number;

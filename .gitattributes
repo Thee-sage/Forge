@@ -1,0 +1,14 @@
+# Forge stores and checks out every text file with LF endings.
+#
+# This is not a style preference. `evaluation/datasets/*/dataset.json` are hashed
+# byte-for-byte in `evaluation/datasets/MANIFEST.json`, and the evaluator refuses to run
+# when a hash differs (ACCURACY_VALIDATION.md §4). On a client with `core.autocrlf=true`
+# — the Git for Windows default — a CRLF checkout would rewrite those bytes, so the frozen
+# datasets would fail their own integrity check on a clean clone. Pinning the line ending
+# keeps the manifest meaningful everywhere.
+* text=auto eol=lf
+
+# The hashed fixtures and the stored measurements are never translated, whatever the
+# client's settings: they are evidence, and their bytes are the record.
+evaluation/datasets/** -text
+evaluation/results/** -text

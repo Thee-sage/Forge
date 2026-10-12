@@ -1,0 +1,8956 @@
+{
+ "version": "1.0.0",
+ "split": "dev",
+ "pipeline": [
+  {
+   "id": "D-cf-001",
+   "family": "cashflow",
+   "tags": [
+    "aggregation",
+    "hand-calculated"
+   ],
+   "description": "Three complete months, mixed categories; the reference worked example.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-05",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-10",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-15",
+      "amount": "-450",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-120",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "5200",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-10",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-15",
+      "amount": "-380.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-22",
+      "amount": "-75.25",
+      "category": "transport",
+      "description": "Transport"
+     }
+    ],
+    "holdings": []
+   },
+   "hand": {
+    "cashflow.inflow": 15200,
+    "cashflow.outflow": 5925.75,
+    "cashflow.net": 9274.25,
+    "cashflow.savingsRate": 0.6101480263157895,
+    "cashflow.avgMonthlyNet": 3091.4166666666665,
+    "cashflow.months": 3
+   },
+   "labels": {
+    "insight:low-savings-driver": false,
+    "finding:cashflow.negative-months": false,
+    "insight:thin-liquidity": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-002",
+   "family": "cashflow",
+   "tags": [
+    "aggregation"
+   ],
+   "description": "Single month of data.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-05-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-04",
+      "amount": "-900",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-09",
+      "amount": "-150.40",
+      "category": "groceries",
+      "description": "Groceries"
+     }
+    ],
+    "holdings": []
+   },
+   "expect": {
+    "unavailable": [
+     "trend.categoriesChanged"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-003",
+   "family": "cashflow",
+   "tags": [
+    "zero-income",
+    "abstention"
+   ],
+   "description": "Spending only, no income: savings rate is undefined and no health score may be issued.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-03",
+      "amount": "-500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-10",
+      "amount": "-85.40",
+      "category": "groceries",
+      "description": "Groceries"
+     }
+    ],
+    "holdings": []
+   },
+   "expect": {
+    "unavailable": [
+     "cashflow.savingsRate",
+     "health.score"
+    ]
+   },
+   "labels": {
+    "insight:low-savings-driver": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-004",
+   "family": "cashflow",
+   "tags": [
+    "negative-net"
+   ],
+   "description": "Spending exceeds income overall; one month positive, two negative.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-02",
+      "amount": "2000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-1200",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-300",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-02",
+      "amount": "2000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-10",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-700",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-02",
+      "amount": "2000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-10",
+      "amount": "-1900",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-450",
+      "category": "groceries",
+      "description": "Groceries"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "insight:low-savings-driver": true,
+    "finding:cashflow.negative-months": true,
+    "insight:healthy-position": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-005",
+   "family": "cashflow",
+   "tags": [
+    "zero-outflow"
+   ],
+   "description": "Income only: savings rate exactly 1; expense ratio 0.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-31",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-29",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-31",
+      "amount": "50.75",
+      "category": "income",
+      "description": "Interest"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-006",
+   "family": "cashflow",
+   "tags": [
+    "refund"
+   ],
+   "ambiguous": true,
+   "note": "A refund can be modelled as spending reversal (outflow reduced) or as income. The Forge schema has only inflow/outflow, so the contract reading (refund = inflow) is primary; netting against spend is a valid alternative that changes inflow, outflow and savings rate but not net.",
+   "description": "A refund row (positive amount) alongside the purchase it reverses.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-02",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-240",
+      "category": "shopping",
+      "description": "Headphones"
+     },
+     {
+      "date": "2024-01-18",
+      "amount": "240",
+      "category": "income",
+      "description": "Refund headphones"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-300",
+      "category": "groceries",
+      "description": "Groceries"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-007",
+   "family": "cashflow",
+   "tags": [
+    "transfer"
+   ],
+   "ambiguous": true,
+   "note": "An own-account transfer is neither income nor spending. The schema has no transfer type, so both legs are counted (contract reading, primary). Excluding internal transfers is a valid alternative that changes inflow, outflow and savings rate but not net.",
+   "description": "A transfer to savings recorded as an outflow plus a matching inflow in the other account.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-02",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-500",
+      "category": "transfer",
+      "description": "Transfer to savings"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "500",
+      "category": "transfer",
+      "description": "Transfer from checking"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-900",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-008",
+   "family": "cashflow",
+   "tags": [
+    "irregular-period",
+    "calendar"
+   ],
+   "ambiguous": true,
+   "note": "months = whole calendar months from first to last date (documented). Months without transactions count toward avgMonthlyNet but are skipped by the stability and trend halves (active months only); averaging over active months only is a valid alternative.",
+   "description": "Activity in Jan, Apr and Sep only (empty months in between).",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-10",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-1000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-10",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-1100",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-09-10",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-09-20",
+      "amount": "-1300",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-009",
+   "family": "cashflow",
+   "tags": [
+    "calendar",
+    "leap"
+   ],
+   "description": "Year boundary and leap day; first and last months are single-day months.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2023-12-31",
+      "amount": "1000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "1000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-29",
+      "amount": "-250.10",
+      "category": "groceries",
+      "description": "Leap day shop"
+     },
+     {
+      "date": "2024-02-29",
+      "amount": "-49.90",
+      "category": "dining",
+      "description": "Leap day dinner"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "-75",
+      "category": "transport",
+      "description": "Metro pass"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-010",
+   "family": "cashflow",
+   "tags": [
+    "float-accumulation"
+   ],
+   "description": "200 outflows of 0.10: a naive float sum drifts; the exact total is 20.00.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "100.00",
+      "category": "salary",
+      "description": "Bonus"
+     },
+     {
+      "date": "2024-01-01",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 1"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 2"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 3"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 4"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 5"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 6"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 7"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 8"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 9"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 10"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 11"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 12"
+     },
+     {
+      "date": "2024-01-13",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 13"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 14"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 15"
+     },
+     {
+      "date": "2024-01-16",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 16"
+     },
+     {
+      "date": "2024-01-17",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 17"
+     },
+     {
+      "date": "2024-01-18",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 18"
+     },
+     {
+      "date": "2024-01-19",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 19"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 20"
+     },
+     {
+      "date": "2024-01-21",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 21"
+     },
+     {
+      "date": "2024-01-22",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 22"
+     },
+     {
+      "date": "2024-01-23",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 23"
+     },
+     {
+      "date": "2024-01-24",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 24"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 25"
+     },
+     {
+      "date": "2024-01-26",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 26"
+     },
+     {
+      "date": "2024-01-27",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 27"
+     },
+     {
+      "date": "2024-01-01",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 28"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 29"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 30"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 31"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 32"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 33"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 34"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 35"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 36"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 37"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 38"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 39"
+     },
+     {
+      "date": "2024-01-13",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 40"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 41"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 42"
+     },
+     {
+      "date": "2024-01-16",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 43"
+     },
+     {
+      "date": "2024-01-17",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 44"
+     },
+     {
+      "date": "2024-01-18",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 45"
+     },
+     {
+      "date": "2024-01-19",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 46"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 47"
+     },
+     {
+      "date": "2024-01-21",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 48"
+     },
+     {
+      "date": "2024-01-22",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 49"
+     },
+     {
+      "date": "2024-01-23",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 50"
+     },
+     {
+      "date": "2024-01-24",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 51"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 52"
+     },
+     {
+      "date": "2024-01-26",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 53"
+     },
+     {
+      "date": "2024-01-27",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 54"
+     },
+     {
+      "date": "2024-01-01",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 55"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 56"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 57"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 58"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 59"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 60"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 61"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 62"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 63"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 64"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 65"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 66"
+     },
+     {
+      "date": "2024-01-13",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 67"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 68"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 69"
+     },
+     {
+      "date": "2024-01-16",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 70"
+     },
+     {
+      "date": "2024-01-17",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 71"
+     },
+     {
+      "date": "2024-01-18",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 72"
+     },
+     {
+      "date": "2024-01-19",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 73"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 74"
+     },
+     {
+      "date": "2024-01-21",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 75"
+     },
+     {
+      "date": "2024-01-22",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 76"
+     },
+     {
+      "date": "2024-01-23",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 77"
+     },
+     {
+      "date": "2024-01-24",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 78"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 79"
+     },
+     {
+      "date": "2024-01-26",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 80"
+     },
+     {
+      "date": "2024-01-27",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 81"
+     },
+     {
+      "date": "2024-01-01",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 82"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 83"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 84"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 85"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 86"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 87"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 88"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 89"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 90"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 91"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 92"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 93"
+     },
+     {
+      "date": "2024-01-13",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 94"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 95"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 96"
+     },
+     {
+      "date": "2024-01-16",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 97"
+     },
+     {
+      "date": "2024-01-17",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 98"
+     },
+     {
+      "date": "2024-01-18",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 99"
+     },
+     {
+      "date": "2024-01-19",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 100"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 101"
+     },
+     {
+      "date": "2024-01-21",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 102"
+     },
+     {
+      "date": "2024-01-22",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 103"
+     },
+     {
+      "date": "2024-01-23",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 104"
+     },
+     {
+      "date": "2024-01-24",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 105"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 106"
+     },
+     {
+      "date": "2024-01-26",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 107"
+     },
+     {
+      "date": "2024-01-27",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 108"
+     },
+     {
+      "date": "2024-01-01",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 109"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 110"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 111"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 112"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 113"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 114"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 115"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 116"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 117"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 118"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 119"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 120"
+     },
+     {
+      "date": "2024-01-13",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 121"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 122"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 123"
+     },
+     {
+      "date": "2024-01-16",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 124"
+     },
+     {
+      "date": "2024-01-17",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 125"
+     },
+     {
+      "date": "2024-01-18",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 126"
+     },
+     {
+      "date": "2024-01-19",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 127"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 128"
+     },
+     {
+      "date": "2024-01-21",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 129"
+     },
+     {
+      "date": "2024-01-22",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 130"
+     },
+     {
+      "date": "2024-01-23",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 131"
+     },
+     {
+      "date": "2024-01-24",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 132"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 133"
+     },
+     {
+      "date": "2024-01-26",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 134"
+     },
+     {
+      "date": "2024-01-27",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 135"
+     },
+     {
+      "date": "2024-01-01",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 136"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 137"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 138"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 139"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 140"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 141"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 142"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 143"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 144"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 145"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 146"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 147"
+     },
+     {
+      "date": "2024-01-13",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 148"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 149"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 150"
+     },
+     {
+      "date": "2024-01-16",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 151"
+     },
+     {
+      "date": "2024-01-17",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 152"
+     },
+     {
+      "date": "2024-01-18",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 153"
+     },
+     {
+      "date": "2024-01-19",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 154"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 155"
+     },
+     {
+      "date": "2024-01-21",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 156"
+     },
+     {
+      "date": "2024-01-22",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 157"
+     },
+     {
+      "date": "2024-01-23",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 158"
+     },
+     {
+      "date": "2024-01-24",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 159"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 160"
+     },
+     {
+      "date": "2024-01-26",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 161"
+     },
+     {
+      "date": "2024-01-27",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 162"
+     },
+     {
+      "date": "2024-01-01",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 163"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 164"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 165"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 166"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 167"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 168"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 169"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 170"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 171"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 172"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 173"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 174"
+     },
+     {
+      "date": "2024-01-13",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 175"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 176"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 177"
+     },
+     {
+      "date": "2024-01-16",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 178"
+     },
+     {
+      "date": "2024-01-17",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 179"
+     },
+     {
+      "date": "2024-01-18",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 180"
+     },
+     {
+      "date": "2024-01-19",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 181"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 182"
+     },
+     {
+      "date": "2024-01-21",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 183"
+     },
+     {
+      "date": "2024-01-22",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 184"
+     },
+     {
+      "date": "2024-01-23",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 185"
+     },
+     {
+      "date": "2024-01-24",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 186"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 187"
+     },
+     {
+      "date": "2024-01-26",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 188"
+     },
+     {
+      "date": "2024-01-27",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 189"
+     },
+     {
+      "date": "2024-01-01",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 190"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 191"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 192"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 193"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 194"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 195"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 196"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 197"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 198"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 199"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-0.10",
+      "category": "misc",
+      "description": "Penny 200"
+     }
+    ],
+    "holdings": []
+   },
+   "hand": {
+    "cashflow.inflow": 100,
+    "cashflow.outflow": 20,
+    "cashflow.net": 80,
+    "cashflow.savingsRate": 0.8
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-011",
+   "family": "cashflow",
+   "tags": [
+    "large-values"
+   ],
+   "description": "Values around 1e9 with cents.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-15",
+      "amount": "1234567890.12",
+      "category": "salary",
+      "description": "Fund distribution"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-234567890.12",
+      "category": "housing",
+      "description": "Property"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-1000000000.00",
+      "category": "shopping",
+      "description": "Equipment"
+     }
+    ],
+    "holdings": []
+   },
+   "hand": {
+    "cashflow.inflow": 1234567890.12,
+    "cashflow.outflow": 1234567890.12,
+    "cashflow.net": 0
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-012",
+   "family": "cashflow",
+   "tags": [
+    "category-normalisation"
+   ],
+   "description": "Category cells differing only by case/whitespace must merge into one category.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-02",
+      "amount": "2000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-100",
+      "category": "groceries",
+      "description": "A"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-200",
+      "category": "groceries",
+      "description": "B"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-300",
+      "category": "groceries",
+      "description": "C"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-50",
+      "category": "dining",
+      "description": "D"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "categoryText": [
+     "Salary",
+     "Groceries",
+     " groceries ",
+     "GROCERIES",
+     "Dining"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-cf-013",
+   "family": "cashflow",
+   "tags": [
+    "thin-margin"
+   ],
+   "description": "Income barely above spending: savings rate 3%.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-1110",
+      "category": "groceries",
+      "description": "Living costs"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-12",
+      "amount": "-1110",
+      "category": "groceries",
+      "description": "Living costs"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-12",
+      "amount": "-1110",
+      "category": "groceries",
+      "description": "Living costs"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "insight:low-savings-driver": true,
+    "insight:healthy-position": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-fmt-001",
+   "family": "format",
+   "tags": [
+    "debit-credit"
+   ],
+   "description": "Separate Debit/Credit columns.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-05",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-700.35",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-11",
+      "amount": "-88.88",
+      "category": "dining",
+      "description": "Dinner"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "amountFormat": "debitcredit"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-fmt-002",
+   "family": "format",
+   "tags": [
+    "parentheses"
+   ],
+   "description": "Accounting negatives in parentheses with thousands separators.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-05",
+      "amount": "12500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-1700.35",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "12500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-11",
+      "amount": "-2088.88",
+      "category": "dining",
+      "description": "Dinner"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "amountFormat": "parens"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-fmt-003",
+   "family": "format",
+   "tags": [
+    "currency-symbol"
+   ],
+   "description": "Euro-prefixed amounts, no currency column: the dataset currency is EUR.",
+   "truth": {
+    "currency": "EUR",
+    "txns": [
+     {
+      "date": "2024-01-05",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-700.35",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "amountFormat": "symbol"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-fmt-004",
+   "family": "format",
+   "tags": [
+    "dates",
+    "dmy"
+   ],
+   "description": "DD/MM/YYYY dates containing a day > 12 (unambiguous).",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-25",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-700.35",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-15",
+      "amount": "-88.88",
+      "category": "dining",
+      "description": "Dinner"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "dateFormat": "dmy"
+   },
+   "expect": {
+    "forbiddenWarnings": [
+     "ambiguous"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-fmt-005",
+   "family": "format",
+   "tags": [
+    "dates",
+    "mdy"
+   ],
+   "description": "MM/DD/YYYY dates containing a day > 12 (unambiguous US style).",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-25",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-700.35",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-15",
+      "amount": "-88.88",
+      "category": "dining",
+      "description": "Dinner"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "dateFormat": "mdy"
+   },
+   "expect": {
+    "forbiddenWarnings": [
+     "ambiguous"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-fmt-006",
+   "family": "format",
+   "tags": [
+    "dates",
+    "long"
+   ],
+   "description": "Month-name dates.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-25",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-700.35",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-15",
+      "amount": "-88.88",
+      "category": "dining",
+      "description": "Dinner"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "dateFormat": "long"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-fmt-007",
+   "family": "format",
+   "tags": [
+    "dates",
+    "ambiguous-order"
+   ],
+   "ambiguous": true,
+   "note": "All day/month fields are <= 12, so DD/MM and MM/DD are both valid readings. Forge's documented default is DD/MM and it must warn; the truth uses DD/MM.",
+   "description": "Slash dates where no field exceeds 12.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-02-03",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-04",
+      "amount": "-700.35",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-05",
+      "amount": "-88.88",
+      "category": "dining",
+      "description": "Dinner"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "dateFormat": "dmy"
+   },
+   "expect": {
+    "warnings": [
+     "ambiguous"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-fmt-008",
+   "family": "format",
+   "tags": [
+    "dates",
+    "conflict"
+   ],
+   "description": "One column mixes 13/02/2024 (DD/MM) and 02/13/2024 (MM/DD): contradictory, must warn.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Description,Amount,Category\n13/02/2024,A,-10.00,misc\n02/13/2024,B,-20.00,misc\n"
+   },
+   "expect": {
+    "metrics": false,
+    "warnings": [
+     "mixes|conflict|ambig"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-ex-001",
+   "family": "expenditure",
+   "tags": [
+    "ranking"
+   ],
+   "description": "Seven categories with distinct totals; checks totals, ranking and shares.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "9000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-2200",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-610.40",
+      "category": "groceries",
+      "description": "G1"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-310.10",
+      "category": "groceries",
+      "description": "G2"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-480",
+      "category": "transport",
+      "description": "T1"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-150",
+      "category": "dining",
+      "description": "D1"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-95.5",
+      "category": "dining",
+      "description": "D2"
+     },
+     {
+      "date": "2024-01-16",
+      "amount": "-300",
+      "category": "utilities",
+      "description": "U1"
+     },
+     {
+      "date": "2024-01-17",
+      "amount": "-77.77",
+      "category": "subscriptions",
+      "description": "S1"
+     },
+     {
+      "date": "2024-01-18",
+      "amount": "-640",
+      "category": "travel",
+      "description": "V1"
+     },
+     {
+      "date": "2024-01-19",
+      "amount": "-33.33",
+      "category": "fees",
+      "description": "F1"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "finding:expenditure.concentrated": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-ex-002",
+   "family": "expenditure",
+   "tags": [
+    "ranking",
+    "tie"
+   ],
+   "description": "Two categories tie exactly; rank-dependent metrics are not eligible (ordering undefined).",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-500",
+      "category": "groceries",
+      "description": "Food"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-100",
+      "category": "dining",
+      "description": "Out"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-ex-003",
+   "family": "expenditure",
+   "tags": [
+    "categorisation",
+    "inference"
+   ],
+   "description": "No category column: Forge infers categories from descriptions (human labels are the truth).",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary ACME payroll"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Monthly rent payment"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-312.40",
+      "category": "groceries",
+      "description": "Whole Foods Market"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-18.50",
+      "category": "dining",
+      "description": "Starbucks coffee"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-45",
+      "category": "transport",
+      "description": "Shell gas station"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-15.99",
+      "category": "subscriptions",
+      "description": "Netflix subscription"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-62.10",
+      "category": "utilities",
+      "description": "Electric bill"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-210",
+      "category": "health",
+      "description": "City Hospital copay"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "omitCategory": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-ex-004",
+   "family": "expenditure",
+   "tags": [
+    "concentration"
+   ],
+   "description": "One non-housing category is 70% of spending.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1400",
+      "category": "shopping",
+      "description": "Gear"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-300",
+      "category": "groceries",
+      "description": "G"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-300",
+      "category": "transport",
+      "description": "T"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "finding:expenditure.concentrated": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-tr-001",
+   "family": "trend",
+   "tags": [
+    "even-halves"
+   ],
+   "description": "Six months; dining rises from 100 to 220/month, groceries flat.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-100",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-100",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-100",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-220",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-220",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-220",
+      "category": "dining",
+      "description": "Dining"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "trend:dining": true,
+    "trend:groceries": false,
+    "insight:cashflow-decline-driver": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-tr-002",
+   "family": "trend",
+   "tags": [
+    "odd-halves"
+   ],
+   "description": "Five months: halves of 2 and 3 months must be compared per month, not in total.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-80",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-02-10",
+      "amount": "-120",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-03-10",
+      "amount": "-100",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-04-10",
+      "amount": "-100",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-05-10",
+      "amount": "-100",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-50",
+      "category": "transport",
+      "description": "Transit"
+     },
+     {
+      "date": "2024-02-12",
+      "amount": "-50",
+      "category": "transport",
+      "description": "Transit"
+     },
+     {
+      "date": "2024-03-12",
+      "amount": "-130",
+      "category": "transport",
+      "description": "Transit"
+     },
+     {
+      "date": "2024-04-12",
+      "amount": "-130",
+      "category": "transport",
+      "description": "Transit"
+     },
+     {
+      "date": "2024-05-12",
+      "amount": "-130",
+      "category": "transport",
+      "description": "Transit"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "trend:dining": false,
+    "trend:transport": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-tr-003",
+   "family": "trend",
+   "tags": [
+    "irregular-period"
+   ],
+   "ambiguous": true,
+   "note": "Forge compares halves of the ACTIVE months (months with at least one transaction). Treating the empty calendar months as zero-spend months is a valid alternative that changes every per-month average.",
+   "description": "Active months Jan, Feb, Aug, Sep with a long gap between.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-05",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-08-05",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-09-05",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-90",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-02-15",
+      "amount": "-110",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-08-15",
+      "amount": "-300",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-09-15",
+      "amount": "-300",
+      "category": "dining",
+      "description": "Dining"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-tr-004",
+   "family": "trend",
+   "tags": [
+    "new-category"
+   ],
+   "description": "A category appears only in the recent half.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-1200",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-02",
+      "amount": "-1200",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-02",
+      "amount": "-1200",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-600",
+      "category": "travel",
+      "description": "Trip"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-02",
+      "amount": "-1200",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-600",
+      "category": "travel",
+      "description": "Trip"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "trend:travel": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-tr-005",
+   "family": "trend",
+   "tags": [
+    "flat"
+   ],
+   "description": "Identical months: nothing changed.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-1200",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-350",
+      "category": "groceries",
+      "description": "Food"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-02",
+      "amount": "-1200",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-10",
+      "amount": "-350",
+      "category": "groceries",
+      "description": "Food"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-02",
+      "amount": "-1200",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-10",
+      "amount": "-350",
+      "category": "groceries",
+      "description": "Food"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-02",
+      "amount": "-1200",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-10",
+      "amount": "-350",
+      "category": "groceries",
+      "description": "Food"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "trend:groceries": false,
+    "insight:cashflow-decline-driver": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-tr-006",
+   "family": "trend",
+   "tags": [
+    "decline",
+    "spending-driven"
+   ],
+   "description": "Net cash flow falls by more than half because dining spending rises tenfold.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-200",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-200",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-200",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-2000",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-2000",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-2000",
+      "category": "dining",
+      "description": "Dining"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "insight:cashflow-decline-driver": true,
+    "trend:dining": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-tr-007",
+   "family": "trend",
+   "tags": [
+    "decline",
+    "income-driven"
+   ],
+   "description": "Net cash flow falls because income halves; spending is flat. The decline is real but is NOT caused by rising spending.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-200",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-200",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-200",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-200",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-200",
+      "category": "dining",
+      "description": "Dining"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-400",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-200",
+      "category": "dining",
+      "description": "Dining"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "insight:cashflow-decline-driver": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-001",
+   "family": "anomaly",
+   "tags": [
+    "clear-outlier"
+   ],
+   "description": "Twelve ordinary grocery charges and one 900 surgery bill.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-42.10",
+      "category": "groceries",
+      "description": "Groceries 1"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-55.80",
+      "category": "groceries",
+      "description": "Groceries 2"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-47.25",
+      "category": "groceries",
+      "description": "Groceries 3"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-61.00",
+      "category": "groceries",
+      "description": "Groceries 4"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-39.90",
+      "category": "groceries",
+      "description": "Groceries 5"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-52.35",
+      "category": "groceries",
+      "description": "Groceries 6"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-48.70",
+      "category": "groceries",
+      "description": "Groceries 7"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-58.15",
+      "category": "groceries",
+      "description": "Groceries 8"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-44.60",
+      "category": "groceries",
+      "description": "Groceries 9"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-50.05",
+      "category": "groceries",
+      "description": "Groceries 10"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-53.40",
+      "category": "groceries",
+      "description": "Groceries 11"
+     },
+     {
+      "date": "2024-01-13",
+      "amount": "-46.30",
+      "category": "groceries",
+      "description": "Groceries 12"
+     },
+     {
+      "date": "2024-01-28",
+      "amount": "-900",
+      "category": "health",
+      "description": "Surgery bill"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Surgery bill": true,
+    "anomaly:Groceries 4": false,
+    "anomaly:Groceries 5": false,
+    "insight:anomaly-impact": true,
+    "insight:low-savings-driver": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-002",
+   "family": "anomaly",
+   "tags": [
+    "tight-cluster"
+   ],
+   "description": "Ten similar charges; no outlier exists.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-50.00",
+      "category": "groceries",
+      "description": "Beans 1"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-51.00",
+      "category": "groceries",
+      "description": "Beans 2"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-49.00",
+      "category": "groceries",
+      "description": "Beans 3"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-52.00",
+      "category": "groceries",
+      "description": "Beans 4"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-48.00",
+      "category": "groceries",
+      "description": "Beans 5"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-50.50",
+      "category": "groceries",
+      "description": "Beans 6"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-49.50",
+      "category": "groceries",
+      "description": "Beans 7"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-53.00",
+      "category": "groceries",
+      "description": "Beans 8"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-47.00",
+      "category": "groceries",
+      "description": "Beans 9"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-51.50",
+      "category": "groceries",
+      "description": "Beans 10"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Beans 8": false,
+    "anomaly:Beans 9": false,
+    "anomaly:Beans 5": false,
+    "insight:anomaly-impact": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-003",
+   "family": "anomaly",
+   "tags": [
+    "recurring"
+   ],
+   "description": "Rent of 1500 every month plus ordinary groceries: the rent is regular, not anomalous.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-01"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-45.00",
+      "category": "groceries",
+      "description": "Food 1"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-02"
+     },
+     {
+      "date": "2024-02-10",
+      "amount": "-48.10",
+      "category": "groceries",
+      "description": "Food 2"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-03"
+     },
+     {
+      "date": "2024-03-10",
+      "amount": "-51.20",
+      "category": "groceries",
+      "description": "Food 3"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-04"
+     },
+     {
+      "date": "2024-04-10",
+      "amount": "-54.30",
+      "category": "groceries",
+      "description": "Food 4"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-05"
+     },
+     {
+      "date": "2024-05-10",
+      "amount": "-57.40",
+      "category": "groceries",
+      "description": "Food 5"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-06"
+     },
+     {
+      "date": "2024-06-10",
+      "amount": "-60.50",
+      "category": "groceries",
+      "description": "Food 6"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Rent 2024-01": false,
+    "anomaly:Rent 2024-04": false,
+    "insight:anomaly-impact": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-004",
+   "family": "anomaly",
+   "tags": [
+    "short-history",
+    "abstention"
+   ],
+   "description": "Only four outflows: too little history to call any of them an outlier.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-30",
+      "category": "groceries",
+      "description": "Small 1"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-25",
+      "category": "groceries",
+      "description": "Small 2"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-28",
+      "category": "groceries",
+      "description": "Small 3"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-900",
+      "category": "shopping",
+      "description": "Big thing"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Big thing": false,
+    "insight:anomaly-impact": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-005",
+   "family": "anomaly",
+   "tags": [
+    "zero-variance"
+   ],
+   "description": "Eight identical 50.00 charges (a subscription): zero variance, nothing is an outlier.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-50.00",
+      "category": "subscriptions",
+      "description": "Gym 1"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-50.00",
+      "category": "subscriptions",
+      "description": "Gym 2"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-50.00",
+      "category": "subscriptions",
+      "description": "Gym 3"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-50.00",
+      "category": "subscriptions",
+      "description": "Gym 4"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-50.00",
+      "category": "subscriptions",
+      "description": "Gym 5"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-50.00",
+      "category": "subscriptions",
+      "description": "Gym 6"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-50.00",
+      "category": "subscriptions",
+      "description": "Gym 7"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-50.00",
+      "category": "subscriptions",
+      "description": "Gym 8"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Gym 1": false,
+    "anomaly:Gym 8": false,
+    "insight:anomaly-impact": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-006",
+   "family": "anomaly",
+   "tags": [
+    "near-duplicate",
+    "zero-mad"
+   ],
+   "ambiguous": true,
+   "note": "The documented rule divides by the median absolute deviation, which is 0 when most variable amounts are identical; the numeric flag set is then undefined. The LABEL (10.50 is 5% above its cluster and is not an outlier) is unambiguous.",
+   "description": "Variable spend is 10.00, 10.00, 10.50 plus a 100.00 bill three times (recurring): 10.50 is not an outlier.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-10.00",
+      "category": "dining",
+      "description": "Tea A"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-10.00",
+      "category": "dining",
+      "description": "Tea B"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-10.50",
+      "category": "dining",
+      "description": "Tea C"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-100.00",
+      "category": "utilities",
+      "description": "Bill A"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "-100.00",
+      "category": "utilities",
+      "description": "Bill B"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "-100.00",
+      "category": "utilities",
+      "description": "Bill C"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Tea C": false,
+    "anomaly:Tea A": false,
+    "insight:anomaly-impact": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-007",
+   "family": "anomaly",
+   "tags": [
+    "two-outliers"
+   ],
+   "description": "Two genuine one-offs among ordinary spending.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-42.10",
+      "category": "groceries",
+      "description": "Groceries 1"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-55.80",
+      "category": "groceries",
+      "description": "Groceries 2"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-47.25",
+      "category": "groceries",
+      "description": "Groceries 3"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-61.00",
+      "category": "groceries",
+      "description": "Groceries 4"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-39.90",
+      "category": "groceries",
+      "description": "Groceries 5"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-52.35",
+      "category": "groceries",
+      "description": "Groceries 6"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-48.70",
+      "category": "groceries",
+      "description": "Groceries 7"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-58.15",
+      "category": "groceries",
+      "description": "Groceries 8"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-44.60",
+      "category": "groceries",
+      "description": "Groceries 9"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-50.05",
+      "category": "groceries",
+      "description": "Groceries 10"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-53.40",
+      "category": "groceries",
+      "description": "Groceries 11"
+     },
+     {
+      "date": "2024-01-13",
+      "amount": "-46.30",
+      "category": "groceries",
+      "description": "Groceries 12"
+     },
+     {
+      "date": "2024-01-27",
+      "amount": "-1200",
+      "category": "shopping",
+      "description": "Laptop"
+     },
+     {
+      "date": "2024-01-28",
+      "amount": "-800",
+      "category": "travel",
+      "description": "Flights"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Laptop": true,
+    "anomaly:Flights": true,
+    "anomaly:Groceries 2": false,
+    "insight:anomaly-impact": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-008",
+   "family": "anomaly",
+   "tags": [
+    "recurring",
+    "one-off"
+   ],
+   "description": "Rent 1500 x5 (recurring) and one 3000 deposit (a one-off).",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "9000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 1"
+     },
+     {
+      "date": "2024-02-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2"
+     },
+     {
+      "date": "2024-03-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 3"
+     },
+     {
+      "date": "2024-04-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 4"
+     },
+     {
+      "date": "2024-05-02",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 5"
+     },
+     {
+      "date": "2024-02-10",
+      "amount": "-3000",
+      "category": "housing",
+      "description": "Deposit"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-42.10",
+      "category": "groceries",
+      "description": "Groceries 1"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-55.80",
+      "category": "groceries",
+      "description": "Groceries 2"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-47.25",
+      "category": "groceries",
+      "description": "Groceries 3"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-61.00",
+      "category": "groceries",
+      "description": "Groceries 4"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-39.90",
+      "category": "groceries",
+      "description": "Groceries 5"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-52.35",
+      "category": "groceries",
+      "description": "Groceries 6"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-48.70",
+      "category": "groceries",
+      "description": "Groceries 7"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-58.15",
+      "category": "groceries",
+      "description": "Groceries 8"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Deposit": true,
+    "anomaly:Rent 3": false,
+    "insight:anomaly-impact": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-009",
+   "family": "anomaly",
+   "tags": [
+    "low-side"
+   ],
+   "description": "A 0.50 charge among ~50 charges: unusually SMALL is not an anomaly of the 'large charge' type.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-42.10",
+      "category": "groceries",
+      "description": "Groceries 1"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-55.80",
+      "category": "groceries",
+      "description": "Groceries 2"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-47.25",
+      "category": "groceries",
+      "description": "Groceries 3"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-61.00",
+      "category": "groceries",
+      "description": "Groceries 4"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-39.90",
+      "category": "groceries",
+      "description": "Groceries 5"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-52.35",
+      "category": "groceries",
+      "description": "Groceries 6"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-48.70",
+      "category": "groceries",
+      "description": "Groceries 7"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-58.15",
+      "category": "groceries",
+      "description": "Groceries 8"
+     },
+     {
+      "date": "2024-01-29",
+      "amount": "-0.50",
+      "category": "misc",
+      "description": "Sample"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Sample": false,
+    "insight:anomaly-impact": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-010",
+   "family": "anomaly",
+   "tags": [
+    "largest-is-recurring"
+   ],
+   "description": "The largest outflow is a recurring 2000 rent; the only genuine outlier is a 400 dental bill (4.5% of spending).",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "9000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent 1"
+     },
+     {
+      "date": "2024-02-02",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent 2"
+     },
+     {
+      "date": "2024-03-02",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent 3"
+     },
+     {
+      "date": "2024-04-02",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent 4"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-42.10",
+      "category": "groceries",
+      "description": "Groceries 1"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-55.80",
+      "category": "groceries",
+      "description": "Groceries 2"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-47.25",
+      "category": "groceries",
+      "description": "Groceries 3"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-61.00",
+      "category": "groceries",
+      "description": "Groceries 4"
+     },
+     {
+      "date": "2024-01-06",
+      "amount": "-39.90",
+      "category": "groceries",
+      "description": "Groceries 5"
+     },
+     {
+      "date": "2024-01-07",
+      "amount": "-52.35",
+      "category": "groceries",
+      "description": "Groceries 6"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-48.70",
+      "category": "groceries",
+      "description": "Groceries 7"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-58.15",
+      "category": "groceries",
+      "description": "Groceries 8"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-44.60",
+      "category": "groceries",
+      "description": "Groceries 9"
+     },
+     {
+      "date": "2024-01-11",
+      "amount": "-50.05",
+      "category": "groceries",
+      "description": "Groceries 10"
+     },
+     {
+      "date": "2024-01-30",
+      "amount": "-400",
+      "category": "health",
+      "description": "Dental"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Dental": true,
+    "insight:anomaly-impact": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-011",
+   "family": "anomaly",
+   "tags": [
+    "multi-category",
+    "pooled-baseline"
+   ],
+   "description": "A normal household: groceries ~450/month, dining ~100, transport ~60. Monthly groceries are ordinary for this household and must not be flagged just because they dwarf dining and transport.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent 2024-01"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-430.00",
+      "category": "groceries",
+      "description": "Groceries 1"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-88.00",
+      "category": "dining",
+      "description": "Dining 1"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-55.00",
+      "category": "transport",
+      "description": "Transit 1"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent 2024-02"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-437.35",
+      "category": "groceries",
+      "description": "Groceries 2"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-92.10",
+      "category": "dining",
+      "description": "Dining 2"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-57.20",
+      "category": "transport",
+      "description": "Transit 2"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent 2024-03"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-444.70",
+      "category": "groceries",
+      "description": "Groceries 3"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-96.20",
+      "category": "dining",
+      "description": "Dining 3"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-59.40",
+      "category": "transport",
+      "description": "Transit 3"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent 2024-04"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-452.05",
+      "category": "groceries",
+      "description": "Groceries 4"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-100.30",
+      "category": "dining",
+      "description": "Dining 4"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-61.60",
+      "category": "transport",
+      "description": "Transit 4"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent 2024-05"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-459.40",
+      "category": "groceries",
+      "description": "Groceries 5"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-104.40",
+      "category": "dining",
+      "description": "Dining 5"
+     },
+     {
+      "date": "2024-05-20",
+      "amount": "-63.80",
+      "category": "transport",
+      "description": "Transit 5"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent 2024-06"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-466.75",
+      "category": "groceries",
+      "description": "Groceries 6"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-108.50",
+      "category": "dining",
+      "description": "Dining 6"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-66.00",
+      "category": "transport",
+      "description": "Transit 6"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Groceries 3": false,
+    "anomaly:Groceries 6": false,
+    "anomaly:Dining 2": false,
+    "insight:anomaly-impact": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-001",
+   "family": "portfolio",
+   "tags": [
+    "equal-weights",
+    "hand-calculated"
+   ],
+   "description": "Four equal positions: HHI = 1/4, effective positions = 4.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "A",
+      "value": "25000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "B",
+      "value": "25000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "C",
+      "value": "25000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "D",
+      "value": "25000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "hand": {
+    "concentration.hhi": 0.25,
+    "concentration.effectivePositions": 4,
+    "concentration.topWeight": 0.25,
+    "concentration.top3Weight": 0.75,
+    "concentration.positions": 4,
+    "allocation.portfolioValue": 100000
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-002",
+   "family": "portfolio",
+   "tags": [
+    "single-position"
+   ],
+   "description": "One holding: HHI = 1.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "ONLY",
+      "value": "5000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "hand": {
+    "concentration.hhi": 1,
+    "concentration.effectivePositions": 1,
+    "concentration.top3Weight": 1
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-003",
+   "family": "portfolio",
+   "tags": [
+    "cash-heavy"
+   ],
+   "description": "70% cash plus eight equal equities: cash must not register as concentration risk.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "CASH",
+      "value": "70000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "E1",
+      "value": "3750",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "E2",
+      "value": "3750",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "E3",
+      "value": "3750",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "E4",
+      "value": "3750",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "E5",
+      "value": "3750",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "E6",
+      "value": "3750",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "E7",
+      "value": "3750",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "E8",
+      "value": "3750",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "labels": {
+    "insight:portfolio-concentration": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-004",
+   "family": "portfolio",
+   "tags": [
+    "dominant-position"
+   ],
+   "description": "One stock is 70% of the investments.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "BIG",
+      "value": "70000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "S1",
+      "value": "10000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "S2",
+      "value": "10000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "S3",
+      "value": "10000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "labels": {
+    "insight:portfolio-concentration": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-005",
+   "family": "portfolio",
+   "tags": [
+    "all-cash"
+   ],
+   "description": "A portfolio made only of cash.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "CHK",
+      "value": "8000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "SAV",
+      "value": "12000",
+      "assetClass": "cash"
+     }
+    ]
+   },
+   "labels": {
+    "insight:portfolio-concentration": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-006",
+   "family": "portfolio",
+   "tags": [
+    "no-holdings",
+    "abstention"
+   ],
+   "description": "Transactions only: portfolio metrics are unavailable (HHI of an empty portfolio is undefined).",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-900",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": []
+   },
+   "expect": {
+    "unavailable": [
+     "concentration.hhi",
+     "allocation.cashWeight"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-007",
+   "family": "portfolio",
+   "tags": [
+    "many-positions"
+   ],
+   "description": "Twenty positions with graded sizes.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "P1",
+      "value": "1000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "P2",
+      "value": "1137",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "P3",
+      "value": "1274",
+      "assetClass": "real_estate"
+     },
+     {
+      "symbol": "P4",
+      "value": "1411",
+      "assetClass": "commodity"
+     },
+     {
+      "symbol": "P5",
+      "value": "1548",
+      "assetClass": "crypto"
+     },
+     {
+      "symbol": "P6",
+      "value": "1685",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "P7",
+      "value": "1822",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "P8",
+      "value": "1959",
+      "assetClass": "real_estate"
+     },
+     {
+      "symbol": "P9",
+      "value": "2096",
+      "assetClass": "commodity"
+     },
+     {
+      "symbol": "P10",
+      "value": "2233",
+      "assetClass": "crypto"
+     },
+     {
+      "symbol": "P11",
+      "value": "2370",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "P12",
+      "value": "2507",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "P13",
+      "value": "2644",
+      "assetClass": "real_estate"
+     },
+     {
+      "symbol": "P14",
+      "value": "2781",
+      "assetClass": "commodity"
+     },
+     {
+      "symbol": "P15",
+      "value": "2918",
+      "assetClass": "crypto"
+     },
+     {
+      "symbol": "P16",
+      "value": "3055",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "P17",
+      "value": "3192",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "P18",
+      "value": "3329",
+      "assetClass": "real_estate"
+     },
+     {
+      "symbol": "P19",
+      "value": "3466",
+      "assetClass": "commodity"
+     },
+     {
+      "symbol": "P20",
+      "value": "3603",
+      "assetClass": "crypto"
+     }
+    ]
+   },
+   "labels": {
+    "insight:portfolio-concentration": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-008",
+   "family": "portfolio",
+   "tags": [
+    "duplicate-symbol"
+   ],
+   "ambiguous": true,
+   "note": "The same ticker held in two accounts is one economic position. Forge treats every row as its own position (no aggregation by symbol), which lowers HHI. Both readings are defensible; the contract (one holding row = one position) is primary.",
+   "description": "VTI appears twice (two accounts).",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "VTI",
+      "value": "30000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "VTI",
+      "value": "30000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "BND",
+      "value": "40000",
+      "assetClass": "fixed_income"
+     }
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-009",
+   "family": "portfolio",
+   "tags": [
+    "class-text"
+   ],
+   "description": "Asset-class cells use free text (Stocks, Bonds, Cash & Equivalents).",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "A",
+      "value": "40000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "B",
+      "value": "30000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "C",
+      "value": "20000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "D",
+      "value": "10000",
+      "assetClass": "real_estate"
+     }
+    ]
+   },
+   "input": {
+    "holdingClassText": [
+     "Stocks",
+     "Bonds",
+     "Cash & Equivalents",
+     "Real Estate"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-010",
+   "family": "portfolio",
+   "tags": [
+    "class-text",
+    "wrapper"
+   ],
+   "description": "Fund wrappers: a money-market fund is cash; a bond ETF is fixed income; a gold ETF is a commodity.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "MMF",
+      "value": "30000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "BETF",
+      "value": "30000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "GETF",
+      "value": "20000",
+      "assetClass": "commodity"
+     },
+     {
+      "symbol": "EQ",
+      "value": "20000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "input": {
+    "holdingClassText": [
+     "Money Market Fund",
+     "Bond ETF",
+     "Gold ETF",
+     "Equity"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-pf-011",
+   "family": "portfolio",
+   "tags": [
+    "cash-top-position"
+   ],
+   "description": "Cash is the largest row (50%) but the investments are concentrated (60/40): the driver is NOT cash.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "1000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-500",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASH",
+      "value": "500",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "A",
+      "value": "300",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "B",
+      "value": "200",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "labels": {
+    "insight:portfolio-concentration": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-hl-001",
+   "family": "health",
+   "tags": [
+    "runway",
+    "boundary"
+   ],
+   "description": "Cash equals exactly one month of average spending: runway = 1.0 (cap boundary is strict < 1).",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASH",
+      "value": "2000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "ETF",
+      "value": "18000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "ETF2",
+      "value": "20000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "labels": {
+    "insight:thin-liquidity": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-hl-002",
+   "family": "health",
+   "tags": [
+    "runway",
+    "zero-cash"
+   ],
+   "description": "Holdings but no cash: runway 0.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "ETF",
+      "value": "18000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "ETF2",
+      "value": "20000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "labels": {
+    "insight:thin-liquidity": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-hl-003",
+   "family": "health",
+   "tags": [
+    "runway",
+    "large"
+   ],
+   "description": "Cash covers 24 months: liquidity sub-score saturates at 1.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "4000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASH",
+      "value": "48000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "ETF",
+      "value": "20000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "labels": {
+    "insight:thin-liquidity": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-hl-004",
+   "family": "health",
+   "tags": [
+    "cap",
+    "majority-negative"
+   ],
+   "ambiguous": true,
+   "note": "DECISIONS D8 and PROJECT_RULES say the score is capped at 55 when a MAJORITY of months are negative. The code caps only when fewer than 34% of months are non-negative (>= ~66% negative). With 3 of 5 months negative (60%) the documented rule caps and the implementation does not. Documentation and code disagree; the documented contract is the primary expectation.",
+   "description": "Five months, three negative.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-1000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "-1000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "1000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "-2500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "1000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-05",
+      "amount": "-2500",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "1000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-05",
+      "amount": "-2500",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASH",
+      "value": "30000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "FUND1",
+      "value": "40000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "FUND2",
+      "value": "40000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "BOND",
+      "value": "40000",
+      "assetClass": "fixed_income"
+     }
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-hl-005",
+   "family": "health",
+   "tags": [
+    "cap",
+    "net-negative"
+   ],
+   "description": "Strong liquidity and diversification but spending exceeds income: score capped at 45.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-3300",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "-3300",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "-3300",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-05",
+      "amount": "-3300",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASH",
+      "value": "60000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "E1",
+      "value": "50000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "E2",
+      "value": "50000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "B1",
+      "value": "50000",
+      "assetClass": "fixed_income"
+     }
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-hl-006",
+   "family": "health",
+   "tags": [
+    "holdings-only",
+    "abstention"
+   ],
+   "description": "Holdings with no transactions: no health score, runway unavailable.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "CASH",
+      "value": "10000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "ETF",
+      "value": "30000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "expect": {
+    "unavailable": [
+     "health.score",
+     "health.runwayMonths"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-hl-007",
+   "family": "health",
+   "tags": [
+    "strong"
+   ],
+   "description": "Six months, 42% savings, no negative month, 8+ months of cash, diversified.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-900",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-600",
+      "category": "utilities",
+      "description": "Bills"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-12",
+      "amount": "-900",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-600",
+      "category": "utilities",
+      "description": "Bills"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-12",
+      "amount": "-900",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-600",
+      "category": "utilities",
+      "description": "Bills"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-12",
+      "amount": "-900",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-600",
+      "category": "utilities",
+      "description": "Bills"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-12",
+      "amount": "-900",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-20",
+      "amount": "-600",
+      "category": "utilities",
+      "description": "Bills"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-05",
+      "amount": "-2000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-12",
+      "amount": "-900",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-600",
+      "category": "utilities",
+      "description": "Bills"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASH",
+      "value": "30000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "E1",
+      "value": "20000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "E2",
+      "value": "20000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "B1",
+      "value": "20000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "R1",
+      "value": "15000",
+      "assetClass": "real_estate"
+     }
+    ]
+   },
+   "labels": {
+    "insight:healthy-position": true,
+    "insight:low-savings-driver": false,
+    "insight:thin-liquidity": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-hl-008",
+   "family": "health",
+   "tags": [
+    "insufficient-history",
+    "abstention"
+   ],
+   "description": "One good month and nothing else: too little history to call finances 'on a strong footing'.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-1000",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "insight:healthy-position": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-hl-009",
+   "family": "health",
+   "tags": [
+    "single-transaction",
+    "abstention"
+   ],
+   "description": "A single transaction.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "5000",
+      "category": "salary",
+      "description": "Salary"
+     }
+    ],
+    "holdings": []
+   },
+   "expect": {
+    "unavailable": [
+     "trend.categoriesChanged",
+     "anomaly.medianOutflow",
+     "concentration.hhi"
+    ]
+   },
+   "labels": {
+    "insight:healthy-position": false,
+    "insight:low-savings-driver": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-001",
+   "family": "scenario",
+   "tags": [
+    "scenario"
+   ],
+   "description": "Income -20%.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-420.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-95",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-130",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-435.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-102",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-02-25",
+      "amount": "-133",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-450.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-109",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-03-25",
+      "amount": "-136",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-465.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-116",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-04-25",
+      "amount": "-139",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-480.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-123",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-05-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-05-25",
+      "amount": "-142",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-495.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-130",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-06-25",
+      "amount": "-145",
+      "category": "utilities",
+      "description": "Utilities"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASHACC",
+      "value": "9000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "VTI",
+      "value": "30000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "BNDX",
+      "value": "12000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "GLD",
+      "value": "4000",
+      "assetClass": "commodity"
+     }
+    ]
+   },
+   "scenarios": [
+    {
+     "incomePct": "-0.2"
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-002",
+   "family": "scenario",
+   "tags": [
+    "scenario"
+   ],
+   "description": "Expenses +10%.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-420.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-95",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-130",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-435.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-102",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-02-25",
+      "amount": "-133",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-450.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-109",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-03-25",
+      "amount": "-136",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-465.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-116",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-04-25",
+      "amount": "-139",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-480.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-123",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-05-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-05-25",
+      "amount": "-142",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-495.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-130",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-06-25",
+      "amount": "-145",
+      "category": "utilities",
+      "description": "Utilities"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASHACC",
+      "value": "9000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "VTI",
+      "value": "30000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "BNDX",
+      "value": "12000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "GLD",
+      "value": "4000",
+      "assetClass": "commodity"
+     }
+    ]
+   },
+   "scenarios": [
+    {
+     "expensePct": "0.1"
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-003",
+   "family": "scenario",
+   "tags": [
+    "scenario"
+   ],
+   "description": "Combined: income -10%, expenses +5%.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-420.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-95",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-130",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-435.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-102",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-02-25",
+      "amount": "-133",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-450.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-109",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-03-25",
+      "amount": "-136",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-465.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-116",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-04-25",
+      "amount": "-139",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-480.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-123",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-05-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-05-25",
+      "amount": "-142",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-495.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-130",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-06-25",
+      "amount": "-145",
+      "category": "utilities",
+      "description": "Utilities"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASHACC",
+      "value": "9000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "VTI",
+      "value": "30000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "BNDX",
+      "value": "12000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "GLD",
+      "value": "4000",
+      "assetClass": "commodity"
+     }
+    ]
+   },
+   "scenarios": [
+    {
+     "incomePct": "-0.1",
+     "expensePct": "0.05"
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-004",
+   "family": "scenario",
+   "tags": [
+    "scenario"
+   ],
+   "description": "New recurring expense of 200 per month.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-420.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-95",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-130",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-435.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-102",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-02-25",
+      "amount": "-133",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-450.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-109",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-03-25",
+      "amount": "-136",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-465.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-116",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-04-25",
+      "amount": "-139",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-480.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-123",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-05-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-05-25",
+      "amount": "-142",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-495.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-130",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-06-25",
+      "amount": "-145",
+      "category": "utilities",
+      "description": "Utilities"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASHACC",
+      "value": "9000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "VTI",
+      "value": "30000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "BNDX",
+      "value": "12000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "GLD",
+      "value": "4000",
+      "assetClass": "commodity"
+     }
+    ]
+   },
+   "scenarios": [
+    {
+     "recurringExpense": {
+      "amount": "200",
+      "category": "gym"
+     }
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-005",
+   "family": "scenario",
+   "tags": [
+    "scenario"
+   ],
+   "description": "One-off expense of 5000.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-420.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-95",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-130",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-435.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-102",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-02-25",
+      "amount": "-133",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-450.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-109",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-03-25",
+      "amount": "-136",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-465.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-116",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-04-25",
+      "amount": "-139",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-480.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-123",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-05-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-05-25",
+      "amount": "-142",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-495.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-130",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-06-25",
+      "amount": "-145",
+      "category": "utilities",
+      "description": "Utilities"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASHACC",
+      "value": "9000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "VTI",
+      "value": "30000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "BNDX",
+      "value": "12000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "GLD",
+      "value": "4000",
+      "assetClass": "commodity"
+     }
+    ]
+   },
+   "scenarios": [
+    {
+     "oneOffExpense": {
+      "amount": "5000",
+      "category": "repairs"
+     }
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-006",
+   "family": "scenario",
+   "tags": [
+    "scenario"
+   ],
+   "description": "Empty scenario equals the baseline.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-420.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-95",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-130",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-435.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-102",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-02-25",
+      "amount": "-133",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-450.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-109",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-03-25",
+      "amount": "-136",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-465.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-116",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-04-25",
+      "amount": "-139",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-480.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-123",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-05-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-05-25",
+      "amount": "-142",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-495.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-130",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-06-25",
+      "amount": "-145",
+      "category": "utilities",
+      "description": "Utilities"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASHACC",
+      "value": "9000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "VTI",
+      "value": "30000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "BNDX",
+      "value": "12000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "GLD",
+      "value": "4000",
+      "assetClass": "commodity"
+     }
+    ]
+   },
+   "scenarios": [
+    {}
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-007",
+   "family": "scenario",
+   "tags": [
+    "scenario"
+   ],
+   "description": "All four levers at once.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-420.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-95",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-130",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-435.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-102",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-02-25",
+      "amount": "-133",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-450.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-109",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-03-25",
+      "amount": "-136",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-465.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-116",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-04-25",
+      "amount": "-139",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-480.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-123",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-05-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-05-25",
+      "amount": "-142",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-495.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-130",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-06-25",
+      "amount": "-145",
+      "category": "utilities",
+      "description": "Utilities"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASHACC",
+      "value": "9000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "VTI",
+      "value": "30000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "BNDX",
+      "value": "12000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "GLD",
+      "value": "4000",
+      "assetClass": "commodity"
+     }
+    ]
+   },
+   "scenarios": [
+    {
+     "incomePct": "0.05",
+     "expensePct": "0.1",
+     "recurringExpense": {
+      "amount": "150",
+      "category": "gym"
+     },
+     "oneOffExpense": {
+      "amount": "2500",
+      "category": "repairs"
+     }
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-008",
+   "family": "scenario",
+   "tags": [
+    "scenario"
+   ],
+   "description": "Income -100%: score and savings rate become unavailable; no delta may be fabricated.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-420.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-01-14",
+      "amount": "-95",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-01-25",
+      "amount": "-130",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-435.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-102",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-02-25",
+      "amount": "-133",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-450.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-03-14",
+      "amount": "-109",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-03-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-03-25",
+      "amount": "-136",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-465.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-04-14",
+      "amount": "-116",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-60.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-04-25",
+      "amount": "-139",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-480.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-05-14",
+      "amount": "-123",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-05-20",
+      "amount": "-71.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-05-25",
+      "amount": "-142",
+      "category": "utilities",
+      "description": "Utilities"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1800",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-495.50",
+      "category": "groceries",
+      "description": "Groceries"
+     },
+     {
+      "date": "2024-06-14",
+      "amount": "-130",
+      "category": "dining",
+      "description": "Dining out"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-82.25",
+      "category": "transport",
+      "description": "Transport"
+     },
+     {
+      "date": "2024-06-25",
+      "amount": "-145",
+      "category": "utilities",
+      "description": "Utilities"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASHACC",
+      "value": "9000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "VTI",
+      "value": "30000",
+      "assetClass": "equity"
+     },
+     {
+      "symbol": "BNDX",
+      "value": "12000",
+      "assetClass": "fixed_income"
+     },
+     {
+      "symbol": "GLD",
+      "value": "4000",
+      "assetClass": "commodity"
+     }
+    ]
+   },
+   "scenarios": [
+    {
+     "incomePct": "-1"
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-009",
+   "family": "scenario",
+   "tags": [
+    "scenario",
+    "missing-baseline"
+   ],
+   "description": "Baseline has no spending (so no runway); a scenario adds a one-off expense. The runway delta must not be computed against a fabricated baseline of 0.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "1000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "1000",
+      "category": "salary",
+      "description": "Salary"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASH",
+      "value": "6000",
+      "assetClass": "cash"
+     }
+    ]
+   },
+   "scenarios": [
+    {
+     "oneOffExpense": {
+      "amount": "1000",
+      "category": "repairs"
+     }
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-010",
+   "family": "scenario",
+   "tags": [
+    "scenario",
+    "irregular-period"
+   ],
+   "ambiguous": true,
+   "note": "'Recurring monthly expense' is applied by Forge to each month that contains data (documented in simulate.ts). Applying it to every calendar month of the period is a valid alternative.",
+   "description": "Recurring expense on a period with empty months.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-10",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-20",
+      "amount": "-1000",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-10",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-20",
+      "amount": "-1100",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-10",
+      "amount": "2500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-20",
+      "amount": "-1300",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "CASH",
+      "value": "5000",
+      "assetClass": "cash"
+     },
+     {
+      "symbol": "ETF",
+      "value": "15000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "scenarios": [
+    {
+     "recurringExpense": {
+      "amount": "300",
+      "category": "gym"
+     }
+    }
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "D-sc-011",
+   "family": "safety",
+   "tags": [
+    "scenario",
+    "invalid-input"
+   ],
+   "description": "Out-of-range / non-finite scenario inputs must be rejected, not turned into negative or infinite amounts.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "3000",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-900",
+      "category": "housing",
+      "description": "Rent"
+     }
+    ],
+    "holdings": []
+   },
+   "scenarios": [
+    {
+     "incomePct": "-1.5"
+    },
+    {
+     "expensePct": "-2"
+    },
+    {
+     "recurringExpense": {
+      "amount": "Infinity",
+      "category": "x"
+     }
+    },
+    {
+     "oneOffExpense": {
+      "amount": "NaN",
+      "category": "x"
+     }
+    }
+   ],
+   "expect": {
+    "metrics": false,
+    "scenarioMustReject": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-001",
+   "family": "safety",
+   "tags": [
+    "currency"
+   ],
+   "description": "Rows tagged USD and EUR in one transactions file: must refuse to sum them.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "100",
+      "category": "salary",
+      "description": "A"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-20",
+      "category": "groceries",
+      "description": "B"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "currencyColumn": [
+     "USD",
+     "EUR"
+    ]
+   },
+   "expect": {
+    "metrics": false,
+    "error": "CurrencyMismatchError",
+    "warnings": [
+     "Multiple currencies"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-002",
+   "family": "safety",
+   "tags": [
+    "currency"
+   ],
+   "description": "USD transactions with INR holdings (holdings tagged via a Currency column).",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "100",
+      "category": "salary",
+      "description": "A"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-20",
+      "category": "groceries",
+      "description": "B"
+     }
+    ],
+    "holdings": [
+     {
+      "symbol": "X",
+      "value": "1000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "input": {
+    "rawHoldingsCsv": "Symbol,Name,Asset Class,Quantity,Price,Value,Currency\nX,X,equity,1,1000,1000,INR\n"
+   },
+   "expect": {
+    "metrics": false,
+    "error": "CurrencyMismatchError"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-003",
+   "family": "safety",
+   "tags": [
+    "currency",
+    "symbols"
+   ],
+   "description": "Amount cells carry different currency symbols ($ and €) with no currency column: silently summing them would be a mixed-currency total.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "100",
+      "category": "salary",
+      "description": "A"
+     },
+     {
+      "date": "2024-01-02",
+      "amount": "-20",
+      "category": "groceries",
+      "description": "B"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Description,Amount,Category\n2024-01-01,A,$100.00,salary\n2024-01-02,B,-€20.00,groceries\n"
+   },
+   "expect": {
+    "metrics": false,
+    "abstain": {
+     "error": "CurrencyMismatchError",
+     "warning": "currenc"
+    }
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-004",
+   "family": "safety",
+   "tags": [
+    "skipped-rows"
+   ],
+   "description": "Missing date, zero amount, text amount: each skipped with a reason.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "100",
+      "category": "salary",
+      "description": "Good"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Description,Amount,Category\n2024-01-01,Good,100.00,salary\n,No date,-5.00,misc\n2024-01-02,Zero,0.00,misc\n2024-01-03,Text,N/A,misc\n"
+   },
+   "expect": {
+    "skipped": [
+     {
+      "table": "transactions",
+      "row": 1,
+      "reason": "date"
+     },
+     {
+      "table": "transactions",
+      "row": 2,
+      "reason": "amount"
+     },
+     {
+      "table": "transactions",
+      "row": 3,
+      "reason": "amount"
+     }
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-005",
+   "family": "safety",
+   "tags": [
+    "skipped-rows",
+    "calendar"
+   ],
+   "description": "Impossible calendar dates (2024-02-30, 2024-13-01) must be rejected, not accepted as-is.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "100",
+      "category": "salary",
+      "description": "Good"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Description,Amount,Category\n2024-01-01,Good,100.00,salary\n2024-02-30,Impossible,-5.00,misc\n2024-13-01,Impossible month,-6.00,misc\n"
+   },
+   "expect": {
+    "skipped": [
+     {
+      "table": "transactions",
+      "row": 1,
+      "reason": "date"
+     },
+     {
+      "table": "transactions",
+      "row": 2,
+      "reason": "date"
+     }
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-006",
+   "family": "safety",
+   "tags": [
+    "skipped-rows",
+    "non-finite"
+   ],
+   "description": "Infinity / NaN / garbage amounts are rejected with a reason.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "100",
+      "category": "salary",
+      "description": "Good"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Description,Amount,Category\n2024-01-01,Good,100.00,salary\n2024-01-02,Inf,Infinity,misc\n2024-01-03,Nan,NaN,misc\n2024-01-04,Junk,1.2.3,misc\n"
+   },
+   "expect": {
+    "skipped": [
+     {
+      "table": "transactions",
+      "row": 1,
+      "reason": "amount"
+     },
+     {
+      "table": "transactions",
+      "row": 2,
+      "reason": "amount"
+     },
+     {
+      "table": "transactions",
+      "row": 3,
+      "reason": "amount"
+     }
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-007",
+   "family": "safety",
+   "tags": [
+    "skipped-rows",
+    "holdings"
+   ],
+   "description": "Negative and zero holding values are skipped with reasons.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "OK",
+      "value": "1000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "input": {
+    "rawHoldingsCsv": "Symbol,Name,Asset Class,Quantity,Price,Value\nOK,OK,equity,1,1000,1000\nNEG,NEG,equity,1,-50,-50\nZERO,ZERO,equity,0,0,0\n"
+   },
+   "expect": {
+    "skipped": [
+     {
+      "table": "holdings",
+      "row": 1,
+      "reason": "negative|non-positive"
+     },
+     {
+      "table": "holdings",
+      "row": 2,
+      "reason": "non-positive|missing"
+     }
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-008",
+   "family": "safety",
+   "tags": [
+    "ingestion"
+   ],
+   "description": "A file with a header and no data rows.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Description,Amount,Category\n"
+   },
+   "expect": {
+    "metrics": false,
+    "error": "IngestionError"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-009",
+   "family": "safety",
+   "tags": [
+    "ingestion"
+   ],
+   "description": "Unsupported file extension.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Amount\n2024-01-01,5\n",
+    "transactionsFileName": "statement.txt"
+   },
+   "expect": {
+    "metrics": false,
+    "error": "IngestionError"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-010",
+   "family": "safety",
+   "tags": [
+    "contradictory",
+    "debit-credit"
+   ],
+   "description": "One row has both a Debit (100) and a Credit (40): contradictory. Silently keeping one and dropping the other loses data.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Description,Debit,Credit,Category\n2024-01-05,Both set,100.00,40.00,misc\n2024-01-06,Fine,10.00,,misc\n"
+   },
+   "expect": {
+    "metrics": false,
+    "abstain": {
+     "row": {
+      "table": "transactions",
+      "index": 0
+     },
+     "warning": "debit|credit"
+    }
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-011",
+   "family": "safety",
+   "tags": [
+    "currency",
+    "unrecognised"
+   ],
+   "description": "Currency cell says 'Swiss Franc' (not recognised): silently assuming USD would corrupt totals.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Description,Amount,Category,Currency\n2024-01-05,Row,-100.00,misc,Swiss Franc\n2024-01-06,Row2,-10.00,misc,USD\n"
+   },
+   "expect": {
+    "metrics": false,
+    "abstain": {
+     "error": "CurrencyMismatchError",
+     "row": {
+      "table": "transactions",
+      "index": 0
+     },
+     "warning": "currenc"
+    }
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-012",
+   "family": "safety",
+   "tags": [
+    "contradictory",
+    "holdings"
+   ],
+   "description": "Holding states quantity 10 x price 100 but value 5000: contradictory.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": [
+     {
+      "symbol": "X",
+      "value": "5000",
+      "assetClass": "equity"
+     }
+    ]
+   },
+   "input": {
+    "rawHoldingsCsv": "Symbol,Name,Asset Class,Quantity,Price,Value\nX,X,equity,10,100,5000\n"
+   },
+   "expect": {
+    "metrics": false,
+    "warnings": [
+     "value|quantity|price|inconsisten|contradict"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-013",
+   "family": "safety",
+   "tags": [
+    "duplicates"
+   ],
+   "declaredUnsupported": "Duplicate-transaction detection is a documented limitation (PROJECT_STATE: 'No duplicate-transaction detection'). Reported, never scored.",
+   "description": "The same transaction row appears twice.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-05",
+      "amount": "-50",
+      "category": "groceries",
+      "description": "Same row"
+     }
+    ],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Description,Amount,Category\n2024-01-05,Same row,-50.00,groceries\n2024-01-05,Same row,-50.00,groceries\n"
+   },
+   "expect": {
+    "metrics": false,
+    "warnings": [
+     "duplicate"
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-014",
+   "family": "safety",
+   "tags": [
+    "columns"
+   ],
+   "description": "No date column: every row is skipped and the data problem is stated.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Description,Amount,Category\nA,-5.00,misc\nB,6.00,misc\n"
+   },
+   "expect": {
+    "metrics": false,
+    "warnings": [
+     "date column"
+    ],
+    "skipped": [
+     {
+      "table": "transactions",
+      "row": 0,
+      "reason": "date"
+     }
+    ]
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-sf-015",
+   "family": "safety",
+   "tags": [
+    "columns"
+   ],
+   "description": "No amount/debit/credit column: table is skipped with an explicit warning.",
+   "truth": {
+    "currency": "USD",
+    "txns": [],
+    "holdings": []
+   },
+   "input": {
+    "rawTransactionsCsv": "Date,Description,Category\n2024-01-01,A,misc\n"
+   },
+   "expect": {
+    "metrics": false,
+    "warnings": [
+     "amount"
+    ],
+    "skipped": [
+     {
+      "table": "transactions",
+      "row": 0,
+      "reason": "amount"
+     }
+    ]
+   },
+   "split": "dev"
+  }
+ ],
+ "cells": [
+  {
+   "id": "D-cell-a01",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "1234.56",
+   "expected": "1234.56"
+  },
+  {
+   "id": "D-cell-a02",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "-1234.56",
+   "expected": "-1234.56"
+  },
+  {
+   "id": "D-cell-a03",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "(1,234.56)",
+   "expected": "-1234.56"
+  },
+  {
+   "id": "D-cell-a04",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "$1,234.56",
+   "expected": "1234.56"
+  },
+  {
+   "id": "D-cell-a05",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "-$5.00",
+   "expected": "-5.00"
+  },
+  {
+   "id": "D-cell-a06",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "€ 99.90",
+   "expected": "99.90"
+  },
+  {
+   "id": "D-cell-a07",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "USD 500",
+   "expected": "500"
+  },
+  {
+   "id": "D-cell-a08",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "+500",
+   "expected": "500"
+  },
+  {
+   "id": "D-cell-a09",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": ".50",
+   "expected": "0.50"
+  },
+  {
+   "id": "D-cell-a10",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "1e3",
+   "expected": "1000",
+   "note": "Scientific notation as exported by spreadsheets."
+  },
+  {
+   "id": "D-cell-a11",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "1.234,56",
+   "expected": "1234.56",
+   "acceptAlso": [
+    null
+   ],
+   "ambiguous": true,
+   "note": "European grouping. Parsing as 1234.56 or rejecting are both safe; 1.23456 is wrong under every reading."
+  },
+  {
+   "id": "D-cell-a12",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "1,5",
+   "expected": null,
+   "acceptAlso": [
+    "1.5"
+   ],
+   "ambiguous": true,
+   "note": "Decimal comma or malformed thousands; 15 is not a plausible reading."
+  },
+  {
+   "id": "D-cell-a13",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "1.2.3",
+   "expected": null
+  },
+  {
+   "id": "D-cell-a14",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "5-3",
+   "expected": null
+  },
+  {
+   "id": "D-cell-a15",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "abc",
+   "expected": null
+  },
+  {
+   "id": "D-cell-a16",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "N/A",
+   "expected": null
+  },
+  {
+   "id": "D-cell-a17",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "Infinity",
+   "expected": null
+  },
+  {
+   "id": "D-cell-a18",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "0.00",
+   "expected": null,
+   "note": "Zero-value rows carry no movement and are skipped with a reason (documented)."
+  },
+  {
+   "id": "D-cell-a19",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "12,34,567.00",
+   "expected": "1234567.00",
+   "note": "Indian digit grouping."
+  },
+  {
+   "id": "D-cell-a20",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "Rs.500",
+   "expected": "500"
+  },
+  {
+   "id": "D-cell-a21",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "5.00-",
+   "expected": "-5.00",
+   "ambiguous": true,
+   "note": "Trailing minus (accounting export style)."
+  },
+  {
+   "id": "D-cell-a22",
+   "split": "dev",
+   "family": "cell",
+   "kind": "amount",
+   "raw": "−5.00",
+   "expected": "-5.00",
+   "acceptAlso": [
+    null
+   ],
+   "note": "Unicode minus sign (U+2212), common in PDF/Excel exports: dropping it flips the sign silently."
+  },
+  {
+   "id": "D-cell-d01",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "2024-03-15",
+   "expected": "2024-03-15"
+  },
+  {
+   "id": "D-cell-d02",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "2024-03-15T10:00:00Z",
+   "expected": "2024-03-15"
+  },
+  {
+   "id": "D-cell-d03",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "15/03/2024",
+   "expected": "2024-03-15"
+  },
+  {
+   "id": "D-cell-d04",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "03/15/2024",
+   "expected": "2024-03-15"
+  },
+  {
+   "id": "D-cell-d05",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "05/01/2024",
+   "expected": "2024-01-05",
+   "ambiguous": true,
+   "note": "Ambiguous order; DD/MM is Forge's documented default."
+  },
+  {
+   "id": "D-cell-d06",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "2024-02-30",
+   "expected": null
+  },
+  {
+   "id": "D-cell-d07",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "2024-13-01",
+   "expected": null
+  },
+  {
+   "id": "D-cell-d08",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "31/04/2024",
+   "expected": null
+  },
+  {
+   "id": "D-cell-d09",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "29/02/2024",
+   "expected": "2024-02-29"
+  },
+  {
+   "id": "D-cell-d10",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "29/02/2023",
+   "expected": null
+  },
+  {
+   "id": "D-cell-d11",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "Jan 5, 2024",
+   "expected": "2024-01-05"
+  },
+  {
+   "id": "D-cell-d12",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "5 January 2024",
+   "expected": "2024-01-05"
+  },
+  {
+   "id": "D-cell-d13",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "hello 5",
+   "expected": null
+  },
+  {
+   "id": "D-cell-d14",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "Feb 30, 2024",
+   "expected": null
+  },
+  {
+   "id": "D-cell-d15",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "15.03.2024",
+   "expected": "2024-03-15"
+  },
+  {
+   "id": "D-cell-d16",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "2024-00-10",
+   "expected": null
+  },
+  {
+   "id": "D-cell-d17",
+   "split": "dev",
+   "family": "cell",
+   "kind": "date",
+   "raw": "tomorrow",
+   "expected": null
+  }
+ ],
+ "classify": [
+  {
+   "id": "D-cat-01",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Whole Foods Market",
+   "expected": "groceries"
+  },
+  {
+   "id": "D-cat-02",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Starbucks coffee",
+   "expected": "dining"
+  },
+  {
+   "id": "D-cat-03",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Uber ride to airport",
+   "expected": "transport"
+  },
+  {
+   "id": "D-cat-04",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Uber Eats order",
+   "expected": "dining"
+  },
+  {
+   "id": "D-cat-05",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Netflix monthly",
+   "expected": "subscriptions"
+  },
+  {
+   "id": "D-cat-06",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Monthly rent",
+   "expected": "housing"
+  },
+  {
+   "id": "D-cat-07",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Electric bill",
+   "expected": "utilities"
+  },
+  {
+   "id": "D-cat-08",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "ACME payroll",
+   "expected": "salary"
+  },
+  {
+   "id": "D-cat-09",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "City Hospital copay",
+   "expected": "health"
+  },
+  {
+   "id": "D-cat-10",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Amazon order",
+   "expected": "shopping"
+  },
+  {
+   "id": "D-cat-11",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Airbnb Lisbon",
+   "expected": "travel"
+  },
+  {
+   "id": "D-cat-12",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Cinema tickets",
+   "expected": "entertainment"
+  },
+  {
+   "id": "D-cat-13",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "ATM withdrawal",
+   "expected": "transfer"
+  },
+  {
+   "id": "D-cat-14",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Overdraft fee",
+   "expected": "fees"
+  },
+  {
+   "id": "D-cat-15",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Credit card payment",
+   "expected": "transfer",
+   "note": "A card repayment is a transfer of money, not income."
+  },
+  {
+   "id": "D-cat-16",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Interest charge",
+   "expected": "fees"
+  },
+  {
+   "id": "D-cat-17",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Water park tickets",
+   "expected": "entertainment"
+  },
+  {
+   "id": "D-cat-18",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Phone case",
+   "expected": "shopping"
+  },
+  {
+   "id": "D-cat-19",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Zorblax Industries",
+   "expected": "uncategorized"
+  },
+  {
+   "id": "D-cat-20",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Dividend payment",
+   "expected": "income"
+  },
+  {
+   "id": "D-cat-21",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Costco wholesale",
+   "expected": "groceries"
+  },
+  {
+   "id": "D-cat-22",
+   "split": "dev",
+   "family": "classify",
+   "kind": "category",
+   "text": "Spotify Premium",
+   "expected": "subscriptions"
+  },
+  {
+   "id": "D-ac-01",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Equity",
+   "expected": "equity"
+  },
+  {
+   "id": "D-ac-02",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Stocks",
+   "expected": "equity"
+  },
+  {
+   "id": "D-ac-03",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Mutual Fund",
+   "expected": "equity"
+  },
+  {
+   "id": "D-ac-04",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Bond",
+   "expected": "fixed_income"
+  },
+  {
+   "id": "D-ac-05",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Treasury Note",
+   "expected": "fixed_income"
+  },
+  {
+   "id": "D-ac-06",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Cash",
+   "expected": "cash"
+  },
+  {
+   "id": "D-ac-07",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Savings account",
+   "expected": "cash"
+  },
+  {
+   "id": "D-ac-08",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Money Market Fund",
+   "expected": "cash"
+  },
+  {
+   "id": "D-ac-09",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Real Estate",
+   "expected": "real_estate"
+  },
+  {
+   "id": "D-ac-10",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "REIT",
+   "expected": "real_estate"
+  },
+  {
+   "id": "D-ac-11",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Gold",
+   "expected": "commodity"
+  },
+  {
+   "id": "D-ac-12",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Bitcoin",
+   "expected": "crypto"
+  },
+  {
+   "id": "D-ac-13",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Hedge Fund",
+   "expected": "alternative"
+  },
+  {
+   "id": "D-ac-14",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Private Equity",
+   "expected": "alternative"
+  },
+  {
+   "id": "D-ac-15",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Bond ETF",
+   "expected": "fixed_income"
+  },
+  {
+   "id": "D-ac-16",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Gold ETF",
+   "expected": "commodity"
+  },
+  {
+   "id": "D-ac-17",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Index Fund",
+   "expected": "equity"
+  },
+  {
+   "id": "D-ac-18",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "Misc",
+   "expected": "unknown"
+  },
+  {
+   "id": "D-ac-19",
+   "split": "dev",
+   "family": "classify",
+   "kind": "assetClass",
+   "text": "real_estate",
+   "expected": "real_estate",
+   "note": "snake_case enum text as exported by some systems"
+  }
+ ]
+}

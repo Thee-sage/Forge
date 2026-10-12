@@ -14,8 +14,11 @@
     "forge": "tsx src/cli/index.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit",
-    "clean": "rimraf dist"
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.eval.json",
+    "clean": "rimraf dist",
+    "validate:accuracy": "tsx evaluation/run.ts",
+    "eval:build-datasets": "tsx evaluation/datasets/src/build.ts",
+    "validate:accuracy:compare": "tsx evaluation/compare.ts"
   },
   "keywords": [
     "finance",
