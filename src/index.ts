@@ -51,6 +51,9 @@ export {
   type UnavailableDelta,
 } from "./scenario/simulate.js";
 
+export { buildReportView, buildScenarioView } from "./web/viewmodel.js";
+export type { ReportView, ScenarioView } from "./web/viewmodel.js";
+
 export interface ForgeReport {
   model: FinancialModel;
   normalization: NormalizationReport;

@@ -12,6 +12,7 @@
     "build": "tsc",
     "dev": "tsx src/cli/index.ts",
     "forge": "tsx src/cli/index.ts",
+    "web": "tsx src/cli/index.ts serve",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.eval.json",

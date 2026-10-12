@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-5c3664e8-705b-4216-95ef-570689db2d87/styles.css">
+<script src="_ds/classical-5c3664e8-705b-4216-95ef-570689db2d87/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #0b0e10; }
+  [data-fg="viewport"] {
+    --f-bg: #0b0e10; --f-s1: #12171a; --f-s2: #181e22; --f-s3: #1f262b;
+    --f-line: #232b31; --f-line2: #313b43;
+    --f-tx: #e9edf0; --f-tx2: #a5b1b9; --f-tx3: #74818a;
+    --f-ac: #3fa79f; --f-ac-lo: rgba(63, 167, 159, 0.14); --f-ac-dk: #2b7a74;
+    --f-crit: #e0574f; --f-high: #dd8235; --f-med: #cfa93a; --f-low: #6f90da; --f-pos: #47a86d;
+    --f-sans: 'IBM Plex Sans', system-ui, sans-serif;
+    --f-mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --f-serif: var(--font-heading, Georgia, serif);
+  }
+  [data-fg="shell"] { --fg-shell-cols: var(--fg-rail) minmax(0, 1fr); --fg-rail: 210px; --fg-split: minmax(0,1.04fr) minmax(0,1fr); --fg-pad: 26px; --fg-c3: repeat(3, minmax(0,1fr)); --fg-rel: repeat(3, minmax(0,1fr)); --fg-c2: repeat(2, minmax(0,1fr)); --fg-c4: repeat(4, minmax(0,1fr)); --fg-row: 9px; --fg-disp: 30px; }
+  [data-fg="shell"][data-density="compact"] { --fg-pad: 18px; --fg-row: 5px; --fg-disp: 26px; }
+  @container (max-width: 1200px) { [data-fg="shell"] { --fg-split: minmax(0,1fr); } }
+  @container (max-width: 1000px) { [data-fg="shell"] { --fg-rail: 60px; --fg-c3: repeat(2, minmax(0,1fr)); --fg-c4: repeat(2, minmax(0,1fr)); --fg-pad: 20px; --fg-disp: 26px; --fg-rel: minmax(0,1fr); } [data-fg="nav2"] { display: none !important; } [data-fg="navlabel"] { display: none; } [data-fg="mark-full"] { display: none; } [data-fg="mark-mini"] { display: inline !important; } [data-fg="brand"] { text-align: center; letter-spacing: 0 !important; } }
+  @container (max-width: 680px) { [data-fg="shell"] { --fg-shell-cols: minmax(0, 1fr); --fg-rail: 0px; --fg-c3: minmax(0,1fr); --fg-c2: minmax(0,1fr); --fg-c4: repeat(2, minmax(0,1fr)); --fg-pad: 14px; --fg-disp: 24px; --fg-rel: minmax(0,1fr); } [data-fg="rail"] { display: none !important; } [data-fg="mobnav"] { display: flex !important; } }
+  [data-fg="shell"] h1, [data-fg="shell"] h2, [data-fg="shell"] h3, [data-fg="shell"] h4 { font-family: var(--f-sans); font-weight: 500; }
+  [data-fg="shell"] [data-fg="editorial"] { font-family: var(--f-serif); font-weight: 400; }
+  [data-fg="row"]:hover { background: var(--f-s2); }
+  [data-fg="viewport"] a { color: var(--f-ac); text-decoration: none; }
+  [data-fg="viewport"] a:hover { color: #56c0b7; }
+  [data-fg="viewport"] :focus-visible { outline: 2px solid var(--f-ac); outline-offset: 2px; }
+  [data-fg="viewport"] input[type="range"] { accent-color: var(--f-ac); }
+  [data-fg="btn"]:hover { background: var(--f-ac-lo); border-color: var(--f-ac); color: var(--f-tx); }
+</style>
+</helmet>
+
+<div data-fg="viewport" style="container-type: inline-size; width: {{ vw }}; max-width: 100%; margin: 0 auto; background: var(--f-bg);">
+<div data-fg="shell" data-density="{{ density }}" style="min-height: 100vh; background: var(--f-bg); color: var(--f-tx); font-family: var(--f-sans); font-size: 13px; line-height: 1.5; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;">
+
+  <sc-if value="{{ isUpload }}">
+    <div style="min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto;">
+      <div style="display: flex; align-items: center; gap: 14px; padding: 14px var(--fg-pad); border-bottom: 1px solid var(--f-line);">
+        <span style="font-family: var(--f-mono); font-weight: 500; font-size: 15px; letter-spacing: 0.22em;">FORGE</span>
+        <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3);">Financial Reasoning Engine</span>
+        <a href="#" onClick="{{ goOverview }}" style="margin-left: auto; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;">Open demo report &rarr;</a>
+      </div>
+
+      <div style="display: grid; place-items: center; padding: 52px var(--fg-pad);">
+        <div style="width: min(740px, 100%);">
+          <div style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--f-ac); margin-bottom: 14px;">Ingestion</div>
+          <h1 data-fg="editorial" style="font-size: 40px; line-height: 1.12; letter-spacing: -0.01em; margin: 0 0 12px; color: var(--f-tx);">Turn financial data into explainable insights.</h1>
+          <p style="max-width: 62ch; text-wrap: pretty; color: var(--f-tx2); font-size: 14px; margin: 0 0 32px;">Forge normalizes statements and holdings into one model, runs deterministic analysis over it, and reports what it found. Every conclusion carries the evidence it was drawn from.</p>
+
+          <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+            <sc-if value="{{ upIdle }}" hint-placeholder-val="{{ true }}">
+              <div style="padding: 48px 40px; text-align: center;">
+                <div style="width: 34px; height: 34px; margin: 0 auto 18px; border: 1px solid var(--f-ac); border-radius: 2px; display: grid; place-items: center; color: var(--f-ac); background: var(--f-ac-lo);">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 16V4"></path><path d="M7 9l5-5 5 5"></path><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"></path></svg>
+                </div>
+                <h4 style="font-size: 17px; font-weight: 500; margin: 0 0 6px; letter-spacing: -0.01em;">Upload financial data</h4>
+                <p style="font-size: 13px; color: var(--f-tx3); margin: 0 0 22px;">Drop files here, or select them from disk.</p>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                  <button onClick="{{ startUpload }}" style="appearance: none; cursor: pointer; font-family: var(--f-sans); font-size: 12.5px; padding: 9px 16px; border-radius: 3px; border: 1px solid var(--f-ac); background: var(--f-ac-lo); color: var(--f-tx);">Select files</button>
+                  <button data-fg="btn" onClick="{{ goOverview }}" style="appearance: none; cursor: pointer; font-family: var(--f-sans); font-size: 12.5px; padding: 9px 16px; border-radius: 3px; border: 1px solid var(--f-line2); background: transparent; color: var(--f-tx2);">Use demo dataset</button>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 28px; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--f-tx3);">
+                  <span>CSV</span><span style="color: var(--f-line2);">/</span>
+                  <span>XLSX</span><span style="color: var(--f-line2);">/</span>
+                  <span>Several sources per report</span><span style="color: var(--f-line2);">/</span>
+                  <span>Single currency</span>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ upRunning }}">
+              <div style="padding: 34px 36px;">
+                <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px;">
+                  <h4 style="font-size: 16px; font-weight: 500; margin: 0;">Normalizing three tables</h4>
+                  <span style="font-family: var(--f-mono); font-size: 11px; color: var(--f-tx3);">1,326 rows read</span>
+                </div>
+                <div style="height: 2px; background: var(--f-line); margin: 16px 0 20px;"><div style="height: 2px; width: 68%; background: var(--f-ac);"></div></div>
+                <sc-for list="{{ pipeSteps }}" as="s" hint-placeholder-count="6">
+                  <div style="display: grid; grid-template-columns: 76px 1fr auto; gap: 14px; align-items: baseline; padding: 8px 0; border-top: 1px solid var(--f-line);">
+                    <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: {{ s.tone }};">{{ s.state }}</span>
+                    <span style="font-size: 12.5px; color: {{ s.labelTone }};">{{ s.label }}</span>
+                    <span style="font-family: var(--f-mono); font-size: 11px; color: var(--f-tx3);">{{ s.note }}</span>
+                  </div>
+                </sc-for>
+                <div style="display: flex; gap: 10px; margin-top: 22px;">
+                  <button onClick="{{ goOverview }}" style="appearance: none; cursor: pointer; font-family: var(--f-sans); font-size: 12.5px; padding: 9px 16px; border-radius: 3px; border: 1px solid var(--f-ac); background: var(--f-ac-lo); color: var(--f-tx);">Open report</button>
+                  <button data-fg="btn" onClick="{{ resetUpload }}" style="appearance: none; cursor: pointer; font-family: var(--f-sans); font-size: 12.5px; padding: 9px 16px; border-radius: 3px; border: 1px solid var(--f-line2); background: transparent; color: var(--f-tx2);">Cancel</button>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ upError }}">
+              <div style="padding: 34px 36px;">
+                <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 12px;">
+                  <span style="width: 8px; height: 8px; border-radius: 1px; background: var(--f-crit);"></span>
+                  <span style="font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--f-crit);">CurrencyMismatchError</span>
+                </div>
+                <h4 style="font-size: 18px; font-weight: 500; line-height: 1.3; margin: 0 0 10px;">Forge cannot combine USD and INR data without explicit currency conversion.</h4>
+                <p style="font-size: 13px; color: var(--f-tx2); max-width: 66ch; margin: 0 0 16px;">Two currencies were detected across the uploaded tables. Forge does not apply an exchange rate of its own, because an assumed rate would silently alter every figure downstream. Convert before ingestion, or upload a single-currency dataset.</p>
+                <div style="border-top: 1px solid var(--f-line); padding-top: 12px; font-family: var(--f-mono); font-size: 11px; color: var(--f-tx3);">2 tables INR &middot; 1 table USD &middot; analysis did not run</div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                  <button onClick="{{ resetUpload }}" style="appearance: none; cursor: pointer; font-family: var(--f-sans); font-size: 12.5px; padding: 9px 16px; border-radius: 3px; border: 1px solid var(--f-ac); background: var(--f-ac-lo); color: var(--f-tx);">Upload different files</button>
+                  <button data-fg="btn" onClick="{{ goData }}" style="appearance: none; cursor: pointer; font-family: var(--f-sans); font-size: 12.5px; padding: 9px 16px; border-radius: 3px; border: 1px solid var(--f-line2); background: transparent; color: var(--f-tx2);">Inspect sources</button>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="margin-top: 34px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
+            <sc-for list="{{ pipeline }}" as="p" hint-placeholder-count="6">
+              <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 8px; border: 1px solid {{ p.rule }}; border-radius: 2px; color: {{ p.tone }}; background: {{ p.bg }};">{{ p.label }}</span>
+              <span style="color: var(--f-line2); font-size: 10px;">{{ p.arrow }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 12px var(--fg-pad); border-top: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10.5px; color: var(--f-tx3);">Deterministic analysis &middot; no figure shown in Forge is calculated by the interface</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isApp }}" hint-placeholder-val="{{ true }}">
+    <div style="display: grid; grid-template-columns: var(--fg-shell-cols); align-items: start;">
+
+      <div data-fg="rail" style="border-right: 1px solid var(--f-line); position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: var(--f-bg);">
+        <div style="padding: 14px 14px 12px;">
+          <div data-fg="brand" style="font-family: var(--f-mono); font-weight: 500; font-size: 14px; letter-spacing: 0.22em;"><span data-fg="mark-full">FORGE</span><span data-fg="mark-mini" style="display: none;">F</span></div>
+          <div data-fg="navlabel" style="font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); margin-top: 3px;">Reasoning engine</div>
+        </div>
+        <div style="height: 1px; background: var(--f-line);"></div>
+        <nav style="display: flex; flex-direction: column; padding: 6px 0;">
+          <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7">
+            <a href="#" onClick="{{ n.go }}" style="display: grid; grid-template-columns: 18px 1fr auto; gap: 10px; align-items: center; padding: 7px 14px; font-size: 12.5px; color: {{ n.tone }}; background: {{ n.bg }}; border-left: 2px solid {{ n.mark }};">
+              <span style="font-family: var(--f-mono); font-size: 9.5px; color: {{ n.numTone }};">{{ n.num }}</span>
+              <span data-fg="navlabel">{{ n.label }}</span>
+              <span data-fg="navlabel" style="font-family: var(--f-mono); font-size: 9.5px; color: {{ n.badgeTone }};">{{ n.badge }}</span>
+            </a>
+          </sc-for>
+        </nav>
+        <div data-fg="nav2" style="height: 1px; background: var(--f-line); margin: 5px 0;"></div>
+        <nav data-fg="nav2" style="display: flex; flex-direction: column; padding: 3px 0;">
+          <sc-for list="{{ nav2 }}" as="n" hint-placeholder-count="3">
+            <a href="#" onClick="{{ n.go }}" style="display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: center; padding: 6px 14px; font-size: 12px; color: {{ n.tone }}; background: {{ n.bg }}; border-left: 2px solid {{ n.mark }};">
+              <span style="font-family: var(--f-mono); font-size: 9.5px; color: var(--f-tx3);">&middot;</span>
+              <span data-fg="navlabel">{{ n.label }}</span>
+            </a>
+          </sc-for>
+        </nav>
+        <div data-fg="navlabel" style="margin-top: auto; padding: 12px 14px; border-top: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; line-height: 1.6; color: var(--f-tx3);">
+          <div style="letter-spacing: 0.14em; text-transform: uppercase; color: var(--f-tx2); margin-bottom: 4px;">Report</div>
+          <div>forge_report &middot; INR</div>
+          <div>Jan&ndash;Jun 2026 &middot; 6P</div>
+          <div style="margin-top: 8px;"><a href="#" onClick="{{ goUpload }}" style="font-size: 10px;">Replace dataset</a></div>
+        </div>
+      </div>
+
+      <div style="min-width: 0;">
+        <div style="position: sticky; top: 0; z-index: 5; background: var(--f-bg); border-bottom: 1px solid var(--f-line); padding: 11px var(--fg-pad);">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: baseline; gap: 12px;">
+              <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-ac);">{{ ctxKicker }}</span>
+              <h2 style="font-size: 17px; font-weight: 500; letter-spacing: -0.01em; margin: 0;">{{ ctxTitle }}</h2>
+              <span style="font-family: var(--f-mono); font-size: 10.5px; color: var(--f-tx3);">{{ ctxMeta }}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <a data-fg="mobnav" href="#" onClick="{{ cycleScreen }}" style="display: none; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;">Next &rarr;</a>
+              <div style="display: flex; border: 1px solid var(--f-line); border-radius: 3px; overflow: hidden;">
+                <sc-for list="{{ views }}" as="v" hint-placeholder-count="3">
+                  <button onClick="{{ v.go }}" style="appearance: none; border: 0; cursor: pointer; background: {{ v.bg }}; color: {{ v.tone }}; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 9px;">{{ v.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding: 16px var(--fg-pad) 48px;">
+
+          <sc-if value="{{ isOverview }}">
+            <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1); margin-bottom: 14px;">
+              <div style="display: grid; grid-template-columns: var(--fg-c4); gap: 1px; background: var(--f-line);">
+                <sc-for list="{{ band }}" as="b" hint-placeholder-count="4">
+                  <div style="background: var(--f-s1); padding: 13px 16px;">
+                    <div style="display: flex; align-items: baseline; gap: 7px; margin-bottom: 7px;">
+                      <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3);">{{ b.label }}</span>
+                      <span style="font-family: var(--f-mono); font-size: 9.5px; color: var(--f-tx3);">{{ b.op }}</span>
+                    </div>
+                    <div style="font-family: var(--f-mono); font-weight: 500; font-size: var(--fg-disp); line-height: 1.05; letter-spacing: -0.02em; color: {{ b.tone }};">{{ b.value }}</div>
+                    <div style="display: flex; align-items: baseline; gap: 7px; margin-top: 7px;">
+                      <span style="font-family: var(--f-mono); font-size: 10.5px; color: {{ b.deltaTone }};">{{ b.delta }}</span>
+                      <span style="font-size: 11px; color: var(--f-tx3);">{{ b.sub }}</span>
+                    </div>
+                    <sc-if value="{{ b.isHealth }}">
+                      <div style="height: 3px; margin-top: 10px; background: var(--f-line);"><div style="height: 3px; width: {{ b.pct }}; background: {{ b.bar }};"></div></div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display: grid; grid-template-columns: var(--fg-rel); gap: 1px; background: var(--f-line); border-top: 1px solid var(--f-line);">
+                <sc-for list="{{ relations }}" as="r" hint-placeholder-count="3">
+                  <div style="background: var(--f-s1); padding: 11px 16px;">
+                    <div style="display: flex; align-items: baseline; gap: 9px;">
+                      <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--f-tx3);">{{ r.label }}</span>
+                      <span style="font-family: var(--f-mono); font-size: 14px; color: var(--f-tx); margin-left: auto;">{{ r.value }}</span>
+                      <span style="font-family: var(--f-mono); font-size: 10.5px; color: {{ r.tone }};">{{ r.delta }}</span>
+                    </div>
+                    <div style="font-size: 11.5px; color: var(--f-tx3); margin-top: 5px;">{{ r.note }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isRisks }}">
+            <div style="display: grid; grid-template-columns: var(--fg-c4); gap: 1px; background: var(--f-line); border: 1px solid var(--f-line); border-radius: 3px; margin-bottom: 14px;">
+              <sc-for list="{{ sevLedger }}" as="s" hint-placeholder-count="4">
+                <button onClick="{{ s.go }}" style="appearance: none; cursor: pointer; text-align: left; border: 0; background: {{ s.bg }}; padding: 12px 14px; display: flex; align-items: flex-start; gap: 10px; border-left: 2px solid {{ s.edge }}; font-family: var(--f-sans);">
+                  <span style="width: 8px; height: 8px; margin-top: 4px; border-radius: 1px; background: {{ s.color }};"></span>
+                  <span>
+                    <span style="display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: {{ s.color }};">{{ s.label }}</span>
+                    <span style="display: block; font-size: 11px; color: var(--f-tx3); margin-top: 4px;">{{ s.note }}</span>
+                  </span>
+                  <span style="margin-left: auto; font-family: var(--f-mono); font-size: 19px; color: {{ s.countTone }};">{{ s.count }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ hasSplit }}">
+            <div style="display: grid; grid-template-columns: var(--fg-split); gap: 14px; align-items: start;">
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1); min-width: 0; overflow: hidden;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line);">
+                  <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">{{ listTitle }}</span>
+                  <span style="font-family: var(--f-mono); font-size: 10px; color: var(--f-tx3);">{{ listMeta }}</span>
+                </div>
+                <sc-for list="{{ findings }}" as="f" hint-placeholder-count="5">
+                  <a href="#" data-fg="row" onClick="{{ f.go }}" style="display: block; text-decoration: none; color: inherit; border-bottom: 1px solid var(--f-line); background: {{ f.bg }}; padding: 12px 14px; border-left: 2px solid {{ f.sel }};">
+                    <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 6px;">
+                      <span style="width: 7px; height: 7px; border-radius: 1px; background: {{ f.sevColor }};"></span>
+                      <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: {{ f.sevColor }};">{{ f.sevLabel }}</span>
+                      <span style="font-family: var(--f-mono); font-size: 9.5px; color: var(--f-tx3); margin-left: auto;">{{ f.id }}</span>
+                    </div>
+                    <div style="font-size: 14.5px; font-weight: 500; line-height: 1.3; margin-bottom: 4px; color: {{ f.headTone }};">{{ f.headline }}</div>
+                    <div style="font-size: 12px; color: var(--f-tx3); max-width: 54ch;">{{ f.explanation }}</div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-top: 9px; font-family: var(--f-mono); font-size: 10px; color: var(--f-tx3);">
+                      <span>CONF {{ f.conf }}</span>
+                      <span style="color: var(--f-line2);">|</span>
+                      <span>{{ f.driverCount }} DRIVERS</span>
+                      <span style="margin-left: auto; letter-spacing: 0.12em; text-transform: uppercase; color: {{ f.ctaTone }};">{{ f.cta }}</span>
+                    </div>
+                  </a>
+                </sc-for>
+              </div>
+
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1); min-width: 0;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line);">
+                  <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Why Forge reached this conclusion</span>
+                  <span style="font-family: var(--f-mono); font-size: 10px; color: var(--f-tx3);">{{ selId }}</span>
+                </div>
+                <div style="padding: 16px 18px 18px;">
+                  <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 9px;">
+                    <span style="width: 7px; height: 7px; border-radius: 1px; background: {{ selSevColor }};"></span>
+                    <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: {{ selSevColor }};">{{ selSevLabel }}</span>
+                  </div>
+                  <h3 data-fg="editorial" style="font-size: 25px; line-height: 1.2; margin: 0 0 8px; letter-spacing: -0.01em;">{{ selHeadline }}</h3>
+                  <p style="font-size: 13px; color: var(--f-tx2); text-wrap: pretty; margin: 0 0 22px; max-width: 64ch;">{{ selExplanation }}</p>
+
+                  <div style="border-left: 1px solid var(--f-line2); padding-left: 18px; display: grid; gap: 22px;">
+                    <div>
+                      <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 10px;">
+                        <span style="font-family: var(--f-mono); font-size: 10px; color: var(--f-ac);">01</span>
+                        <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Evidence</span>
+                      </div>
+                      <div style="display: grid; grid-template-columns: minmax(0,1.4fr) auto auto auto; gap: 0 14px; font-size: 12.5px;">
+                        <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2);">Measure</div>
+                        <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Prior</div>
+                        <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Current</div>
+                        <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Change</div>
+                        <sc-for list="{{ selEvidence }}" as="e" hint-placeholder-count="4">
+                          <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); color: var(--f-tx2);">{{ e.label }}</div>
+                          <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px; color: var(--f-tx3);">{{ e.prev }}</div>
+                          <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px; color: var(--f-tx);">{{ e.cur }}</div>
+                          <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px; color: {{ e.tone }};">{{ e.delta }}</div>
+                        </sc-for>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 8px;">
+                        <span style="font-family: var(--f-mono); font-size: 10px; color: var(--f-ac);">02</span>
+                        <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Cause</span>
+                      </div>
+                      <p style="margin: 0; font-size: 13px; color: var(--f-tx); text-wrap: pretty; max-width: 64ch;">{{ selCause }}</p>
+                    </div>
+
+                    <div>
+                      <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 8px;">
+                        <span style="font-family: var(--f-mono); font-size: 10px; color: var(--f-ac);">03</span>
+                        <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Impact</span>
+                      </div>
+                      <p style="margin: 0; font-size: 13px; color: var(--f-tx); text-wrap: pretty; max-width: 64ch;">{{ selImpact }}</p>
+                    </div>
+                  </div>
+
+                  <div style="display: grid; grid-template-columns: var(--fg-c2); gap: 22px; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--f-line);">
+                    <div>
+                      <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3); margin-bottom: 9px;">Drivers</div>
+                      <sc-for list="{{ selDrivers }}" as="d" hint-placeholder-count="3">
+                        <div style="display: grid; grid-template-columns: 10px 1fr; gap: 8px; font-size: 12.5px; padding: 3px 0; color: var(--f-tx2);">
+                          <span style="color: var(--f-ac);">&rsaquo;</span>
+                          <span>{{ d.text }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div>
+                      <sc-if value="{{ showConfidence }}" hint-placeholder-val="{{ true }}">
+                        <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3); margin-bottom: 9px;">Confidence</div>
+                        <div style="display: flex; align-items: baseline; gap: 9px;">
+                          <span style="font-family: var(--f-mono); font-size: 19px;">{{ selConf }}</span>
+                          <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--f-tx3);">{{ selConfLabel }}</span>
+                        </div>
+                        <div style="display: flex; gap: 2px; margin-top: 8px;">
+                          <sc-for list="{{ selConfTicks }}" as="t" hint-placeholder-count="10">
+                            <span style="width: 7px; height: 7px; background: {{ t.fill }};"></span>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                      <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3); margin: 16px 0 8px;">Basis</div>
+                      <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                        <sc-for list="{{ selBasis }}" as="b" hint-placeholder-count="4">
+                          <span style="font-family: var(--f-mono); font-size: 10px; border: 1px solid var(--f-line2); border-radius: 2px; padding: 3px 6px; color: var(--f-tx2);">{{ b.text }}</span>
+                        </sc-for>
+                      </div>
+                      <div style="margin-top: 12px;"><a href="#" onClick="{{ goData }}" style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;">Inspect underlying data &rarr;</a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isCashflow }}">
+            <div style="display: grid; grid-template-columns: var(--fg-split); gap: 14px; align-items: start;">
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line);">
+                  <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Income against expenses · 6 periods</span>
+                  <span style="display: flex; gap: 12px; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--f-tx3);">
+                    <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 9px; height: 8px; border: 1px solid var(--f-ac);"></span>Income</span>
+                    <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 9px; height: 8px; background: var(--f-high);"></span>Expenses</span>
+                  </span>
+                </div>
+                <div style="padding: 16px 14px;">
+                  <div style="display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 14px; align-items: end; border-bottom: 1px solid var(--f-line2); padding-bottom: 8px;">
+                    <sc-for list="{{ months }}" as="mo" hint-placeholder-count="6">
+                      <div style="display: flex; align-items: flex-end; gap: 4px; height: 120px;">
+                        <div style="flex: 1; height: {{ mo.incH }}; border: 1px solid var(--f-ac); background: var(--f-ac-lo);"></div>
+                        <div style="flex: 1; height: {{ mo.expH }}; background: var(--f-high); opacity: 0.85;"></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 14px; padding-top: 9px;">
+                    <sc-for list="{{ months }}" as="mo" hint-placeholder-count="6">
+                      <div>
+                        <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--f-tx3);">{{ mo.m }}</div>
+                        <div style="font-family: var(--f-mono); font-size: 13px; margin-top: 3px; color: {{ mo.tone }};">{{ mo.net }}</div>
+                        <div style="font-family: var(--f-mono); font-size: 9.5px; color: var(--f-tx3);">{{ mo.rate }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="border-top: 1px solid var(--f-line); padding: 12px 14px; font-size: 12.5px; color: var(--f-tx2);">{{ cfNote }}</div>
+              </div>
+
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Period comparison</div>
+                <div style="padding: 14px;">
+                  <div style="display: grid; grid-template-columns: minmax(0,1.2fr) auto auto auto; gap: 0 14px; font-size: 12.5px;">
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2);">Measure</div>
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Jan–Mar</div>
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Apr–Jun</div>
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Change</div>
+                    <sc-for list="{{ cfCompare }}" as="c" hint-placeholder-count="5">
+                      <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); color: var(--f-tx2);">{{ c.label }}</div>
+                      <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px; color: var(--f-tx3);">{{ c.a }}</div>
+                      <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px;">{{ c.b }}</div>
+                      <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px; color: {{ c.tone }};">{{ c.ch }}</div>
+                    </sc-for>
+                  </div>
+                  <div style="margin-top: 14px;"><a href="#" onClick="{{ goOverview }}" style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;">Two findings draw on this analysis &rarr;</a></div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isSpending }}">
+            <div style="display: grid; grid-template-columns: var(--fg-split); gap: 14px; align-items: start;">
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line);">
+                  <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">By category · latest period</span>
+                  <span style="font-family: var(--f-mono); font-size: 10px; color: var(--f-tx3);">TOTAL ₹88,640</span>
+                </div>
+                <div style="padding: 14px;">
+                  <div style="display: grid; grid-template-columns: minmax(0,1fr) 88px 62px 68px; gap: 0 12px; font-size: 12.5px;">
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2);">Category</div>
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Amount</div>
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Share</div>
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Change</div>
+                    <sc-for list="{{ categories }}" as="c" hint-placeholder-count="10">
+                      <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); color: var(--f-tx2);">
+                        <div>{{ c.label }}</div>
+                        <div style="height: 3px; margin-top: 5px; background: var(--f-line);"><div style="height: 3px; width: {{ c.barW }}; background: {{ c.fill }};"></div></div>
+                      </div>
+                      <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px;">{{ c.cur }}</div>
+                      <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px; color: var(--f-tx3);">{{ c.share }}</div>
+                      <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px; color: {{ c.tone }};">{{ c.delta }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Explaining the change</div>
+                <div style="padding: 16px 14px 14px;">
+                  <p style="margin: 0 0 18px; font-size: 13px; color: var(--f-tx2); max-width: 62ch;">Total expenditure rose 18.4%. Fixed categories &mdash; housing, education &mdash; did not move; the whole delta sits in four categories, of which two are discretionary and one is unresolved.</p>
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3); margin-bottom: 10px;">Significant changes &amp; anomalies</div>
+                  <sc-for list="{{ spendAnomalies }}" as="a" hint-placeholder-count="3">
+                    <div style="border-top: 1px solid var(--f-line); padding: 11px 0;">
+                      <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 13.5px; font-weight: 500;">{{ a.label }}</span>
+                        <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: {{ a.tone }}; border: 1px solid {{ a.tone }}; border-radius: 2px; padding: 2px 5px;">{{ a.tag }}</span>
+                        <span style="margin-left: auto; font-family: var(--f-mono); font-size: 14px;">{{ a.amount }}</span>
+                      </div>
+                      <div style="font-size: 11.5px; color: var(--f-tx3); margin-top: 4px;">{{ a.note }}</div>
+                    </div>
+                  </sc-for>
+                  <div style="border-top: 1px solid var(--f-line2); margin-top: 14px; padding-top: 12px;">
+                    <a href="#" onClick="{{ goRisks }}" style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;">Open the related finding &rarr;</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isPortfolio }}">
+            <div style="display: grid; grid-template-columns: var(--fg-c2); gap: 14px; align-items: start; margin-bottom: 14px;">
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line);">
+                  <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Asset allocation</span>
+                  <span style="font-family: var(--f-mono); font-size: 10px; color: var(--f-tx3);">TOTAL ₹12,40,000</span>
+                </div>
+                <div style="padding: 8px 14px 14px;">
+                  <sc-for list="{{ allocation }}" as="a" hint-placeholder-count="4">
+                    <div style="border-bottom: 1px solid var(--f-line); padding: 10px 0;">
+                      <div style="display: flex; align-items: baseline; gap: 12px;">
+                        <span style="font-size: 12.5px; color: var(--f-tx2);">{{ a.label }}</span>
+                        <span style="margin-left: auto; font-family: var(--f-mono); font-size: 14px;">{{ a.pct }}</span>
+                        <span style="font-family: var(--f-mono); font-size: 11.5px; color: var(--f-tx3); min-width: 88px; text-align: right;">{{ a.value }}</span>
+                      </div>
+                      <div style="height: 3px; margin-top: 6px; background: var(--f-line);"><div style="height: 3px; width: {{ a.barW }}; background: {{ a.fill }};"></div></div>
+                    </div>
+                  </sc-for>
+                  <div style="font-size: 11.5px; color: var(--f-tx3); margin-top: 10px;">Invested ₹11,33,600 · cash is held outside the concentration measure.</div>
+                </div>
+              </div>
+
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line);">
+                  <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Concentration</span>
+                  <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-high); border: 1px solid var(--f-high); border-radius: 2px; padding: 2px 5px;">Threshold exceeded</span>
+                </div>
+                <div style="padding: 8px 14px 14px;">
+                  <sc-for list="{{ concRows }}" as="c" hint-placeholder-count="5">
+                    <div style="display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; align-items: baseline; border-bottom: 1px solid var(--f-line); padding: 10px 0;">
+                      <div>
+                        <div style="font-size: 12.5px; color: var(--f-tx2);">{{ c.label }}</div>
+                        <div style="font-size: 11px; color: var(--f-tx3); margin-top: 2px;">{{ c.note }}</div>
+                      </div>
+                      <div style="font-family: var(--f-mono); font-size: 16px; color: {{ c.tone }};">{{ c.value }}</div>
+                    </div>
+                  </sc-for>
+                  <div style="margin-top: 12px;"><a href="#" onClick="{{ goRisks }}" style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;">Why this was flagged &rarr;</a></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+              <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Holdings</div>
+              <div style="padding: 14px;">
+                <div style="display: grid; grid-template-columns: 30px minmax(0,1.4fr) minmax(0,1fr) 110px 100px; gap: 0 12px; font-size: 12.5px;">
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2);">#</div>
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2);">Holding</div>
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2);">Class</div>
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Value</div>
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Weight</div>
+                  <sc-for list="{{ holdings }}" as="h" hint-placeholder-count="7">
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; color: var(--f-tx3);">{{ h.rank }}</div>
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); color: var(--f-tx);">{{ h.label }}</div>
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); font-size: 11.5px; color: var(--f-tx3);">{{ h.cls }}</div>
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px;">{{ h.value }}</div>
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line);">
+                      <div style="text-align: right; font-family: var(--f-mono); font-size: 12px; color: {{ h.tone }};">{{ h.pct }}</div>
+                      <div style="height: 2px; margin-top: 4px; background: var(--f-line);"><div style="height: 2px; width: {{ h.barW }}; background: {{ h.fill }};"></div></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isScenarios }}">
+            <div style="display: grid; grid-template-columns: 300px minmax(0,1fr); gap: 14px; align-items: start;">
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">What if?</div>
+                <div style="padding: 16px 14px 14px;">
+                  <div style="margin-bottom: 22px;">
+                    <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 7px;">
+                      <span style="font-size: 12.5px; color: var(--f-tx2);">Monthly income</span>
+                      <span style="font-family: var(--f-mono); font-size: 15px;">{{ scIncomeLabel }}</span>
+                    </div>
+                    <input type="range" min="60000" max="140000" step="1000" value="{{ scIncome }}" onChange="{{ setIncome }}" onInput="{{ setIncome }}" style="width: 100%;">
+                    <div style="display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 9.5px; color: var(--f-tx3); margin-top: 3px;"><span>60K</span><span>reported 1,04,200</span><span>1.4L</span></div>
+                  </div>
+                  <div style="margin-bottom: 20px;">
+                    <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 7px;">
+                      <span style="font-size: 12.5px; color: var(--f-tx2);">Monthly expenses</span>
+                      <span style="font-family: var(--f-mono); font-size: 15px;">{{ scExpensesLabel }}</span>
+                    </div>
+                    <input type="range" min="50000" max="130000" step="1000" value="{{ scExpenses }}" onChange="{{ setExpenses }}" onInput="{{ setExpenses }}" style="width: 100%;">
+                    <div style="display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 9.5px; color: var(--f-tx3); margin-top: 3px;"><span>50K</span><span>reported 88,640</span><span>1.3L</span></div>
+                  </div>
+                  <button data-fg="btn" onClick="{{ resetScenario }}" style="appearance: none; cursor: pointer; width: 100%; font-family: var(--f-sans); font-size: 12.5px; padding: 8px 12px; border-radius: 3px; border: 1px solid var(--f-line2); background: transparent; color: var(--f-tx2);">Reset to reported values</button>
+                  <p style="font-size: 11.5px; color: var(--f-tx3); margin: 16px 0 0;">{{ scenarioNote }}</p>
+                </div>
+              </div>
+
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Current · scenario · change</div>
+                <div style="padding: 14px;">
+                  <div style="display: grid; grid-template-columns: minmax(0,1.2fr) 120px 120px 130px; gap: 0 14px; font-size: 13px;">
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 7px; border-bottom: 1px solid var(--f-line2);">Measure</div>
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 7px; border-bottom: 1px solid var(--f-line2); text-align: right;">Current</div>
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 7px; border-bottom: 1px solid var(--f-line2); text-align: right;">Scenario</div>
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 7px; border-bottom: 1px solid var(--f-line2); text-align: right;">Change</div>
+                    <sc-for list="{{ scenarioRows }}" as="r" hint-placeholder-count="6">
+                      <div style="padding: 12px 0; border-bottom: 1px solid var(--f-line); color: var(--f-tx2);">{{ r.label }}</div>
+                      <div style="padding: 12px 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12.5px; color: var(--f-tx3);">{{ r.cur }}</div>
+                      <div style="padding: 12px 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 15px;">{{ r.sc }}</div>
+                      <div style="padding: 12px 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12.5px; color: {{ r.tone }};">{{ r.ch }}</div>
+                    </sc-for>
+                  </div>
+                  <div style="display: flex; gap: 12px; align-items: flex-start; margin-top: 18px; padding: 12px 14px; border: 1px solid var(--f-line); border-left: 2px solid {{ scenarioTone }}; border-radius: 2px; background: var(--f-s2);">
+                    <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: {{ scenarioTone }}; padding-top: 2px;">Engine reading</span>
+                    <p style="margin: 0; font-size: 13px; max-width: 64ch;">{{ scenarioVerdict }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isData }}">
+            <div style="display: grid; grid-template-columns: var(--fg-c3); gap: 1px; background: var(--f-line); border: 1px solid var(--f-line); border-radius: 3px; margin-bottom: 14px;">
+              <sc-for list="{{ dataFacts }}" as="d" hint-placeholder-count="6">
+                <div style="background: var(--f-s1); padding: 11px 14px;">
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--f-tx3); margin-bottom: 5px;">{{ d.label }}</div>
+                  <div style="font-family: var(--f-mono); font-size: 17px; color: {{ d.tone }};">{{ d.value }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1); margin-bottom: 14px;">
+              <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Sources</div>
+              <div style="padding: 14px;">
+                <div style="display: grid; grid-template-columns: minmax(0,1.5fr) minmax(0,0.9fr) 66px 66px 70px minmax(0,1fr); gap: 0 12px; font-size: 12.5px;">
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2);">File</div>
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2);">Format</div>
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Rows</div>
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Parsed</div>
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Skipped</div>
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-tx3); padding-bottom: 6px; border-bottom: 1px solid var(--f-line2); text-align: right;">Range</div>
+                  <sc-for list="{{ sources }}" as="s" hint-placeholder-count="3">
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 11.5px; color: var(--f-tx);">{{ s.name }}</div>
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); font-size: 11.5px; color: var(--f-tx3);">{{ s.kind }}</div>
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px;">{{ s.rows }}</div>
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px; color: var(--f-pos);">{{ s.parsed }}</div>
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 12px; color: var(--f-high);">{{ s.skipped }}</div>
+                    <div style="padding: var(--fg-row) 0; border-bottom: 1px solid var(--f-line); text-align: right; font-family: var(--f-mono); font-size: 11px; color: var(--f-tx3);">{{ s.range }}</div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: var(--fg-c2); gap: 14px; align-items: start;">
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Normalization warnings</div>
+                <div style="padding: 6px 14px 14px;">
+                  <sc-for list="{{ warnings }}" as="w" hint-placeholder-count="3">
+                    <div style="display: grid; grid-template-columns: 74px minmax(0,1fr); gap: 12px; border-bottom: 1px solid var(--f-line); padding: 10px 0;">
+                      <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: {{ w.tone }};">{{ w.level }}</span>
+                      <span style="font-size: 12.5px; color: var(--f-tx2);">{{ w.text }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">What exactly was analyzed</div>
+                <div style="padding: 14px;">
+                  <p style="margin: 0 0 12px; font-size: 13px; color: var(--f-tx2); max-width: 62ch;">Every figure in this report derives from the 1,322 transactions and 7 holdings listed above, in INR, between 01 January and 30 June 2026. Four rows were excluded and are named in the warnings; nothing was inferred to replace them.</p>
+                  <div style="border-top: 1px solid var(--f-line); padding-top: 10px; font-family: var(--f-mono); font-size: 10.5px; color: var(--f-tx3);">forge@0.4.1 · deterministic · re-running on the same input reproduces this report exactly</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isEmpty }}">
+            <p style="margin: 0 0 14px; font-size: 13px; color: var(--f-tx2); max-width: 72ch;">When an analysis cannot run, Forge states what is missing and why the measure is unavailable. It never substitutes a zero for an unknown.</p>
+            <div style="display: grid; grid-template-columns: var(--fg-c2); gap: 14px; align-items: start;">
+              <sc-for list="{{ emptyStates }}" as="e" hint-placeholder-count="4">
+                <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1); padding: 18px 16px;">
+                  <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3); margin-bottom: 9px;">{{ e.tag }}</div>
+                  <div style="font-size: 15px; font-weight: 500; line-height: 1.35; margin-bottom: 7px; max-width: 38ch;">{{ e.title }}</div>
+                  <p style="margin: 0 0 14px; font-size: 12.5px; color: var(--f-tx3); max-width: 50ch;">{{ e.body }}</p>
+                  <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--f-ac);">{{ e.action }} &rarr;</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top: 14px; border: 1px solid var(--f-line); border-left: 2px solid var(--f-crit); border-radius: 3px; background: var(--f-s1); padding: 18px 16px;">
+              <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 9px;">
+                <span style="width: 8px; height: 8px; border-radius: 1px; background: var(--f-crit);"></span>
+                <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--f-crit);">ParseError · unreadable file</span>
+              </div>
+              <div style="font-family: var(--f-mono); font-size: 15px; margin-bottom: 6px;">q2_ledger.xlsx</div>
+              <p style="margin: 0 0 14px; font-size: 12.5px; color: var(--f-tx2); max-width: 66ch;">The workbook has no header row Forge recognises, and column 3 mixes dates with free text. No partial analysis was produced from it; the other two sources were unaffected.</p>
+              <div style="display: flex; gap: 10px;">
+                <button onClick="{{ goUpload }}" style="appearance: none; cursor: pointer; font-family: var(--f-sans); font-size: 12.5px; padding: 8px 14px; border-radius: 3px; border: 1px solid var(--f-ac); background: var(--f-ac-lo); color: var(--f-tx);">Re-upload file</button>
+                <button data-fg="btn" onClick="{{ goData }}" style="appearance: none; cursor: pointer; font-family: var(--f-sans); font-size: 12.5px; padding: 8px 14px; border-radius: 3px; border: 1px solid var(--f-line2); background: transparent; color: var(--f-tx2);">See parsed sources</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isSystem }}">
+            <div style="display: grid; grid-template-columns: var(--fg-c2); gap: 14px; align-items: start;">
+              <div style="display: grid; gap: 14px;">
+                <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                  <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Severity</div>
+                  <div style="padding: 6px 14px 14px;">
+                    <sc-for list="{{ sysSeverities }}" as="s" hint-placeholder-count="4">
+                      <div style="display: grid; grid-template-columns: 16px 76px minmax(0,1fr) auto; gap: 10px; align-items: center; border-bottom: 1px solid var(--f-line); padding: 9px 0;">
+                        <span style="width: 8px; height: 8px; border-radius: 1px; background: {{ s.color }};"></span>
+                        <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: {{ s.color }};">{{ s.label }}</span>
+                        <span style="font-size: 12px; color: var(--f-tx3);">{{ s.use }}</span>
+                        <span style="font-family: var(--f-mono); font-size: 10px; color: var(--f-tx3);">{{ s.token }}</span>
+                      </div>
+                    </sc-for>
+                    <div style="display: flex; align-items: center; gap: 10px; padding: 9px 0;">
+                      <span style="width: 8px; height: 8px; border-radius: 1px; background: var(--f-pos);"></span>
+                      <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--f-pos); min-width: 66px;">Positive</span>
+                      <span style="font-size: 12px; color: var(--f-tx3);">Improvement against the prior period</span>
+                      <span style="margin-left: auto; font-family: var(--f-mono); font-size: 10px; color: var(--f-tx3);">--f-pos</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                  <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Surfaces &amp; accent</div>
+                  <div style="padding: 14px;">
+                    <div style="display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px;">
+                      <sc-for list="{{ sysPalette }}" as="p" hint-placeholder-count="6">
+                        <div>
+                          <div style="height: 38px; border: 1px solid var(--f-line2); border-radius: 2px; background: {{ p.hex }};"></div>
+                          <div style="font-size: 11.5px; margin-top: 6px; color: {{ p.tone }};">{{ p.name }}</div>
+                          <div style="font-family: var(--f-mono); font-size: 9.5px; color: var(--f-tx3);">{{ p.hex }}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="font-size: 11.5px; color: var(--f-tx3); margin-top: 12px;">Accent carries active navigation, selection, and the reasoning-step numerals. It is never used for decoration or for severity.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: grid; gap: 14px;">
+                <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                  <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Type</div>
+                  <div style="padding: 6px 14px 14px;">
+                    <sc-for list="{{ sysType }}" as="t" hint-placeholder-count="6">
+                      <div style="display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); gap: 12px; align-items: baseline; border-bottom: 1px solid var(--f-line); padding: 9px 0;">
+                        <div>
+                          <div style="font-size: 12px; color: var(--f-tx2);">{{ t.name }}</div>
+                          <div style="font-family: var(--f-mono); font-size: 9.5px; color: var(--f-tx3); margin-top: 2px;">{{ t.spec }}</div>
+                        </div>
+                        <div style="font-size: 15px;">{{ t.sample }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="border: 1px solid var(--f-line); border-radius: 3px; background: var(--f-s1);">
+                  <div style="padding: 9px 14px; background: var(--f-s2); border-bottom: 1px solid var(--f-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Components</div>
+                  <div style="padding: 14px;">
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3); margin-bottom: 8px;">Metric</div>
+                    <div style="border: 1px solid var(--f-line); border-radius: 2px; padding: 12px 14px; margin-bottom: 16px;">
+                      <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3);">Net cash flow</div>
+                      <div style="font-family: var(--f-mono); font-size: 28px; margin-top: 6px;">₹15,560</div>
+                      <div style="display: flex; gap: 8px; align-items: baseline; margin-top: 6px;"><span style="font-family: var(--f-mono); font-size: 10.5px; color: var(--f-crit);">−32.4%</span><span style="font-size: 11px; color: var(--f-tx3);">savings rate 14.9%</span></div>
+                    </div>
+
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3); margin-bottom: 8px;">Reasoning step</div>
+                    <div style="border-left: 1px solid var(--f-line2); padding-left: 16px; margin-bottom: 16px;">
+                      <div style="display: flex; gap: 9px; align-items: baseline; margin-bottom: 5px;">
+                        <span style="font-family: var(--f-mono); font-size: 10px; color: var(--f-ac);">02</span>
+                        <span style="font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--f-tx2);">Cause</span>
+                      </div>
+                      <p style="margin: 0; font-size: 12.5px; color: var(--f-tx2); max-width: 54ch;">01 Evidence, 02 Cause, 03 Impact against one hairline. The order never changes, so a reader learns where to look.</p>
+                    </div>
+
+                    <div style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--f-tx3); margin-bottom: 8px;">Controls</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                      <span style="font-family: var(--f-sans); font-size: 12.5px; padding: 8px 14px; border-radius: 3px; border: 1px solid var(--f-ac); background: var(--f-ac-lo);">Primary</span>
+                      <span style="font-family: var(--f-sans); font-size: 12.5px; padding: 8px 14px; border-radius: 3px; border: 1px solid var(--f-line2); color: var(--f-tx2);">Secondary</span>
+                      <span style="font-family: var(--f-mono); font-size: 10px; border: 1px solid var(--f-line2); border-radius: 2px; padding: 4px 7px; color: var(--f-tx2);">analyses.liquidity</span>
+                      <span style="font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid var(--f-med); border-radius: 2px; padding: 3px 6px; color: var(--f-med);">Non-recurring</span>
+                    </div>
+                    <div style="border-top: 1px solid var(--f-line); padding-top: 10px; margin-top: 14px; font-family: var(--f-mono); font-size: 10px; color: var(--f-tx3);">Radius 3px · borders 1px --f-line · panel head --f-s2 · rows 9px · figures always Plex Mono, tabular</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;'comfortable' | 'compact'&quot;,&quot;section&quot;:&quot;Workstation&quot;},&quot;showConfidence&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Reasoning&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;overview&quot;,&quot;upload&quot;,&quot;cashflow&quot;,&quot;spending&quot;,&quot;portfolio&quot;,&quot;risks&quot;,&quot;scenarios&quot;,&quot;data&quot;,&quot;empty&quot;,&quot;system&quot;],&quot;default&quot;:&quot;overview&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Workstation&quot;}}">
+const N = (n) => '\u20b9' + Math.round(n).toLocaleString('en-IN');
+const PCT = (n) => n.toFixed(1) + '%';
+const C = { crit: 'var(--f-crit)', high: 'var(--f-high)', med: 'var(--f-med)', low: 'var(--f-low)', pos: 'var(--f-pos)', ac: 'var(--f-ac)', tx: 'var(--f-tx)', tx2: 'var(--f-tx2)', tx3: 'var(--f-tx3)', line: 'var(--f-line)', line2: 'var(--f-line2)' };
+
+const REPORT = {
+  model: { currency: 'INR', periods: 6, range: '01 Jan – 30 Jun 2026', transactions: 1322, holdings: 7 },
+  metrics: { income: 104200, expenses: 88640, net: 15560, savingsRate: 14.9, runway: 1.2, cash: 106400, health: 62 },
+  insights: [
+    { ruleId: 'LIQ_RUNWAY_LOW', severity: 'critical', confidence: 0.94,
+      headline: 'Liquidity buffer is thin',
+      explanation: 'Current cash runway is approximately 1.2 months against a three-month floor.',
+      evidence: [
+        { label: 'Cash & equivalents', prev: '₹1,48,900', cur: '₹1,06,400', delta: '−28.5%', sent: 'bad' },
+        { label: 'Mean monthly outflow', prev: '₹79,210', cur: '₹88,640', delta: '+11.9%', sent: 'bad' },
+        { label: 'Runway (months)', prev: '1.9', cur: '1.2', delta: '−0.7', sent: 'bad' }
+      ],
+      cause: 'Runway fell on both sides of the ratio at once: outflow rose 11.9% across the six periods while the cash balance was drawn down 28.5%. Neither movement alone would have breached the floor Forge applies to a single-income salaried profile.',
+      impact: 'One month of interrupted income would exhaust available cash before the next payroll date. Restoring a three-month buffer requires ₹1,59,520 of additional liquid reserve at the current outflow rate.',
+      drivers: ['Cash on hand ₹1,06,400', 'Mean monthly outflow ₹88,640', 'No credit facility present in dataset'],
+      basis: ['analyses.liquidity', 'analyses.cashflow.monthly', '1,322 transactions', '6 periods'] },
+    { ruleId: 'EXP_DELTA_MATERIAL', severity: 'high', confidence: 0.88,
+      headline: 'Spending increased 18.4%',
+      explanation: 'Expenditure rose from ₹74,880 to ₹88,640 between the two three-period windows.',
+      evidence: [
+        { label: 'Food', prev: '₹8,420', cur: '₹11,030', delta: '+31.0%', sent: 'bad' },
+        { label: 'Shopping', prev: '₹6,940', cur: '₹8,420', delta: '+21.3%', sent: 'bad' },
+        { label: 'Transportation', prev: '₹6,180', cur: '₹7,060', delta: '+14.2%', sent: 'bad' },
+        { label: 'Housing', prev: '₹32,000', cur: '₹32,000', delta: 'Stable', sent: 'flat' }
+      ],
+      cause: 'The increase is primarily attributable to higher discretionary food expenditure. Fixed categories did not move at all, and 71% of the delta sits in two discretionary categories, so the movement is behavioural rather than structural.',
+      impact: 'At the current rate, annual expenditure could increase by approximately ₹1,65,120 against the prior window, reducing the annual surplus by the same amount.',
+      drivers: ['Food +31.0%', 'Shopping +21.3%', 'Housing unchanged'],
+      basis: ['analyses.expenditureDelta', 'analyses.categories', '842 categorised transactions', '2 windows'] },
+    { ruleId: 'PORT_CONCENTRATION_HHI', severity: 'high', confidence: 0.91,
+      headline: 'Portfolio concentration exceeds threshold',
+      explanation: 'Holdings-level HHI is 0.31 against a 0.15 threshold. Cash is excluded from the measure.',
+      evidence: [
+        { label: 'HHI (ex-cash)', prev: '0.24', cur: '0.31', delta: '+0.07', sent: 'bad' },
+        { label: 'Largest holding weight', prev: '29.4%', cur: '34.2%', delta: '+4.8 pp', sent: 'bad' },
+        { label: 'Top three weight', prev: '58.1%', cur: '64.3%', delta: '+6.2 pp', sent: 'bad' },
+        { label: 'Positions', prev: '8', cur: '7', delta: '−1', sent: 'flat' }
+      ],
+      cause: 'One position appreciated while another was exited, so weight migrated into the largest holding instead of being redistributed across the remaining six.',
+      impact: 'A 20% drawdown in the largest holding would reduce invested value by 6.8% and total net worth by 4.1%.',
+      drivers: ['Top holding 34.2% of invested value', 'Top three 64.3%', '7 positions ex-cash'],
+      basis: ['analyses.concentration', 'analyses.allocation', '7 holdings', 'holdings_apr2026.xlsx'] },
+    { ruleId: 'SAV_RATE_TREND_DOWN', severity: 'medium', confidence: 0.76,
+      headline: 'Savings rate declined across three consecutive periods',
+      explanation: 'Savings rate moved 22.1% → 18.4% → 14.9% with income unchanged throughout.',
+      evidence: [
+        { label: 'Savings rate', prev: '22.1%', cur: '14.9%', delta: '−7.2 pp', sent: 'bad' },
+        { label: 'Net cash flow', prev: '₹23,030', cur: '₹15,560', delta: '−32.4%', sent: 'bad' },
+        { label: 'Income', prev: '₹1,04,200', cur: '₹1,04,200', delta: 'Stable', sent: 'flat' }
+      ],
+      cause: 'The decline is entirely expenditure-driven. Income did not change in any of the three periods, so the whole movement is attributable to outflow growth.',
+      impact: 'Held at 14.9%, annual saving falls to ₹1,86,720 from ₹2,76,360 at the earlier rate.',
+      drivers: ['Expenses +18.4%', 'Income flat at ₹1,04,200', 'No one-off income in window'],
+      basis: ['analyses.trend.savingsRate', 'analyses.cashflow.monthly', '6 periods'] },
+    { ruleId: 'TXN_OUTLIER_ONEOFF', severity: 'low', confidence: 0.68,
+      headline: 'Two non-recurring transactions distort the period',
+      explanation: 'Amounts of ₹41,000 and ₹18,600 were flagged non-recurring and excluded from annualization.',
+      evidence: [
+        { label: 'Insurance premium', prev: '—', cur: '₹41,000', delta: 'One-off', sent: 'flat' },
+        { label: 'Appliance purchase', prev: '—', cur: '₹18,600', delta: 'One-off', sent: 'flat' },
+        { label: 'Adjusted monthly outflow', prev: '₹88,640', cur: '₹78,707', delta: '−11.2%', sent: 'good' }
+      ],
+      cause: 'Both amounts exceed four standard deviations of their category history and have no matching entry in any prior period, so Forge treats them as non-recurring.',
+      impact: 'Excluding them, the underlying outflow trend is +6.1% rather than +18.4%. Both figures remain in the reported totals.',
+      drivers: ['Insurance premium ₹41,000', 'Appliance purchase ₹18,600', 'No prior-period match'],
+      basis: ['analyses.anomaly', 'analyses.recurring', '2 flagged rows', 'hdfc_statement_jan_jun.csv'] }
+  ]
+};
+
+const SERIES = [
+  { m: 'Jan', inc: 104200, exp: 71400, net: 32800 },
+  { m: 'Feb', inc: 104200, exp: 78200, net: 26000 },
+  { m: 'Mar', inc: 104200, exp: 75040, net: 29160 },
+  { m: 'Apr', inc: 104200, exp: 84900, net: 19300 },
+  { m: 'May', inc: 104200, exp: 92100, net: 12100 },
+  { m: 'Jun', inc: 104200, exp: 88640, net: 15560 }
+];
+const CATS = [
+  { label: 'Housing', cur: 32000, prev: 32000, share: 36.1, flag: false },
+  { label: 'Food', cur: 11030, prev: 8420, share: 12.4, flag: true },
+  { label: 'Uncategorised', cur: 9000, prev: 4120, share: 10.2, flag: true },
+  { label: 'Shopping', cur: 8420, prev: 6940, share: 9.5, flag: true },
+  { label: 'Transportation', cur: 7060, prev: 6180, share: 8.0, flag: false },
+  { label: 'Dining & entertainment', cur: 6120, prev: 5880, share: 6.9, flag: false },
+  { label: 'Education', cur: 4700, prev: 4700, share: 5.3, flag: false },
+  { label: 'Utilities', cur: 4180, prev: 4050, share: 4.7, flag: false },
+  { label: 'Health', cur: 3240, prev: 2410, share: 3.7, flag: false },
+  { label: 'Subscriptions', cur: 2890, prev: 2180, share: 3.3, flag: false }
+];
+const ALLOC = [
+  { label: 'Equity', pct: 74.5, value: 923900 },
+  { label: 'Debt', pct: 9.2, value: 114300 },
+  { label: 'Commodity', pct: 7.8, value: 96400 },
+  { label: 'Cash', pct: 8.5, value: 106400 }
+];
+const HOLD = [
+  { label: 'NIFTY 50 Index Fund', cls: 'Equity · index', value: 387700, pct: 34.2 },
+  { label: 'HDFC Bank', cls: 'Equity · single name', value: 198400, pct: 17.5 },
+  { label: 'Small-cap Fund', cls: 'Equity · fund', value: 142800, pct: 12.6 },
+  { label: 'Corporate Bond Fund', cls: 'Debt · fund', value: 114300, pct: 10.1 },
+  { label: 'Infosys', cls: 'Equity · single name', value: 102000, pct: 9.0 },
+  { label: 'Gold ETF', cls: 'Commodity · ETF', value: 96400, pct: 8.5 },
+  { label: 'ITC', cls: 'Equity · single name', value: 92000, pct: 8.1 }
+];
+
+const SCREENS = [
+  { key: 'overview', label: 'Overview', kicker: 'Report', title: 'Overview' },
+  { key: 'cashflow', label: 'Cash Flow', kicker: 'Analysis', title: 'Cash Flow' },
+  { key: 'spending', label: 'Spending', kicker: 'Analysis', title: 'Spending' },
+  { key: 'portfolio', label: 'Portfolio', kicker: 'Analysis', title: 'Portfolio' },
+  { key: 'risks', label: 'Risks', kicker: 'Investigation', title: 'Risks & Anomalies' },
+  { key: 'scenarios', label: 'Scenarios', kicker: 'Simulation', title: 'Scenarios' },
+  { key: 'data', label: 'Data', kicker: 'Provenance', title: 'Data' }
+];
+const SCREENS2 = [
+  { key: 'empty', label: 'Empty states', kicker: 'Reference', title: 'Empty & degraded states' },
+  { key: 'system', label: 'Design system', kicker: 'Reference', title: 'Forge design system' },
+  { key: 'upload', label: 'Upload', kicker: 'Ingestion', title: 'Upload' }
+];
+
+class Component extends DCLogic {
+  state = { screen: 'overview', sel: 'LIQ_RUNWAY_LOW', up: 'idle', vw: 'desktop', sev: 'all', scIncome: 94000, scExpenses: 92000 };
+
+  componentDidMount() {
+    const s = this.props.startScreen;
+    if (s && s !== 'overview') this.setState({ screen: s });
+  }
+
+  go = (k) => (e) => { if (e) e.preventDefault(); this.setState({ screen: k, up: 'idle' }); if (typeof window !== 'undefined') window.scrollTo(0, 0); };
+  pick = (id) => (e) => { if (e) e.preventDefault(); this.setState({ sel: id }); };
+
+  sev(s) {
+    const map = {
+      critical: { label: 'Critical', color: C.crit, rank: 0, note: 'Breaches a hard threshold' },
+      high: { label: 'High', color: C.high, rank: 1, note: 'Material to a conclusion' },
+      medium: { label: 'Medium', color: C.med, rank: 2, note: 'Directional, monitor' },
+      low: { label: 'Low', color: C.low, rank: 3, note: 'Recorded for traceability' }
+    };
+    return map[s] || map.low;
+  }
+  confLabel(c) { return c >= 0.85 ? 'High' : c >= 0.7 ? 'Moderate' : 'Low'; }
+
+  renderVals() {
+    const st = this.state;
+    const screen = st.screen;
+    const scr = [...SCREENS, ...SCREENS2].find(s => s.key === screen) || SCREENS[0];
+    const m = REPORT.metrics;
+    const showConfidence = this.props.showConfidence ?? true;
+
+    const listAll = REPORT.insights;
+    const visible = screen === 'risks' && st.sev !== 'all' ? listAll.filter(i => i.severity === st.sev) : listAll;
+    const sel = listAll.find(i => i.ruleId === st.sel) || listAll[0];
+    const ss = this.sev(sel.severity);
+    const badTone = sel.severity === 'critical' ? C.crit : C.high;
+
+    const sci = st.scIncome, sce = st.scExpenses;
+    const scSurplus = sci - sce, curSurplus = m.income - m.expenses;
+    const scRate = (scSurplus / sci) * 100, curRate = m.savingsRate;
+    const scRunway = m.cash / sce, curRunway = m.runway;
+    const tone = (v, better) => v === 0 ? C.tx3 : (v > 0) === better ? C.pos : C.crit;
+    const sign = (v, f, eps) => {
+      const z = f(Math.abs(v));
+      if (Math.abs(v) < (eps ?? 0.5) || /^[₹]?0([.,]0+)?( |$)/.test(z.trim())) return 'No change';
+      return (v > 0 ? '+' : '−') + z;
+    };
+    const toneZ = (v, better, eps) => Math.abs(v) < (eps ?? 0.5) ? C.tx3 : tone(v, better);
+
+    return {
+      density: this.props.density ?? 'comfortable',
+      showConfidence,
+      vw: st.vw === 'tablet' ? '900px' : st.vw === 'mobile' ? '430px' : '100%',
+      views: [['desktop', 'Desktop'], ['tablet', 'Tablet'], ['mobile', 'Mobile']].map(([k, label]) => ({
+        label, go: (e) => { if (e) e.preventDefault(); this.setState({ vw: k }); },
+        bg: st.vw === k ? 'var(--f-ac-lo)' : 'transparent',
+        tone: st.vw === k ? C.ac : C.tx3
+      })),
+
+      isUpload: screen === 'upload',
+      isApp: screen !== 'upload',
+      isOverview: screen === 'overview',
+      isRisks: screen === 'risks',
+      isCashflow: screen === 'cashflow',
+      isSpending: screen === 'spending',
+      isPortfolio: screen === 'portfolio',
+      isScenarios: screen === 'scenarios',
+      isData: screen === 'data',
+      isEmpty: screen === 'empty',
+      isSystem: screen === 'system',
+      hasSplit: screen === 'overview' || screen === 'risks',
+
+      upIdle: st.up === 'idle', upRunning: st.up === 'running', upError: st.up === 'error',
+      startUpload: (e) => { if (e) e.preventDefault(); this.setState({ up: 'running' }); },
+      resetUpload: (e) => { if (e) e.preventDefault(); this.setState({ up: 'idle' }); },
+      goOverview: this.go('overview'), goUpload: this.go('upload'), goData: this.go('data'), goRisks: this.go('risks'),
+      cycleScreen: (e) => { if (e) e.preventDefault(); const i = SCREENS.findIndex(s => s.key === screen); this.setState({ screen: SCREENS[(i + 1) % SCREENS.length].key }); },
+
+      pipeSteps: [
+        { state: 'Done', label: 'Read', note: '3 files · 1,326 rows', tone: C.pos, labelTone: C.tx2 },
+        { state: 'Done', label: 'Normalize', note: 'dates, signs, categories', tone: C.pos, labelTone: C.tx2 },
+        { state: 'Done', label: 'Currency check', note: 'INR only', tone: C.pos, labelTone: C.tx2 },
+        { state: 'Running', label: 'Analysis', note: 'cash flow, categories, concentration', tone: C.ac, labelTone: C.tx },
+        { state: 'Queued', label: 'Evidence', note: 'linking rows to measures', tone: C.tx3, labelTone: C.tx3 },
+        { state: 'Queued', label: 'Reasoning', note: '—', tone: C.tx3, labelTone: C.tx3 }
+      ],
+      pipeline: ['Raw data', 'Normalization', 'Analysis', 'Evidence', 'Reasoning', 'Decision support'].map((label, i, a) => ({
+        label, arrow: i === a.length - 1 ? '' : '→',
+        rule: i >= 3 ? 'var(--f-ac-dk)' : C.line,
+        bg: i >= 3 ? 'var(--f-ac-lo)' : 'transparent',
+        tone: i >= 3 ? C.ac : C.tx3
+      })),
+
+      nav: SCREENS.map((s, i) => {
+        const on = s.key === screen;
+        const badges = { risks: '5', data: '3' };
+        return {
+          label: s.label, num: '0' + (i + 1), go: this.go(s.key),
+          tone: on ? C.tx : C.tx2, numTone: on ? C.ac : C.tx3,
+          bg: on ? 'var(--f-ac-lo)' : 'transparent',
+          mark: on ? C.ac : 'transparent',
+          badge: badges[s.key] || '', badgeTone: s.key === 'risks' ? C.high : C.tx3
+        };
+      }),
+      nav2: SCREENS2.map(s => ({
+        label: s.label, go: this.go(s.key),
+        tone: s.key === screen ? C.tx : C.tx3,
+        bg: s.key === screen ? 'var(--f-ac-lo)' : 'transparent',
+        mark: s.key === screen ? C.ac : 'transparent'
+      })),
+
+      ctxKicker: scr.kicker, ctxTitle: scr.title,
+      ctxMeta: REPORT.model.range + '  ·  INR  ·  ' + REPORT.model.transactions.toLocaleString('en-IN') + ' txn',
+
+      band: [
+        { label: 'Income', op: '', value: N(m.income), sub: 'monthly mean', delta: 'FLAT 6P', deltaTone: C.tx3, tone: C.tx, isHealth: false },
+        { label: 'Expenses', op: '−', value: N(m.expenses), sub: 'vs prior window', delta: '+18.4%', deltaTone: C.high, tone: C.tx, isHealth: false },
+        { label: 'Net cash flow', op: '=', value: N(m.net), sub: 'savings rate 14.9%', delta: '−32.4%', deltaTone: C.crit, tone: C.tx, isHealth: false },
+        { label: 'Health score', op: '', value: '62', sub: '/ 100 · moderate', delta: '−8', deltaTone: C.high, tone: C.tx, isHealth: true, pct: '62%', bar: C.med }
+      ],
+      relations: [
+        { label: 'Liquidity / runway', value: '1.2 mo', delta: '−0.7', tone: C.crit, note: 'Cash ₹1,06,400 against mean outflow ₹88,640 — below the three-month floor.' },
+        { label: 'Savings rate', value: '14.9%', delta: '−7.2 pp', tone: C.crit, note: 'Third consecutive decline; income unchanged, so movement is outflow-driven.' },
+        { label: 'Expenditure stability', value: '0.31 σ', delta: 'rising', tone: C.med, note: 'Month-to-month variance widened as discretionary categories grew.' }
+      ],
+      sevLedger: ['critical', 'high', 'medium', 'low'].map(k => {
+        const s = this.sev(k);
+        const count = listAll.filter(i => i.severity === k).length;
+        const on = st.sev === k;
+        return {
+          label: s.label, color: s.color, count, note: count === 0 ? 'None flagged' : s.note,
+          countTone: count === 0 ? C.tx3 : C.tx,
+          bg: on ? 'var(--f-s2)' : 'var(--f-s1)',
+          edge: on ? s.color : 'transparent',
+          go: (e) => { if (e) e.preventDefault(); this.setState({ sev: on ? 'all' : k }); }
+        };
+      }),
+
+      listTitle: screen === 'risks' ? 'Flagged risks & anomalies' : 'Key findings',
+      listMeta: visible.length + '/' + listAll.length + ' · by severity',
+      findings: visible.map(f => {
+        const s = this.sev(f.severity);
+        const active = f.ruleId === sel.ruleId;
+        return {
+          id: f.ruleId, headline: f.headline, explanation: f.explanation,
+          sevLabel: s.label, sevColor: s.color,
+          conf: f.confidence.toFixed(2), driverCount: f.drivers.length,
+          cta: active ? 'Shown' : 'Why?', ctaTone: active ? C.tx3 : C.ac,
+          bg: active ? 'var(--f-s2)' : 'transparent',
+          sel: active ? C.ac : 'transparent',
+          headTone: active ? C.tx : C.tx2,
+          go: this.pick(f.ruleId)
+        };
+      }),
+
+      selId: sel.ruleId, selHeadline: sel.headline, selExplanation: sel.explanation,
+      selCause: sel.cause, selImpact: sel.impact,
+      selSevLabel: ss.label, selSevColor: ss.color,
+      selConf: sel.confidence.toFixed(2), selConfLabel: this.confLabel(sel.confidence),
+      selConfTicks: Array.from({ length: 10 }, (_, i) => ({ fill: i < Math.round(sel.confidence * 10) ? C.ac : C.line })),
+      selEvidence: sel.evidence.map(e => ({ ...e, tone: e.sent === 'good' ? C.pos : e.sent === 'flat' ? C.tx3 : badTone })),
+      selDrivers: sel.drivers.map(text => ({ text })),
+      selBasis: sel.basis.map(text => ({ text })),
+
+      scIncome: sci, scExpenses: sce,
+      scIncomeLabel: N(sci), scExpensesLabel: N(sce),
+      setIncome: (e) => this.setState({ scIncome: Number(e.target.value) }),
+      setExpenses: (e) => this.setState({ scExpenses: Number(e.target.value) }),
+      resetScenario: (e) => { if (e) e.preventDefault(); this.setState({ scIncome: m.income, scExpenses: m.expenses }); },
+      scenarioRows: [
+        { label: 'Monthly income', cur: N(m.income), sc: N(sci), ch: sign(sci - m.income, N), tone: toneZ(sci - m.income, true) },
+        { label: 'Monthly expenses', cur: N(m.expenses), sc: N(sce), ch: sign(sce - m.expenses, N), tone: toneZ(sce - m.expenses, false) },
+        { label: 'Monthly surplus', cur: N(curSurplus), sc: N(scSurplus), ch: sign(scSurplus - curSurplus, N), tone: toneZ(scSurplus - curSurplus, true) },
+        { label: 'Savings rate', cur: PCT(curRate), sc: PCT(scRate), ch: sign(scRate - curRate, (v) => v.toFixed(1) + ' pp', 0.05), tone: toneZ(scRate - curRate, true, 0.05) },
+        { label: 'Runway', cur: curRunway.toFixed(2) + ' mo', sc: scRunway.toFixed(2) + ' mo', ch: sign(scRunway - curRunway, (v) => v.toFixed(2) + ' mo', 0.005), tone: toneZ(scRunway - curRunway, true, 0.005) },
+        { label: 'Annual surplus', cur: N(curSurplus * 12), sc: N(scSurplus * 12), ch: sign((scSurplus - curSurplus) * 12, N), tone: toneZ(scSurplus - curSurplus, true) }
+      ],
+      scenarioVerdict: scSurplus < 0 ? 'Scenario is cash-negative: the simulated month consumes reserve rather than adding to it.' : scRunway < 3 ? 'Scenario stays below the three-month liquidity floor. Runway ' + scRunway.toFixed(1) + ' months.' : 'Scenario clears the three-month liquidity floor.',
+      scenarioTone: scSurplus < 0 ? C.crit : scRunway < 3 ? C.high : C.pos,
+      scenarioNote: 'Simulated by the engine on the normalized model. Prices, returns and inflation are not modelled.',
+
+      months: SERIES.map(r => ({
+        m: r.m, inc: N(r.inc), exp: N(r.exp), net: N(r.net),
+        incH: Math.round((r.inc / 110000) * 120) + 'px',
+        expH: Math.round((r.exp / 110000) * 120) + 'px',
+        rate: ((r.net / r.inc) * 100).toFixed(1) + '%',
+        tone: r.net < 18000 ? C.high : C.tx
+      })),
+      cfCompare: [
+        { label: 'Income', a: '₹3,12,600', b: '₹3,12,600', ch: 'Stable', tone: C.tx3 },
+        { label: 'Expenses', a: '₹2,24,640', b: '₹2,65,640', ch: '+18.4%', tone: C.high },
+        { label: 'Net cash flow', a: '₹87,960', b: '₹46,960', ch: '−46.6%', tone: C.crit },
+        { label: 'Savings rate', a: '28.1%', b: '15.0%', ch: '−13.1 pp', tone: C.crit },
+        { label: 'Lowest month', a: '₹24,700', b: '₹12,100', ch: '−51.0%', tone: C.crit }
+      ],
+      cfNote: 'Income is a single recurring credit in every period; Forge found no secondary income stream in the dataset.',
+
+      categories: CATS.map(c => ({
+        label: c.label, cur: N(c.cur), share: c.share.toFixed(1) + '%',
+        barW: Math.round((c.cur / 32000) * 100) + '%',
+        delta: c.prev === c.cur ? 'Stable' : (c.cur > c.prev ? '+' : '−') + Math.abs(((c.cur - c.prev) / c.prev) * 100).toFixed(1) + '%',
+        tone: c.prev === c.cur ? C.tx3 : c.flag ? C.high : C.tx2,
+        fill: c.flag ? C.high : C.line2
+      })),
+      spendAnomalies: [
+        { label: 'Insurance premium', amount: '₹41,000', note: '4.6σ above category history · no prior-period match', tag: 'Non-recurring', tone: C.med },
+        { label: 'Appliance purchase', amount: '₹18,600', note: '4.1σ above category history · single occurrence', tag: 'Non-recurring', tone: C.med },
+        { label: 'Uncategorised block', amount: '₹9,000', note: '112 rows with no category match after normalization', tag: 'Unresolved', tone: C.high }
+      ],
+
+      allocation: ALLOC.map(a => ({ label: a.label, pct: a.pct.toFixed(1) + '%', value: N(a.value), barW: a.pct.toFixed(1) + '%', fill: a.label === 'Cash' ? C.line2 : C.ac })),
+      holdings: HOLD.map((h, i) => ({
+        rank: '0' + (i + 1), label: h.label, cls: h.cls, value: N(h.value),
+        pct: h.pct.toFixed(1) + '%', barW: Math.round((h.pct / 34.2) * 100) + '%',
+        tone: h.pct > 15 ? C.high : C.tx, fill: h.pct > 15 ? C.high : C.ac
+      })),
+      concRows: [
+        { label: 'HHI (ex-cash)', value: '0.31', note: 'Threshold 0.15 · exceeded', tone: C.high },
+        { label: 'Largest holding', value: '34.2%', note: 'NIFTY 50 Index Fund', tone: C.tx },
+        { label: 'Top three', value: '64.3%', note: 'Of ₹11,33,600 invested', tone: C.tx },
+        { label: 'Positions', value: '7', note: 'Cash excluded from the measure', tone: C.tx },
+        { label: 'Cash allocation', value: '8.5%', note: '₹1,06,400 of ₹12,40,000 total', tone: C.tx }
+      ],
+
+      sources: [
+        { name: 'hdfc_statement_jan_jun.csv', kind: 'CSV', rows: '1,284', parsed: '1,281', skipped: '3', range: '01 Jan – 30 Jun 2026' },
+        { name: 'sip_ledger_2026.csv', kind: 'CSV', rows: '42', parsed: '41', skipped: '1', range: '05 Jan – 05 Jun 2026' },
+        { name: 'holdings_apr2026.xlsx', kind: 'XLSX · “Positions”', rows: '7', parsed: '7', skipped: '0', range: '30 Apr 2026' }
+      ],
+      dataFacts: [
+        { label: 'Transactions', value: '1,322', tone: C.tx },
+        { label: 'Holdings', value: '7', tone: C.tx },
+        { label: 'Date range', value: 'Jan – Jun 2026', tone: C.tx },
+        { label: 'Currency', value: 'INR', tone: C.pos },
+        { label: 'Skipped rows', value: '4', tone: C.high },
+        { label: 'Warnings', value: '3', tone: C.med }
+      ],
+      warnings: [
+        { level: 'Skipped', tone: C.high, text: '3 rows in hdfc_statement_jan_jun.csv used an ambiguous DD-MM-YY date and were dropped rather than guessed.' },
+        { level: 'Grouped', tone: C.med, text: '112 transactions matched no category rule and are reported as Uncategorised (₹9,000).' },
+        { level: 'Deduped', tone: C.low, text: 'sip_ledger_2026.csv row 18 duplicated a debit already present in the bank statement; one copy was kept.' }
+      ],
+
+      emptyStates: [
+        { title: 'No holdings detected in this dataset.', body: 'Portfolio analysis, allocation and concentration are unavailable. Upload a holdings table to enable them.', tag: 'Portfolio', action: 'Add holdings file' },
+        { title: 'Financial health could not be assessed because required transaction data is unavailable.', body: 'The health score needs at least three complete periods of categorised transactions. Two were found.', tag: 'Health score', action: 'Inspect data' },
+        { title: 'Forge cannot combine USD and INR data without explicit currency conversion.', body: 'Analysis did not run. Convert before ingestion — Forge will not assume a rate.', tag: 'Currency', action: 'Replace dataset' },
+        { title: 'No anomalies met the flagging threshold.', body: 'Forge examined 1,322 transactions and found none beyond four standard deviations of category history. This is a result, not an absence of analysis.', tag: 'Risks', action: 'View evidence' }
+      ],
+      sysSeverities: ['critical', 'high', 'medium', 'low'].map(k => { const s = this.sev(k); return { label: s.label, color: s.color, use: s.note, token: '--f-' + (k === 'critical' ? 'crit' : k === 'high' ? 'high' : k === 'medium' ? 'med' : 'low') }; }),
+      sysPalette: [
+        { name: 'Foundation', hex: '#0b0e10', token: '--f-bg', tone: C.tx3 },
+        { name: 'Surface', hex: '#12171a', token: '--f-s1', tone: C.tx3 },
+        { name: 'Raised', hex: '#181e22', token: '--f-s2', tone: C.tx3 },
+        { name: 'Border', hex: '#232b31', token: '--f-line', tone: C.tx3 },
+        { name: 'Accent', hex: '#3fa79f', token: '--f-ac', tone: C.ac },
+        { name: 'Positive', hex: '#47a86d', token: '--f-pos', tone: C.pos }
+      ],
+      sysType: [
+        { name: 'Display figure', spec: 'Plex Mono 500 · 30px · tabular', sample: '₹15,560', mono: true },
+        { name: 'Metric', spec: 'Plex Mono 400 · 14px · tabular', sample: '1.2 mo', mono: true },
+        { name: 'Finding headline', spec: 'Plex Sans 500 · 14.5px', sample: 'Liquidity buffer is thin', mono: false },
+        { name: 'Editorial emphasis', spec: 'Serif 400 · 25px — investigation only', sample: 'Spending increased 18.4%', mono: false, serif: true },
+        { name: 'Body', spec: 'Plex Sans 400 · 13px', sample: 'The increase is attributable to…', mono: false },
+        { name: 'Label / rule id', spec: 'Plex Mono 400 · 9.5px · 0.16em', sample: 'EXP_DELTA_MATERIAL', mono: true }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

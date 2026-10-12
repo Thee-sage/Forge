@@ -121,6 +121,28 @@ program
     },
   );
 
+program
+  .command("serve")
+  .description("Start the Forge web interface (upload files in the browser, same engine)")
+  .option("-p, --port <number>", "port to listen on", "4173")
+  .option("-h, --host <address>", "address to bind", "127.0.0.1")
+  .action(async (opts: { port: string; host: string }) => {
+    const port = Number.parseInt(opts.port, 10);
+    if (!Number.isInteger(port) || port < 0 || port > 65535) {
+      fail(`Invalid port: "${opts.port}"`);
+    }
+    try {
+      const { startForgeServer } = await import("../web/server.js");
+      const server = await startForgeServer(port, opts.host);
+      console.log(banner() + "\n");
+      console.log(`  ${chalk.bold("Forge web")} listening on ${chalk.cyan(`http://${opts.host}:${server.port}`)}`);
+      console.log(chalk.dim("  Analysis runs in this process; nothing is persisted. Ctrl-C to stop.\n"));
+    } catch (err) {
+      if (err instanceof ForgeError) fail(err.message);
+      fail(`Could not start the server: ${(err as Error).message}`);
+    }
+  });
+
 program.parseAsync(process.argv);
 
 // --- helpers -------------------------------------------------------------
