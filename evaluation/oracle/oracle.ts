@@ -168,11 +168,16 @@ function compute(ls: L[], ps: P[]): Computed {
       const med = medianRat(amts);
       v["anomaly.medianOutflow"] = n(med);
       const mad = medianRat(amts.map((a) => a.sub(med).abs()));
+      // A transaction that is ordinary for its own recurring category is regular spend and
+      // is not a candidate (D22 / ALGORITHM_REFERENCE 7.2). The baseline above is still the
+      // whole variable set: candidacy is narrowed, the distribution is not.
+      const regular = regularInOwnCategory(variable, ls);
+      const candidates = variable.filter((i) => !regular.has(i));
       if (mad.isZero()) {
         flags = null; // documented rule undefined at MAD = 0
       } else {
         // modified z = 0.6745 (x - med) / MAD > 3.5   (exact: 6745/10000 and 7/2)
-        flags = variable.filter((i) => R("0.6745").mul(ls[i]!.amt.neg().sub(med)).gt(R("3.5").mul(mad)));
+        flags = candidates.filter((i) => R("0.6745").mul(ls[i]!.amt.neg().sub(med)).gt(R("3.5").mul(mad)));
       }
     }
   }
@@ -268,6 +273,46 @@ function compute(ls: L[], ps: P[]): Computed {
     // scored outright. Removing the marking widens A3's denominator; it does not relax a check.
   }
   return { values: v, flags, mon, cat, trend, halfNets };
+}
+
+/**
+ * Indices (into `ls`) of outflows that are ordinary for their own recurring category, and so
+ * are not anomaly candidates. Transcribed from ALGORITHM_REFERENCE 7.2, in exact rationals:
+ * a category whose rows fall in at least three distinct calendar months is a recurring
+ * commitment, and a row whose modified z-score *within that category* does not exceed the
+ * same 3.5 threshold is ordinary for it. Where the within-category MAD is zero the mean
+ * absolute deviation is used, and where both are zero every row is identical and therefore
+ * ordinary.
+ */
+function regularInOwnCategory(variable: number[], ls: L[]): Set<number> {
+  const byCategory = new Map<string, number[]>();
+  for (const i of variable) {
+    const cat = ls[i]!.category;
+    const group = byCategory.get(cat);
+    if (group) group.push(i);
+    else byCategory.set(cat, [i]);
+  }
+
+  const regular = new Set<number>();
+  for (const group of byCategory.values()) {
+    if (new Set(group.map((i) => ls[i]!.date.slice(0, 7))).size < 3) continue;
+    const amts = group.map((i) => ls[i]!.amt.neg());
+    const med = medianRat(amts);
+    const devs = amts.map((a) => a.sub(med).abs());
+    const mad = medianRat(devs);
+    const meanAd = sumRat(devs).div(Rat.int(devs.length));
+    for (const i of group) {
+      const x = ls[i]!.amt.neg();
+      // z <= 3.5, kept as a cross-multiplied comparison so nothing is divided.
+      const ordinary = !mad.isZero()
+        ? !R("0.6745").mul(x.sub(med)).gt(R("3.5").mul(mad))
+        : !meanAd.isZero()
+          ? !x.sub(med).gt(R("3.5").mul(R("1.253314")).mul(meanAd))
+          : true;
+      if (ordinary) regular.add(i);
+    }
+  }
+  return regular;
 }
 
 function applyScenario(ls: L[], s: ScenarioJson): L[] {

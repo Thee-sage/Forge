@@ -9,6 +9,6 @@ export const DATASET_VERSION = "1.1.0";
 /** Bump when a labelling rubric (docs/ACCURACY_VALIDATION.md §5) changes. */
 export const RUBRIC_VERSION = "1.1.0";
 /** Bump when a formula in evaluation/oracle/** or a tolerance in metrics.ts changes. */
-export const ORACLE_VERSION = "1.0.0";
+export const ORACLE_VERSION = "1.1.0";
 /** The accuracy target the framework reports against. It is a threshold, never a result. */
 export const TARGET_RATE = 0.98;
