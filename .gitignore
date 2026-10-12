@@ -29,3 +29,4 @@ tmp/
 
 # Markdown docs are kept local, not pushed
 *.md
+docs/paper/build_report.py
