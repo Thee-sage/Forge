@@ -1,0 +1,15 @@
+[
+  {
+    "caseId": "D-cat-18",
+    "split": "dev",
+    "family": "classify",
+    "category": "classify",
+    "check": "category",
+    "severity": "major",
+    "ambiguous": false,
+    "expected": "shopping",
+    "actual": "utilities",
+    "detail": "Phone case",
+    "reproduce": "npm run validate:accuracy -- --case D-cat-18"
+  }
+]

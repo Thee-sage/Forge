@@ -12,3 +12,6 @@
 # client's settings: they are evidence, and their bytes are the record.
 evaluation/datasets/** -text
 evaluation/results/** -text
+
+# Workbooks are zip archives; never let a text filter near them.
+*.xlsx binary
