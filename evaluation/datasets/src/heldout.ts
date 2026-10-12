@@ -235,6 +235,47 @@ const hand: PipelineCase[] = [
     truth: truth(T("2024-03-01 +3500 salary Pay", ...lines(G.slice(0, 9), "Shop"), "2024-03-29 -1.20 misc Sample")),
     labels: { "anomaly:Sample": false, "insight:anomaly-impact": false },
   }),
+  c({
+    id: "H-an-010", family: "anomaly", tags: ["multi-category", "pooled-baseline", "recurring-drift"],
+    note: "Rubric 1.1.0: groceries are present in all seven months with no two amounts alike and are ordinary for that category, so they are FALSE despite being 4.35x the pooled median of 116.20 (ungraded under rubric 1.0.0). Dining at 0.89x is FALSE under either rubric version.",
+    description: "Seven months of a household whose groceries (~530) dwarf its dining (~115) and transport (~74). Every grocery month is ordinary for this household.",
+    truth: truth(monthly("2024-01", 7, (ym, i) => [
+      `${ym}-01 +5800 salary Pay`, `${ym}-04 -1650 housing Rent ${ym}`,
+      `${ym}-09 -${(505 + i * 8.2).toFixed(2)} groceries Market ${i + 1}`,
+      `${ym}-16 -${(103 + i * 4.4).toFixed(2)} dining Bistro ${i + 1}`,
+      `${ym}-23 -${(66 + i * 2.6).toFixed(2)} transport Bus ${i + 1}`,
+    ])),
+    labels: { "anomaly:Market 2": false, "anomaly:Market 6": false, "anomaly:Bistro 3": false },
+  }),
+  c({
+    id: "H-an-011", family: "anomaly", tags: ["multi-category", "one-off-inside-recurring"],
+    note: "Rubric 1.1.0: the 3,100 order is 24.4x the pooled median of 127 and far outside what is ordinary for its own category, so TRUE. The ~480 monthly rows are regular spend, so FALSE (3.7x, ungraded under rubric 1.0.0). anomaly-impact left ungraded at 16.6% of outflow.",
+    description: "Groceries recur monthly at ~490 and one month carries a 3,100 order.",
+    truth: truth([
+      ...monthly("2024-02", 6, (ym, i) => [
+        `${ym}-02 +7200 salary Pay`, `${ym}-05 -1900 housing Rent ${ym}`,
+        `${ym}-11 -${(470 + i * 9.3).toFixed(2)} groceries Food shop ${i + 1}`,
+        `${ym}-18 -${(112 + i * 5).toFixed(2)} dining Lunch ${i + 1}`,
+        `${ym}-25 -${(70 + i * 3).toFixed(2)} transport Fare ${i + 1}`,
+      ]),
+      ...T("2024-04-24 -3100 groceries Annual bulk order"),
+    ]),
+    labels: { "anomaly:Annual bulk order": true, "anomaly:Food shop 3": false, "anomaly:Food shop 6": false },
+  }),
+  c({
+    id: "H-an-012", family: "anomaly", tags: ["multi-category", "short-cadence", "over-exclusion-guard"],
+    note: "The held-out twin of D-an-013. Travel occurs in two of six months, so it is not a recurring commitment: Flight to Lisbon is 14.9x the pooled median of 137.50 (TRUE) and Rail pass is 1.38x (FALSE).",
+    description: "Travel appears in only two of six months; groceries and dining recur in all six.",
+    truth: truth([
+      ...monthly("2024-01", 6, (ym, i) => [
+        `${ym}-01 +4800 salary Pay`, `${ym}-03 -1350 housing Rent ${ym}`,
+        `${ym}-10 -${(135 + i * 5).toFixed(2)} groceries Corner shop ${i + 1}`,
+        `${ym}-19 -${(80 + i * 3).toFixed(2)} dining Takeaway ${i + 1}`,
+      ]),
+      ...T("2024-03-22 -2050 travel Flight to Lisbon", "2024-06-18 -190 travel Rail pass"),
+    ]),
+    labels: { "anomaly:Flight to Lisbon": true, "anomaly:Rail pass": false, "anomaly:Corner shop 2": false },
+  }),
 
   // ---------------------------------------------------------------- portfolio
   c({
@@ -317,8 +358,8 @@ const hand: PipelineCase[] = [
     truth: truth(monthly("2024-01", 5, (ym) => [`${ym}-01 +3500 salary Pay`, `${ym}-05 -3900 housing Rent`]), H("CASH 90000 cash", "E1 40000 equity", "E2 40000 equity", "B1 40000 fixed_income")),
   }),
   c({
-    id: "H-hl-004", family: "health", tags: ["cap", "majority-negative"], ambiguous: true,
-    note: "7 months, 4 negative (57%): documented rule (strict majority) caps at 55; the code (cap only when < 34% of months are non-negative) does not. See D-hl-004.",
+    id: "H-hl-004", family: "health", tags: ["cap", "majority-negative"],
+    note: "7 months, 4 negative (57%): a strict majority, so the documented rule caps at 55. Interpretation-dependent under dataset 1.0.0 while the code capped only below 34% non-negative; settled by D21 in favour of the documented rule. The expected value has not changed. See D-hl-004.",
     description: "Seven months, four negative.",
     truth: truth(T(
       "2024-01-01 +4000 salary Pay", "2024-01-05 -1000 housing Rent",

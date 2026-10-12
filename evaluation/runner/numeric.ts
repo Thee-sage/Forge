@@ -52,12 +52,11 @@ export function numericChecks(e: Execution): Check[] {
   const exp: Expected = expectedFor(c);
   const out: Check[] = [];
 
-  const ambiguousIf = (check: Check, flag: boolean): Check => (flag && /(^|.)health.score$/.test(check.check) ? { ...check, ambiguous: true } : check);
   for (const [key, value] of Object.entries(exp.values)) {
     const dot = key.indexOf(".");
     const mod = key.slice(0, dot);
     const k = key.slice(dot + 1);
-    out.push(ambiguousIf(compare(meta, key, value, metricOf(e.report.analyses, mod, k), explained(e.report.analyses, mod)), exp.extras.capAmbiguous));
+    out.push(compare(meta, key, value, metricOf(e.report.analyses, mod, k), explained(e.report.analyses, mod)));
   }
 
   // Anomaly flag set against the documented rule (only where the rule is defined).
@@ -83,10 +82,10 @@ export function numericChecks(e: Execution): Check[] {
         const tracked = rest.slice("delta.".length);
         const row = s.result.deltas.find((d) => d.key === tracked);
         // A delta row for a quantity that is undefined on either side would be a fabricated number.
-        out.push(ambiguousIf(compare(meta, key, value, row?.delta, false), sc.capAmbiguous || exp.extras.capAmbiguous));
+        out.push(compare(meta, key, value, row?.delta, false));
       } else {
         const dot = rest.indexOf(".");
-        out.push(ambiguousIf(compare(meta, key, value, metricOf(s.result.scenarioResults, rest.slice(0, dot), rest.slice(dot + 1)), explained(s.result.scenarioResults, rest.slice(0, dot))), sc.capAmbiguous));
+        out.push(compare(meta, key, value, metricOf(s.result.scenarioResults, rest.slice(0, dot), rest.slice(dot + 1)), explained(s.result.scenarioResults, rest.slice(0, dot))));
       }
     }
   });

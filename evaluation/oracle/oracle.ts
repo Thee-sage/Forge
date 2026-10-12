@@ -27,8 +27,6 @@ export interface Extras {
   trend: Record<string, { early: number; recent: number }>;
   /** Mean monthly net of the earlier / recent half of active months. */
   halfNets: { earlier: number; recent: number } | null;
-  /** True when the documented and implemented "majority negative" caps give different scores. */
-  capAmbiguous: boolean;
   /** Per-row holding values and weights (a symbol held twice appears twice). */
   rowValues: number[];
   rowWeights: number[];
@@ -42,7 +40,7 @@ export interface Extras {
   universe: number[];
 }
 
-export interface ScenarioExpected { values: Values; capAmbiguous: boolean }
+export interface ScenarioExpected { values: Values }
 export interface Expected { values: Values; extras: Extras; scenarios: ScenarioExpected[] }
 
 const n = (r: Rat): number => r.toNumber();
@@ -81,7 +79,7 @@ function months(ls: L[]): Month[] {
 const cashClass = "cash";
 const W = { savings: R("0.3"), expense: R("0.15"), stability: R("0.2"), liquidity: R("0.15"), diversification: R("0.2") };
 
-interface Computed { capAmbiguous: boolean; values: Values; flags: number[] | null; mon: Month[]; cat: Map<string, Rat>; trend: Record<string, { early: number; recent: number }>; halfNets: { earlier: number; recent: number } | null }
+interface Computed { values: Values; flags: number[] | null; mon: Month[]; cat: Map<string, Rat>; trend: Record<string, { early: number; recent: number }>; halfNets: { earlier: number; recent: number } | null }
 
 /** Compute every ledger+portfolio metric for one (possibly scenario-transformed) state. */
 function compute(ls: L[], ps: P[]): Computed {
@@ -252,7 +250,6 @@ function compute(ls: L[], ps: P[]): Computed {
     dims.push({ w: W.diversification, s: div });
   } else v["health.diversificationScore"] = null;
   v["health.assessedDimensions"] = dims.length;
-  let capAmbiguous = false;
   if (!hasIncome) {
     v["health.score"] = null;
   } else {
@@ -264,16 +261,13 @@ function compute(ls: L[], ps: P[]): Computed {
     if (mon.length >= 2 && mon.filter((m) => m.net.lt(ZERO)).length * 2 > mon.length && cap > 55n) cap = 55n;
     const rounded = raw.mul(Rat.int(100)).roundHalfUp();
     v["health.score"] = Number(rounded < cap ? rounded : cap);
-    // Documentation (D8) and implementation disagree on "majority of months negative": the
-    // implementation applies the 55 cap only when fewer than 34% of months are non-negative.
-    // Record whether the choice changes this score so the report can mark it interpretation-dependent.
-    let altCap = 100n;
-    if (net.lt(ZERO)) altCap = 45n;
-    if (runway !== undefined && runway.lt(ONE) && altCap > 55n) altCap = 55n;
-    if (mon.length >= 2 && Rat.int(mon.filter((m) => !m.net.lt(ZERO)).length).div(Rat.int(mon.length)).lt(R("0.34")) && altCap > 55n) altCap = 55n;
-    capAmbiguous = (rounded < cap ? rounded : cap) !== (rounded < altCap ? rounded : altCap);
+    // Until D21 the implementation applied this cap only when fewer than 34% of months were
+    // non-negative, so the oracle modelled both readings and marked any score they disagreed
+    // on as interpretation-dependent. D21 settled the question in favour of the documented
+    // majority rule and the code now implements it, so there is one reading and the score is
+    // scored outright. Removing the marking widens A3's denominator; it does not relax a check.
   }
-  return { values: v, flags, mon, cat, trend, halfNets, capAmbiguous };
+  return { values: v, flags, mon, cat, trend, halfNets };
 }
 
 function applyScenario(ls: L[], s: ScenarioJson): L[] {
@@ -310,7 +304,7 @@ export function computeExpected(truth: Truth, scenarios: ScenarioJson[] = []): E
       // A delta exists only when BOTH sides are defined numbers; otherwise it must not be fabricated.
       values[`scenario${idx}.delta.${key}`] = typeof a === "number" && typeof b === "number" ? a - b : null;
     }
-    return { values, capAmbiguous: sc.capAmbiguous };
+    return { values };
   });
 
   const monthly = base.mon.map((m) => ({ month: m.month, inflow: n(m.inflow), outflow: n(m.outflow), net: n(m.net) }));
@@ -335,7 +329,7 @@ export function computeExpected(truth: Truth, scenarios: ScenarioJson[] = []): E
 
   return {
     values: base.values,
-    extras: { capAmbiguous: base.capAmbiguous, rowValues: ps.map((p) => n(p.value)), rowWeights: ps.map((p) => n(p.value.div(total))), monthly, categoryTotals, trend: base.trend, halfNets: base.halfNets, holdingValues, holdingWeights, classValues, anomalyFlags: base.flags, outflowIndices, universe },
+    extras: { rowValues: ps.map((p) => n(p.value)), rowWeights: ps.map((p) => n(p.value.div(total))), monthly, categoryTotals, trend: base.trend, halfNets: base.halfNets, holdingValues, holdingWeights, classValues, anomalyFlags: base.flags, outflowIndices, universe },
     scenarios: scen,
   };
 }

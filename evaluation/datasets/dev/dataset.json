@@ -1,5 +1,5 @@
 {
- "version": "1.0.0",
+ "version": "1.1.0",
  "split": "dev",
  "pipeline": [
   {
@@ -4358,6 +4358,395 @@
    "split": "dev"
   },
   {
+   "id": "D-an-012",
+   "family": "anomaly",
+   "tags": [
+    "multi-category",
+    "recurring-drift",
+    "one-off-inside-recurring"
+   ],
+   "note": "Rubric 1.1.0: the ordinary grocery rows are regular monthly spend in a category present in every month, so they are FALSE whatever their ratio to the pooled median (4.4x here, which rubric 1.0.0 left ungraded). The 2,600 order is 25x the pooled median and is not ordinary for its own category, so it is TRUE. insight:anomaly-impact is left ungraded: the one-off is 15.4% of total outflow, inside the 5-20% band.",
+   "description": "Groceries recur monthly at ~470 with no two amounts alike, and one month also carries a 2,600 bulk order. The ordinary rows are regular spend; the 2,600 is a genuine one-off and must still be flagged.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "6500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1750",
+      "category": "housing",
+      "description": "Rent 2024-01"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-455.00",
+      "category": "groceries",
+      "description": "Groceries 1"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-92.00",
+      "category": "dining",
+      "description": "Dining 1"
+     },
+     {
+      "date": "2024-01-22",
+      "amount": "-58.00",
+      "category": "transport",
+      "description": "Transit 1"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "6500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1750",
+      "category": "housing",
+      "description": "Rent 2024-02"
+     },
+     {
+      "date": "2024-02-08",
+      "amount": "-461.40",
+      "category": "groceries",
+      "description": "Groceries 2"
+     },
+     {
+      "date": "2024-02-15",
+      "amount": "-95.60",
+      "category": "dining",
+      "description": "Dining 2"
+     },
+     {
+      "date": "2024-02-22",
+      "amount": "-59.90",
+      "category": "transport",
+      "description": "Transit 2"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "6500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1750",
+      "category": "housing",
+      "description": "Rent 2024-03"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-467.80",
+      "category": "groceries",
+      "description": "Groceries 3"
+     },
+     {
+      "date": "2024-03-15",
+      "amount": "-99.20",
+      "category": "dining",
+      "description": "Dining 3"
+     },
+     {
+      "date": "2024-03-22",
+      "amount": "-61.80",
+      "category": "transport",
+      "description": "Transit 3"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "6500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1750",
+      "category": "housing",
+      "description": "Rent 2024-04"
+     },
+     {
+      "date": "2024-04-08",
+      "amount": "-474.20",
+      "category": "groceries",
+      "description": "Groceries 4"
+     },
+     {
+      "date": "2024-04-15",
+      "amount": "-102.80",
+      "category": "dining",
+      "description": "Dining 4"
+     },
+     {
+      "date": "2024-04-22",
+      "amount": "-63.70",
+      "category": "transport",
+      "description": "Transit 4"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "6500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1750",
+      "category": "housing",
+      "description": "Rent 2024-05"
+     },
+     {
+      "date": "2024-05-08",
+      "amount": "-480.60",
+      "category": "groceries",
+      "description": "Groceries 5"
+     },
+     {
+      "date": "2024-05-15",
+      "amount": "-106.40",
+      "category": "dining",
+      "description": "Dining 5"
+     },
+     {
+      "date": "2024-05-22",
+      "amount": "-65.60",
+      "category": "transport",
+      "description": "Transit 5"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "6500",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1750",
+      "category": "housing",
+      "description": "Rent 2024-06"
+     },
+     {
+      "date": "2024-06-08",
+      "amount": "-487.00",
+      "category": "groceries",
+      "description": "Groceries 6"
+     },
+     {
+      "date": "2024-06-15",
+      "amount": "-110.00",
+      "category": "dining",
+      "description": "Dining 6"
+     },
+     {
+      "date": "2024-06-22",
+      "amount": "-67.50",
+      "category": "transport",
+      "description": "Transit 6"
+     },
+     {
+      "date": "2024-04-19",
+      "amount": "-2600",
+      "category": "groceries",
+      "description": "Bulk pantry order"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Bulk pantry order": true,
+    "anomaly:Groceries 2": false,
+    "anomaly:Groceries 5": false,
+    "anomaly:Dining 4": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-an-013",
+   "family": "anomaly",
+   "tags": [
+    "multi-category",
+    "short-cadence",
+    "over-exclusion-guard"
+   ],
+   "note": "Written to catch the opposite error from D-an-011. Travel appears in only two months, which is not a recurring commitment, so its rows stay candidates: Flights is 15.6x the pooled median (TRUE) and Rail pass is 1.43x (FALSE, under the 1.5x bound). If a rule excluded whole categories from the baseline rather than only from candidacy, the baseline here would collapse to two amounts and Flights could stop being flagged.",
+   "description": "Travel appears in only two of six months, while groceries and dining recur in all six.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "5200",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-01"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-120.00",
+      "category": "groceries",
+      "description": "Shop 1"
+     },
+     {
+      "date": "2024-01-17",
+      "amount": "-74.00",
+      "category": "dining",
+      "description": "Dinner 1"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "5200",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-04",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-02"
+     },
+     {
+      "date": "2024-02-09",
+      "amount": "-124.00",
+      "category": "groceries",
+      "description": "Shop 2"
+     },
+     {
+      "date": "2024-02-17",
+      "amount": "-76.50",
+      "category": "dining",
+      "description": "Dinner 2"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "5200",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-04",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-03"
+     },
+     {
+      "date": "2024-03-09",
+      "amount": "-128.00",
+      "category": "groceries",
+      "description": "Shop 3"
+     },
+     {
+      "date": "2024-03-17",
+      "amount": "-79.00",
+      "category": "dining",
+      "description": "Dinner 3"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "5200",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-04",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-04"
+     },
+     {
+      "date": "2024-04-09",
+      "amount": "-132.00",
+      "category": "groceries",
+      "description": "Shop 4"
+     },
+     {
+      "date": "2024-04-17",
+      "amount": "-81.50",
+      "category": "dining",
+      "description": "Dinner 4"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "5200",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-04",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-05"
+     },
+     {
+      "date": "2024-05-09",
+      "amount": "-136.00",
+      "category": "groceries",
+      "description": "Shop 5"
+     },
+     {
+      "date": "2024-05-17",
+      "amount": "-84.00",
+      "category": "dining",
+      "description": "Dinner 5"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "5200",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-04",
+      "amount": "-1500",
+      "category": "housing",
+      "description": "Rent 2024-06"
+     },
+     {
+      "date": "2024-06-09",
+      "amount": "-140.00",
+      "category": "groceries",
+      "description": "Shop 6"
+     },
+     {
+      "date": "2024-06-17",
+      "amount": "-86.50",
+      "category": "dining",
+      "description": "Dinner 6"
+     },
+     {
+      "date": "2024-02-21",
+      "amount": "-1900",
+      "category": "travel",
+      "description": "Flights"
+     },
+     {
+      "date": "2024-05-23",
+      "amount": "-175",
+      "category": "travel",
+      "description": "Rail pass"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Flights": true,
+    "anomaly:Rail pass": false,
+    "anomaly:Shop 4": false
+   },
+   "split": "dev"
+  },
+  {
    "id": "D-pf-001",
    "family": "portfolio",
    "tags": [
@@ -5082,8 +5471,7 @@
     "cap",
     "majority-negative"
    ],
-   "ambiguous": true,
-   "note": "DECISIONS D8 and PROJECT_RULES say the score is capped at 55 when a MAJORITY of months are negative. The code caps only when fewer than 34% of months are non-negative (>= ~66% negative). With 3 of 5 months negative (60%) the documented rule caps and the implementation does not. Documentation and code disagree; the documented contract is the primary expectation.",
+   "note": "DECISIONS D8 and PROJECT_RULES say the score is capped at 55 when a MAJORITY of months are negative. With 3 of 5 months negative (60%) the cap applies. This case was interpretation-dependent under dataset 1.0.0, because the code then capped only when fewer than 34% of months were non-negative; D21 settled the question in favour of the documented rule and the code implements it, so the expected score of 55 is now the single reading. The expected value has not changed.",
    "description": "Five months, three negative.",
    "truth": {
     "currency": "USD",

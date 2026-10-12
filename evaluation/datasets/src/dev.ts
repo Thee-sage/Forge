@@ -336,6 +336,35 @@ const pipeline: PipelineCase[] = [
     ])),
     labels: { "anomaly:Groceries 3": false, "anomaly:Groceries 6": false, "anomaly:Dining 2": false, "insight:anomaly-impact": false },
   }),
+  c({
+    id: "D-an-012", family: "anomaly", tags: ["multi-category", "recurring-drift", "one-off-inside-recurring"],
+    note: "Rubric 1.1.0: the ordinary grocery rows are regular monthly spend in a category present in every month, so they are FALSE whatever their ratio to the pooled median (4.4x here, which rubric 1.0.0 left ungraded). The 2,600 order is 25x the pooled median and is not ordinary for its own category, so it is TRUE. insight:anomaly-impact is left ungraded: the one-off is 15.4% of total outflow, inside the 5-20% band.",
+    description: "Groceries recur monthly at ~470 with no two amounts alike, and one month also carries a 2,600 bulk order. The ordinary rows are regular spend; the 2,600 is a genuine one-off and must still be flagged.",
+    truth: truth([
+      ...monthly("2024-01", 6, (ym, i) => [
+        `${ym}-01 +6500 salary Salary`, `${ym}-03 -1750 housing Rent ${ym}`,
+        `${ym}-08 -${(455 + i * 6.4).toFixed(2)} groceries Groceries ${i + 1}`,
+        `${ym}-15 -${(92 + i * 3.6).toFixed(2)} dining Dining ${i + 1}`,
+        `${ym}-22 -${(58 + i * 1.9).toFixed(2)} transport Transit ${i + 1}`,
+      ]),
+      ...T("2024-04-19 -2600 groceries Bulk pantry order"),
+    ]),
+    labels: { "anomaly:Bulk pantry order": true, "anomaly:Groceries 2": false, "anomaly:Groceries 5": false, "anomaly:Dining 4": false },
+  }),
+  c({
+    id: "D-an-013", family: "anomaly", tags: ["multi-category", "short-cadence", "over-exclusion-guard"],
+    note: "Written to catch the opposite error from D-an-011. Travel appears in only two months, which is not a recurring commitment, so its rows stay candidates: Flights is 15.6x the pooled median (TRUE) and Rail pass is 1.43x (FALSE, under the 1.5x bound). If a rule excluded whole categories from the baseline rather than only from candidacy, the baseline here would collapse to two amounts and Flights could stop being flagged.",
+    description: "Travel appears in only two of six months, while groceries and dining recur in all six.",
+    truth: truth([
+      ...monthly("2024-01", 6, (ym, i) => [
+        `${ym}-01 +5200 salary Salary`, `${ym}-04 -1500 housing Rent ${ym}`,
+        `${ym}-09 -${(120 + i * 4).toFixed(2)} groceries Shop ${i + 1}`,
+        `${ym}-17 -${(74 + i * 2.5).toFixed(2)} dining Dinner ${i + 1}`,
+      ]),
+      ...T("2024-02-21 -1900 travel Flights", "2024-05-23 -175 travel Rail pass"),
+    ]),
+    labels: { "anomaly:Flights": true, "anomaly:Rail pass": false, "anomaly:Shop 4": false },
+  }),
 
   // ------------------------------------------------------------------ portfolio
   c({
@@ -425,8 +454,8 @@ const pipeline: PipelineCase[] = [
     labels: { "insight:thin-liquidity": false },
   }),
   c({
-    id: "D-hl-004", family: "health", tags: ["cap", "majority-negative"], ambiguous: true,
-    note: "DECISIONS D8 and PROJECT_RULES say the score is capped at 55 when a MAJORITY of months are negative. The code caps only when fewer than 34% of months are non-negative (>= ~66% negative). With 3 of 5 months negative (60%) the documented rule caps and the implementation does not. Documentation and code disagree; the documented contract is the primary expectation.",
+    id: "D-hl-004", family: "health", tags: ["cap", "majority-negative"],
+    note: "DECISIONS D8 and PROJECT_RULES say the score is capped at 55 when a MAJORITY of months are negative. With 3 of 5 months negative (60%) the cap applies. This case was interpretation-dependent under dataset 1.0.0, because the code then capped only when fewer than 34% of months were non-negative; D21 settled the question in favour of the documented rule and the code implements it, so the expected score of 55 is now the single reading. The expected value has not changed.",
     description: "Five months, three negative.",
     truth: truth(T(
       "2024-01-01 +5000 salary Salary", "2024-01-05 -1000 housing Rent",

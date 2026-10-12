@@ -1,5 +1,5 @@
 {
- "version": "1.0.0",
+ "version": "1.1.0",
  "split": "heldout",
  "pipeline": [
   {
@@ -3453,6 +3453,626 @@
    "split": "heldout"
   },
   {
+   "id": "H-an-010",
+   "family": "anomaly",
+   "tags": [
+    "multi-category",
+    "pooled-baseline",
+    "recurring-drift"
+   ],
+   "note": "Rubric 1.1.0: groceries are present in all seven months with no two amounts alike and are ordinary for that category, so they are FALSE despite being 4.35x the pooled median of 116.20 (ungraded under rubric 1.0.0). Dining at 0.89x is FALSE under either rubric version.",
+   "description": "Seven months of a household whose groceries (~530) dwarf its dining (~115) and transport (~74). Every grocery month is ordinary for this household.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "5800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-1650",
+      "category": "housing",
+      "description": "Rent 2024-01"
+     },
+     {
+      "date": "2024-01-09",
+      "amount": "-505.00",
+      "category": "groceries",
+      "description": "Market 1"
+     },
+     {
+      "date": "2024-01-16",
+      "amount": "-103.00",
+      "category": "dining",
+      "description": "Bistro 1"
+     },
+     {
+      "date": "2024-01-23",
+      "amount": "-66.00",
+      "category": "transport",
+      "description": "Bus 1"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "5800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-02-04",
+      "amount": "-1650",
+      "category": "housing",
+      "description": "Rent 2024-02"
+     },
+     {
+      "date": "2024-02-09",
+      "amount": "-513.20",
+      "category": "groceries",
+      "description": "Market 2"
+     },
+     {
+      "date": "2024-02-16",
+      "amount": "-107.40",
+      "category": "dining",
+      "description": "Bistro 2"
+     },
+     {
+      "date": "2024-02-23",
+      "amount": "-68.60",
+      "category": "transport",
+      "description": "Bus 2"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "5800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-03-04",
+      "amount": "-1650",
+      "category": "housing",
+      "description": "Rent 2024-03"
+     },
+     {
+      "date": "2024-03-09",
+      "amount": "-521.40",
+      "category": "groceries",
+      "description": "Market 3"
+     },
+     {
+      "date": "2024-03-16",
+      "amount": "-111.80",
+      "category": "dining",
+      "description": "Bistro 3"
+     },
+     {
+      "date": "2024-03-23",
+      "amount": "-71.20",
+      "category": "transport",
+      "description": "Bus 3"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "5800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-04-04",
+      "amount": "-1650",
+      "category": "housing",
+      "description": "Rent 2024-04"
+     },
+     {
+      "date": "2024-04-09",
+      "amount": "-529.60",
+      "category": "groceries",
+      "description": "Market 4"
+     },
+     {
+      "date": "2024-04-16",
+      "amount": "-116.20",
+      "category": "dining",
+      "description": "Bistro 4"
+     },
+     {
+      "date": "2024-04-23",
+      "amount": "-73.80",
+      "category": "transport",
+      "description": "Bus 4"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "5800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-05-04",
+      "amount": "-1650",
+      "category": "housing",
+      "description": "Rent 2024-05"
+     },
+     {
+      "date": "2024-05-09",
+      "amount": "-537.80",
+      "category": "groceries",
+      "description": "Market 5"
+     },
+     {
+      "date": "2024-05-16",
+      "amount": "-120.60",
+      "category": "dining",
+      "description": "Bistro 5"
+     },
+     {
+      "date": "2024-05-23",
+      "amount": "-76.40",
+      "category": "transport",
+      "description": "Bus 5"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "5800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-06-04",
+      "amount": "-1650",
+      "category": "housing",
+      "description": "Rent 2024-06"
+     },
+     {
+      "date": "2024-06-09",
+      "amount": "-546.00",
+      "category": "groceries",
+      "description": "Market 6"
+     },
+     {
+      "date": "2024-06-16",
+      "amount": "-125.00",
+      "category": "dining",
+      "description": "Bistro 6"
+     },
+     {
+      "date": "2024-06-23",
+      "amount": "-79.00",
+      "category": "transport",
+      "description": "Bus 6"
+     },
+     {
+      "date": "2024-07-01",
+      "amount": "5800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-07-04",
+      "amount": "-1650",
+      "category": "housing",
+      "description": "Rent 2024-07"
+     },
+     {
+      "date": "2024-07-09",
+      "amount": "-554.20",
+      "category": "groceries",
+      "description": "Market 7"
+     },
+     {
+      "date": "2024-07-16",
+      "amount": "-129.40",
+      "category": "dining",
+      "description": "Bistro 7"
+     },
+     {
+      "date": "2024-07-23",
+      "amount": "-81.60",
+      "category": "transport",
+      "description": "Bus 7"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Market 2": false,
+    "anomaly:Market 6": false,
+    "anomaly:Bistro 3": false
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "H-an-011",
+   "family": "anomaly",
+   "tags": [
+    "multi-category",
+    "one-off-inside-recurring"
+   ],
+   "note": "Rubric 1.1.0: the 3,100 order is 24.4x the pooled median of 127 and far outside what is ordinary for its own category, so TRUE. The ~480 monthly rows are regular spend, so FALSE (3.7x, ungraded under rubric 1.0.0). anomaly-impact left ungraded at 16.6% of outflow.",
+   "description": "Groceries recur monthly at ~490 and one month carries a 3,100 order.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-02-02",
+      "amount": "7200",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "-1900",
+      "category": "housing",
+      "description": "Rent 2024-02"
+     },
+     {
+      "date": "2024-02-11",
+      "amount": "-470.00",
+      "category": "groceries",
+      "description": "Food shop 1"
+     },
+     {
+      "date": "2024-02-18",
+      "amount": "-112.00",
+      "category": "dining",
+      "description": "Lunch 1"
+     },
+     {
+      "date": "2024-02-25",
+      "amount": "-70.00",
+      "category": "transport",
+      "description": "Fare 1"
+     },
+     {
+      "date": "2024-03-02",
+      "amount": "7200",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "-1900",
+      "category": "housing",
+      "description": "Rent 2024-03"
+     },
+     {
+      "date": "2024-03-11",
+      "amount": "-479.30",
+      "category": "groceries",
+      "description": "Food shop 2"
+     },
+     {
+      "date": "2024-03-18",
+      "amount": "-117.00",
+      "category": "dining",
+      "description": "Lunch 2"
+     },
+     {
+      "date": "2024-03-25",
+      "amount": "-73.00",
+      "category": "transport",
+      "description": "Fare 2"
+     },
+     {
+      "date": "2024-04-02",
+      "amount": "7200",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-04-05",
+      "amount": "-1900",
+      "category": "housing",
+      "description": "Rent 2024-04"
+     },
+     {
+      "date": "2024-04-11",
+      "amount": "-488.60",
+      "category": "groceries",
+      "description": "Food shop 3"
+     },
+     {
+      "date": "2024-04-18",
+      "amount": "-122.00",
+      "category": "dining",
+      "description": "Lunch 3"
+     },
+     {
+      "date": "2024-04-25",
+      "amount": "-76.00",
+      "category": "transport",
+      "description": "Fare 3"
+     },
+     {
+      "date": "2024-05-02",
+      "amount": "7200",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-05-05",
+      "amount": "-1900",
+      "category": "housing",
+      "description": "Rent 2024-05"
+     },
+     {
+      "date": "2024-05-11",
+      "amount": "-497.90",
+      "category": "groceries",
+      "description": "Food shop 4"
+     },
+     {
+      "date": "2024-05-18",
+      "amount": "-127.00",
+      "category": "dining",
+      "description": "Lunch 4"
+     },
+     {
+      "date": "2024-05-25",
+      "amount": "-79.00",
+      "category": "transport",
+      "description": "Fare 4"
+     },
+     {
+      "date": "2024-06-02",
+      "amount": "7200",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-06-05",
+      "amount": "-1900",
+      "category": "housing",
+      "description": "Rent 2024-06"
+     },
+     {
+      "date": "2024-06-11",
+      "amount": "-507.20",
+      "category": "groceries",
+      "description": "Food shop 5"
+     },
+     {
+      "date": "2024-06-18",
+      "amount": "-132.00",
+      "category": "dining",
+      "description": "Lunch 5"
+     },
+     {
+      "date": "2024-06-25",
+      "amount": "-82.00",
+      "category": "transport",
+      "description": "Fare 5"
+     },
+     {
+      "date": "2024-07-02",
+      "amount": "7200",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-07-05",
+      "amount": "-1900",
+      "category": "housing",
+      "description": "Rent 2024-07"
+     },
+     {
+      "date": "2024-07-11",
+      "amount": "-516.50",
+      "category": "groceries",
+      "description": "Food shop 6"
+     },
+     {
+      "date": "2024-07-18",
+      "amount": "-137.00",
+      "category": "dining",
+      "description": "Lunch 6"
+     },
+     {
+      "date": "2024-07-25",
+      "amount": "-85.00",
+      "category": "transport",
+      "description": "Fare 6"
+     },
+     {
+      "date": "2024-04-24",
+      "amount": "-3100",
+      "category": "groceries",
+      "description": "Annual bulk order"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Annual bulk order": true,
+    "anomaly:Food shop 3": false,
+    "anomaly:Food shop 6": false
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "H-an-012",
+   "family": "anomaly",
+   "tags": [
+    "multi-category",
+    "short-cadence",
+    "over-exclusion-guard"
+   ],
+   "note": "The held-out twin of D-an-013. Travel occurs in two of six months, so it is not a recurring commitment: Flight to Lisbon is 14.9x the pooled median of 137.50 (TRUE) and Rail pass is 1.38x (FALSE).",
+   "description": "Travel appears in only two of six months; groceries and dining recur in all six.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "4800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1350",
+      "category": "housing",
+      "description": "Rent 2024-01"
+     },
+     {
+      "date": "2024-01-10",
+      "amount": "-135.00",
+      "category": "groceries",
+      "description": "Corner shop 1"
+     },
+     {
+      "date": "2024-01-19",
+      "amount": "-80.00",
+      "category": "dining",
+      "description": "Takeaway 1"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "4800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1350",
+      "category": "housing",
+      "description": "Rent 2024-02"
+     },
+     {
+      "date": "2024-02-10",
+      "amount": "-140.00",
+      "category": "groceries",
+      "description": "Corner shop 2"
+     },
+     {
+      "date": "2024-02-19",
+      "amount": "-83.00",
+      "category": "dining",
+      "description": "Takeaway 2"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "4800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1350",
+      "category": "housing",
+      "description": "Rent 2024-03"
+     },
+     {
+      "date": "2024-03-10",
+      "amount": "-145.00",
+      "category": "groceries",
+      "description": "Corner shop 3"
+     },
+     {
+      "date": "2024-03-19",
+      "amount": "-86.00",
+      "category": "dining",
+      "description": "Takeaway 3"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "4800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-1350",
+      "category": "housing",
+      "description": "Rent 2024-04"
+     },
+     {
+      "date": "2024-04-10",
+      "amount": "-150.00",
+      "category": "groceries",
+      "description": "Corner shop 4"
+     },
+     {
+      "date": "2024-04-19",
+      "amount": "-89.00",
+      "category": "dining",
+      "description": "Takeaway 4"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "4800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-1350",
+      "category": "housing",
+      "description": "Rent 2024-05"
+     },
+     {
+      "date": "2024-05-10",
+      "amount": "-155.00",
+      "category": "groceries",
+      "description": "Corner shop 5"
+     },
+     {
+      "date": "2024-05-19",
+      "amount": "-92.00",
+      "category": "dining",
+      "description": "Takeaway 5"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "4800",
+      "category": "salary",
+      "description": "Pay"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "-1350",
+      "category": "housing",
+      "description": "Rent 2024-06"
+     },
+     {
+      "date": "2024-06-10",
+      "amount": "-160.00",
+      "category": "groceries",
+      "description": "Corner shop 6"
+     },
+     {
+      "date": "2024-06-19",
+      "amount": "-95.00",
+      "category": "dining",
+      "description": "Takeaway 6"
+     },
+     {
+      "date": "2024-03-22",
+      "amount": "-2050",
+      "category": "travel",
+      "description": "Flight to Lisbon"
+     },
+     {
+      "date": "2024-06-18",
+      "amount": "-190",
+      "category": "travel",
+      "description": "Rail pass"
+     }
+    ],
+    "holdings": []
+   },
+   "labels": {
+    "anomaly:Flight to Lisbon": true,
+    "anomaly:Rail pass": false,
+    "anomaly:Corner shop 2": false
+   },
+   "split": "heldout"
+  },
+  {
    "id": "H-pf-001",
    "family": "portfolio",
    "tags": [
@@ -4326,8 +4946,7 @@
     "cap",
     "majority-negative"
    ],
-   "ambiguous": true,
-   "note": "7 months, 4 negative (57%): documented rule (strict majority) caps at 55; the code (cap only when < 34% of months are non-negative) does not. See D-hl-004.",
+   "note": "7 months, 4 negative (57%): a strict majority, so the documented rule caps at 55. Interpretation-dependent under dataset 1.0.0 while the code capped only below 34% non-negative; settled by D21 in favour of the documented rule. The expected value has not changed. See D-hl-004.",
    "description": "Seven months, four negative.",
    "truth": {
     "currency": "USD",
