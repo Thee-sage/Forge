@@ -1,15 +1,15 @@
 {
-  "datasetVersion": "1.1.0",
+  "datasetVersion": "1.2.0",
   "files": {
     "dev/dataset.json": {
-      "sha256": "afec1b9e2926ae130933c1b9cf672aafacd7ca16e75ecdbd1be2015af97c28b0",
-      "pipeline": 91,
+      "sha256": "cf182ec84aecea8f8b17be51e2f5962690adaf4b0d3a6bb6ea4a1db9faffc594",
+      "pipeline": 94,
       "cells": 39,
       "classify": 41
     },
     "heldout/dataset.json": {
-      "sha256": "b871a5818d57294aeec405039d0c5c2c2ccaf45d49cb0df9b2e63a57ef7519cc",
-      "pipeline": 156,
+      "sha256": "db1472aa3c28e2399119c2546c0f83b654b63833f4422b0e46212910972e0ab8",
+      "pipeline": 159,
       "cells": 34,
       "classify": 43
     }

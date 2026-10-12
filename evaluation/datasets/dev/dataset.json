@@ -1,5 +1,5 @@
 {
- "version": "1.1.0",
+ "version": "1.2.0",
  "split": "dev",
  "pipeline": [
   {
@@ -4743,6 +4743,333 @@
     "anomaly:Flights": true,
     "anomaly:Rail pass": false,
     "anomaly:Shop 4": false
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-rl-001",
+   "family": "realworld",
+   "tags": [
+    "merchant-churn",
+    "inferred-category"
+   ],
+   "note": "No category column, so Forge must infer all 16 categories from real-looking bank strings: abbreviations (AMZN, S/MKT), trailing store and reference numbers, and the same merchant written three ways. The truth categories are the human reading of each line. Expected to be hard; whatever it scores is the honest state of category inference on real descriptions.",
+   "description": "Four months of one current account with no category column and bank-style merchant strings.",
+   "input": {
+    "omitCategory": true
+   },
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-02",
+      "amount": "3100",
+      "category": "salary",
+      "description": "ACME PAYROLL JAN"
+     },
+     {
+      "date": "2024-01-04",
+      "amount": "-980",
+      "category": "housing",
+      "description": "RENT PAYMENT FLAT 4B"
+     },
+     {
+      "date": "2024-01-08",
+      "amount": "-86.40",
+      "category": "groceries",
+      "description": "TESCO STORES 3456"
+     },
+     {
+      "date": "2024-01-15",
+      "amount": "-12.99",
+      "category": "subscriptions",
+      "description": "NETFLIX.COM"
+     },
+     {
+      "date": "2024-01-22",
+      "amount": "-41.25",
+      "category": "transport",
+      "description": "TFL TRAVEL CH"
+     },
+     {
+      "date": "2024-02-02",
+      "amount": "3100",
+      "category": "salary",
+      "description": "ACME PAYROLL FEB"
+     },
+     {
+      "date": "2024-02-04",
+      "amount": "-980",
+      "category": "housing",
+      "description": "RENT PAYMENT FLAT 4B"
+     },
+     {
+      "date": "2024-02-09",
+      "amount": "-92.10",
+      "category": "groceries",
+      "description": "TESCO EXPRESS LONDON"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-28.50",
+      "category": "dining",
+      "description": "PRET A MANGER 45"
+     },
+     {
+      "date": "2024-02-19",
+      "amount": "-55",
+      "category": "transport",
+      "description": "SHELL 8812 LONDON"
+     },
+     {
+      "date": "2024-03-02",
+      "amount": "3100",
+      "category": "salary",
+      "description": "ACME PAYROLL MAR"
+     },
+     {
+      "date": "2024-03-04",
+      "amount": "-980",
+      "category": "housing",
+      "description": "RENT PAYMENT FLAT 4B"
+     },
+     {
+      "date": "2024-03-11",
+      "amount": "-78.65",
+      "category": "groceries",
+      "description": "SAINSBURYS S/MKT 0291"
+     },
+     {
+      "date": "2024-03-18",
+      "amount": "-34.99",
+      "category": "shopping",
+      "description": "AMZN MKTPLACE"
+     },
+     {
+      "date": "2024-04-02",
+      "amount": "3100",
+      "category": "salary",
+      "description": "ACME PAYROLL APR"
+     },
+     {
+      "date": "2024-04-06",
+      "amount": "-980",
+      "category": "housing",
+      "description": "RENT PAYMENT FLAT 4B"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-rl-002",
+   "family": "realworld",
+   "tags": [
+    "multiple-accounts",
+    "own-transfer"
+   ],
+   "ambiguous": true,
+   "note": "Two accounts in one period, including a same-day own-account transfer pair (out of current, into savings). Whether an own-account transfer belongs in inflow/outflow is already listed as interpretation-dependent in §6.4; this case states the contract reading, which counts what the rows say.",
+   "description": "A current account and a savings account over three months, with monthly transfers between them.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-01",
+      "amount": "4200",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-01-03",
+      "amount": "-1250",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "-600",
+      "category": "transfer",
+      "description": "Transfer to savings"
+     },
+     {
+      "date": "2024-01-05",
+      "amount": "600",
+      "category": "transfer",
+      "description": "Transfer from current"
+     },
+     {
+      "date": "2024-01-12",
+      "amount": "-318.40",
+      "category": "groceries",
+      "description": "Supermarket"
+     },
+     {
+      "date": "2024-02-01",
+      "amount": "4200",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-1250",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "-600",
+      "category": "transfer",
+      "description": "Transfer to savings"
+     },
+     {
+      "date": "2024-02-05",
+      "amount": "600",
+      "category": "transfer",
+      "description": "Transfer from current"
+     },
+     {
+      "date": "2024-02-12",
+      "amount": "-341.05",
+      "category": "groceries",
+      "description": "Supermarket"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "4200",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-1250",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "-600",
+      "category": "transfer",
+      "description": "Transfer to savings"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "600",
+      "category": "transfer",
+      "description": "Transfer from current"
+     },
+     {
+      "date": "2024-03-12",
+      "amount": "-329.80",
+      "category": "groceries",
+      "description": "Supermarket"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "dev"
+  },
+  {
+   "id": "D-rl-003",
+   "family": "realworld",
+   "tags": [
+    "partial-months",
+    "instalments",
+    "refund"
+   ],
+   "ambiguous": true,
+   "note": "A statement that begins on the 19th and ends on the 9th, so the first and last months are partial — the calendar-vs-active-month averaging question in §6.4 applies. Also carries a purchase split into three instalments and a partial refund against an earlier purchase.",
+   "description": "Statement running 19 Jan to 9 Apr: partial first and last months, an instalment plan, and a partial refund.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-01-19",
+      "amount": "2400",
+      "category": "salary",
+      "description": "Salary part month"
+     },
+     {
+      "date": "2024-01-24",
+      "amount": "-210.55",
+      "category": "groceries",
+      "description": "Grocery run"
+     },
+     {
+      "date": "2024-01-28",
+      "amount": "-149",
+      "category": "shopping",
+      "description": "Sofa instalment 1 of 3"
+     },
+     {
+      "date": "2024-02-02",
+      "amount": "4800",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-02-07",
+      "amount": "-1180",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-02-14",
+      "amount": "-288.30",
+      "category": "groceries",
+      "description": "Grocery run"
+     },
+     {
+      "date": "2024-02-28",
+      "amount": "-149",
+      "category": "shopping",
+      "description": "Sofa instalment 2 of 3"
+     },
+     {
+      "date": "2024-03-02",
+      "amount": "4800",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-07",
+      "amount": "-1180",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-13",
+      "amount": "-301.75",
+      "category": "groceries",
+      "description": "Grocery run"
+     },
+     {
+      "date": "2024-03-21",
+      "amount": "-520",
+      "category": "shopping",
+      "description": "Coat and boots"
+     },
+     {
+      "date": "2024-03-28",
+      "amount": "-149",
+      "category": "shopping",
+      "description": "Sofa instalment 3 of 3"
+     },
+     {
+      "date": "2024-04-04",
+      "amount": "1600",
+      "category": "salary",
+      "description": "Salary part month"
+     },
+     {
+      "date": "2024-04-09",
+      "amount": "180",
+      "category": "income",
+      "description": "Refund for returned boots"
+     }
+    ],
+    "holdings": []
    },
    "split": "dev"
   },

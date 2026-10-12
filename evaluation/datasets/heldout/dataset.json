@@ -1,5 +1,5 @@
 {
- "version": "1.1.0",
+ "version": "1.2.0",
  "split": "heldout",
  "pipeline": [
   {
@@ -4069,6 +4069,381 @@
     "anomaly:Flight to Lisbon": true,
     "anomaly:Rail pass": false,
     "anomaly:Corner shop 2": false
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "H-rl-001",
+   "family": "realworld",
+   "tags": [
+    "merchant-churn",
+    "inferred-category"
+   ],
+   "note": "No category column; categories must be inferred from real-looking bank strings. Different merchants and abbreviation styles from D-rl-001.",
+   "description": "Four months of one current account with no category column and bank-style merchant strings.",
+   "input": {
+    "omitCategory": true
+   },
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-02-01",
+      "amount": "2750",
+      "category": "salary",
+      "description": "NORTHWIND SALARY FEB"
+     },
+     {
+      "date": "2024-02-03",
+      "amount": "-865",
+      "category": "housing",
+      "description": "MONTHLY RENT 12A"
+     },
+     {
+      "date": "2024-02-07",
+      "amount": "-74.20",
+      "category": "groceries",
+      "description": "ALDI STORES 1102"
+     },
+     {
+      "date": "2024-02-13",
+      "amount": "-9.99",
+      "category": "subscriptions",
+      "description": "SPOTIFY P1BC4D"
+     },
+     {
+      "date": "2024-02-20",
+      "amount": "-36.80",
+      "category": "transport",
+      "description": "RAIL TICKET MACHINE"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "2750",
+      "category": "salary",
+      "description": "NORTHWIND SALARY MAR"
+     },
+     {
+      "date": "2024-03-03",
+      "amount": "-865",
+      "category": "housing",
+      "description": "MONTHLY RENT 12A"
+     },
+     {
+      "date": "2024-03-08",
+      "amount": "-81.45",
+      "category": "groceries",
+      "description": "ALDI SUPERMARKET 889"
+     },
+     {
+      "date": "2024-03-16",
+      "amount": "-22.40",
+      "category": "dining",
+      "description": "COSTA COFFEE 221"
+     },
+     {
+      "date": "2024-03-24",
+      "amount": "-48.50",
+      "category": "transport",
+      "description": "BP SERVICE STN 4471"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "2750",
+      "category": "salary",
+      "description": "NORTHWIND SALARY APR"
+     },
+     {
+      "date": "2024-04-03",
+      "amount": "-865",
+      "category": "housing",
+      "description": "MONTHLY RENT 12A"
+     },
+     {
+      "date": "2024-04-10",
+      "amount": "-69.95",
+      "category": "groceries",
+      "description": "LIDL GB 0774"
+     },
+     {
+      "date": "2024-04-18",
+      "amount": "-27.50",
+      "category": "shopping",
+      "description": "ARGOS RETAIL 3310"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "2750",
+      "category": "salary",
+      "description": "NORTHWIND SALARY MAY"
+     },
+     {
+      "date": "2024-05-03",
+      "amount": "-865",
+      "category": "housing",
+      "description": "MONTHLY RENT 12A"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "H-rl-002",
+   "family": "realworld",
+   "tags": [
+    "multiple-accounts",
+    "own-transfer"
+   ],
+   "ambiguous": true,
+   "note": "Held-out twin of D-rl-002: two accounts and a monthly own-account transfer pair, scored against the contract reading (§6.4).",
+   "description": "A current account and an instant-access saver over four months, with monthly transfers between them.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-03-01",
+      "amount": "3650",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-04",
+      "amount": "-1095",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-06",
+      "amount": "-450",
+      "category": "transfer",
+      "description": "Standing order to saver"
+     },
+     {
+      "date": "2024-03-06",
+      "amount": "450",
+      "category": "transfer",
+      "description": "Standing order from current"
+     },
+     {
+      "date": "2024-03-15",
+      "amount": "-276.55",
+      "category": "groceries",
+      "description": "Supermarket"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "3650",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-04",
+      "amount": "-1095",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-06",
+      "amount": "-450",
+      "category": "transfer",
+      "description": "Standing order to saver"
+     },
+     {
+      "date": "2024-04-06",
+      "amount": "450",
+      "category": "transfer",
+      "description": "Standing order from current"
+     },
+     {
+      "date": "2024-04-15",
+      "amount": "-289.90",
+      "category": "groceries",
+      "description": "Supermarket"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "3650",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-04",
+      "amount": "-1095",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-06",
+      "amount": "-450",
+      "category": "transfer",
+      "description": "Standing order to saver"
+     },
+     {
+      "date": "2024-05-06",
+      "amount": "450",
+      "category": "transfer",
+      "description": "Standing order from current"
+     },
+     {
+      "date": "2024-05-15",
+      "amount": "-301.20",
+      "category": "groceries",
+      "description": "Supermarket"
+     },
+     {
+      "date": "2024-06-01",
+      "amount": "3650",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-06-04",
+      "amount": "-1095",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-06-06",
+      "amount": "-450",
+      "category": "transfer",
+      "description": "Standing order to saver"
+     },
+     {
+      "date": "2024-06-06",
+      "amount": "450",
+      "category": "transfer",
+      "description": "Standing order from current"
+     },
+     {
+      "date": "2024-06-15",
+      "amount": "-294.75",
+      "category": "groceries",
+      "description": "Supermarket"
+     }
+    ],
+    "holdings": []
+   },
+   "split": "heldout"
+  },
+  {
+   "id": "H-rl-003",
+   "family": "realworld",
+   "tags": [
+    "partial-months",
+    "instalments",
+    "refund"
+   ],
+   "ambiguous": true,
+   "note": "Held-out twin of D-rl-003: a statement starting on the 23rd and ending on the 6th, an instalment plan and a partial refund.",
+   "description": "Statement running 23 Feb to 6 Jun: partial first and last months, an instalment plan, and a partial refund.",
+   "truth": {
+    "currency": "USD",
+    "txns": [
+     {
+      "date": "2024-02-23",
+      "amount": "1900",
+      "category": "salary",
+      "description": "Salary part month"
+     },
+     {
+      "date": "2024-02-27",
+      "amount": "-186.40",
+      "category": "groceries",
+      "description": "Grocery run"
+     },
+     {
+      "date": "2024-03-01",
+      "amount": "-232",
+      "category": "shopping",
+      "description": "Mattress instalment 1 of 3"
+     },
+     {
+      "date": "2024-03-05",
+      "amount": "5100",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-03-09",
+      "amount": "-1320",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-03-17",
+      "amount": "-264.85",
+      "category": "groceries",
+      "description": "Grocery run"
+     },
+     {
+      "date": "2024-04-01",
+      "amount": "-232",
+      "category": "shopping",
+      "description": "Mattress instalment 2 of 3"
+     },
+     {
+      "date": "2024-04-05",
+      "amount": "5100",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-04-09",
+      "amount": "-1320",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-04-16",
+      "amount": "-279.30",
+      "category": "groceries",
+      "description": "Grocery run"
+     },
+     {
+      "date": "2024-04-27",
+      "amount": "-615",
+      "category": "shopping",
+      "description": "Winter clothing"
+     },
+     {
+      "date": "2024-05-01",
+      "amount": "-232",
+      "category": "shopping",
+      "description": "Mattress instalment 3 of 3"
+     },
+     {
+      "date": "2024-05-05",
+      "amount": "5100",
+      "category": "salary",
+      "description": "Salary"
+     },
+     {
+      "date": "2024-05-09",
+      "amount": "-1320",
+      "category": "housing",
+      "description": "Rent"
+     },
+     {
+      "date": "2024-05-19",
+      "amount": "-288.15",
+      "category": "groceries",
+      "description": "Grocery run"
+     },
+     {
+      "date": "2024-06-03",
+      "amount": "1700",
+      "category": "salary",
+      "description": "Salary part month"
+     },
+     {
+      "date": "2024-06-06",
+      "amount": "240",
+      "category": "income",
+      "description": "Refund for returned clothing"
+     }
+    ],
+    "holdings": []
    },
    "split": "heldout"
   },

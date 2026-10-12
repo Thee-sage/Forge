@@ -19,7 +19,9 @@
     "clean": "rimraf dist",
     "validate:accuracy": "tsx evaluation/run.ts",
     "eval:build-datasets": "tsx evaluation/datasets/src/build.ts",
-    "validate:accuracy:compare": "tsx evaluation/compare.ts"
+    "validate:accuracy:compare": "tsx evaluation/compare.ts",
+    "validate:accuracy:verify": "tsx evaluation/verify-artifacts.ts",
+    "eval:label-pack": "tsx evaluation/label-pack.ts"
   },
   "keywords": [
     "finance",

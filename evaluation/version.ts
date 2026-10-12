@@ -5,7 +5,7 @@
  */
 export const EVALUATOR_VERSION = "1.0.3";
 /** Bump when any case in evaluation/datasets/{dev,heldout} changes. Checked against MANIFEST.json. */
-export const DATASET_VERSION = "1.1.0";
+export const DATASET_VERSION = "1.2.0";
 /** Bump when a labelling rubric (docs/ACCURACY_VALIDATION.md §5) changes. */
 export const RUBRIC_VERSION = "1.1.0";
 /** Bump when a formula in evaluation/oracle/** or a tolerance in metrics.ts changes. */

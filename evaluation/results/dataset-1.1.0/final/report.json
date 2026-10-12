@@ -8,13 +8,13 @@
     "label": "final"
   },
   "environment": {
-    "note": "Dataset 1.1.0 / oracle 1.1.0 final: Forge at commit e1dfa89 plus the samples/docs additions, after the D21/D22/D23 fixes.",
+    "note": "Dataset 1.1.0 / oracle 1.1.0 final: measured from a clean checkout of ae34cce, after the D21/D22/D23 fixes. Reproducible from git at that commit.",
     "node": "v22.22.1",
     "platform": "win32",
-    "forgeCommit": "e1dfa89",
-    "forgeSourceModified": true,
-    "generatedAt": "2026-10-12T17:07:47.771Z",
-    "runtimeMs": 7407
+    "forgeCommit": "ae34cce",
+    "forgeSourceModified": false,
+    "generatedAt": "2026-10-12T18:47:14.483Z",
+    "runtimeMs": 5370
   },
   "integrity": {
     "ok": true,

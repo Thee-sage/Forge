@@ -366,6 +366,78 @@ const pipeline: PipelineCase[] = [
     labels: { "anomaly:Flights": true, "anomaly:Rail pass": false, "anomaly:Shop 4": false },
   }),
 
+  // --------------------------------------------------- realistic statement shapes (dev)
+  // Authored to resemble real exports rather than to pass: bank descriptions are abbreviated
+  // and inconsistent, statements start and end mid-month, and people hold more than one
+  // account. ACCURACY_VALIDATION §10 lists exactly these shapes as absent from the benchmark.
+  c({
+    id: "D-rl-001", family: "realworld", tags: ["merchant-churn", "inferred-category"],
+    note: "No category column, so Forge must infer all 16 categories from real-looking bank strings: abbreviations (AMZN, S/MKT), trailing store and reference numbers, and the same merchant written three ways. The truth categories are the human reading of each line. Expected to be hard; whatever it scores is the honest state of category inference on real descriptions.",
+    description: "Four months of one current account with no category column and bank-style merchant strings.",
+    input: { omitCategory: true },
+    truth: truth(T(
+      "2024-01-02 +3100 salary ACME PAYROLL JAN",
+      "2024-01-04 -980 housing RENT PAYMENT FLAT 4B",
+      "2024-01-08 -86.40 groceries TESCO STORES 3456",
+      "2024-01-15 -12.99 subscriptions NETFLIX.COM",
+      "2024-01-22 -41.25 transport TFL TRAVEL CH",
+      "2024-02-02 +3100 salary ACME PAYROLL FEB",
+      "2024-02-04 -980 housing RENT PAYMENT FLAT 4B",
+      "2024-02-09 -92.10 groceries TESCO EXPRESS LONDON",
+      "2024-02-14 -28.50 dining PRET A MANGER 45",
+      "2024-02-19 -55 transport SHELL 8812 LONDON",
+      "2024-03-02 +3100 salary ACME PAYROLL MAR",
+      "2024-03-04 -980 housing RENT PAYMENT FLAT 4B",
+      "2024-03-11 -78.65 groceries SAINSBURYS S/MKT 0291",
+      "2024-03-18 -34.99 shopping AMZN MKTPLACE",
+      "2024-04-02 +3100 salary ACME PAYROLL APR",
+      "2024-04-06 -980 housing RENT PAYMENT FLAT 4B",
+    )),
+  }),
+  c({
+    id: "D-rl-002", family: "realworld", tags: ["multiple-accounts", "own-transfer"], ambiguous: true,
+    note: "Two accounts in one period, including a same-day own-account transfer pair (out of current, into savings). Whether an own-account transfer belongs in inflow/outflow is already listed as interpretation-dependent in §6.4; this case states the contract reading, which counts what the rows say.",
+    description: "A current account and a savings account over three months, with monthly transfers between them.",
+    truth: truth(T(
+      "2024-01-01 +4200 salary Salary",
+      "2024-01-03 -1250 housing Rent",
+      "2024-01-05 -600 transfer Transfer to savings",
+      "2024-01-05 +600 transfer Transfer from current",
+      "2024-01-12 -318.40 groceries Supermarket",
+      "2024-02-01 +4200 salary Salary",
+      "2024-02-03 -1250 housing Rent",
+      "2024-02-05 -600 transfer Transfer to savings",
+      "2024-02-05 +600 transfer Transfer from current",
+      "2024-02-12 -341.05 groceries Supermarket",
+      "2024-03-01 +4200 salary Salary",
+      "2024-03-03 -1250 housing Rent",
+      "2024-03-05 -600 transfer Transfer to savings",
+      "2024-03-05 +600 transfer Transfer from current",
+      "2024-03-12 -329.80 groceries Supermarket",
+    )),
+  }),
+  c({
+    id: "D-rl-003", family: "realworld", tags: ["partial-months", "instalments", "refund"], ambiguous: true,
+    note: "A statement that begins on the 19th and ends on the 9th, so the first and last months are partial — the calendar-vs-active-month averaging question in §6.4 applies. Also carries a purchase split into three instalments and a partial refund against an earlier purchase.",
+    description: "Statement running 19 Jan to 9 Apr: partial first and last months, an instalment plan, and a partial refund.",
+    truth: truth(T(
+      "2024-01-19 +2400 salary Salary part month",
+      "2024-01-24 -210.55 groceries Grocery run",
+      "2024-01-28 -149 shopping Sofa instalment 1 of 3",
+      "2024-02-02 +4800 salary Salary",
+      "2024-02-07 -1180 housing Rent",
+      "2024-02-14 -288.30 groceries Grocery run",
+      "2024-02-28 -149 shopping Sofa instalment 2 of 3",
+      "2024-03-02 +4800 salary Salary",
+      "2024-03-07 -1180 housing Rent",
+      "2024-03-13 -301.75 groceries Grocery run",
+      "2024-03-21 -520 shopping Coat and boots",
+      "2024-03-28 -149 shopping Sofa instalment 3 of 3",
+      "2024-04-04 +1600 salary Salary part month",
+      "2024-04-09 +180 income Refund for returned boots",
+    )),
+  }),
+
   // ------------------------------------------------------------------ portfolio
   c({
     id: "D-pf-001", family: "portfolio", tags: ["equal-weights", "hand-calculated"],
