@@ -56,6 +56,19 @@ function tokenized(s: string): string {
   return ` ${s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim()} `;
 }
 
+/**
+ * The forms of a keyword that count as the same word. Rule 1 matches whole tokens, which on its
+ * own meant a plural in the description no longer matched a singular keyword — "Bank charges"
+ * and "Monthly account fees" fell through to `uncategorized`, which substring matching had
+ * caught. Only the final word is inflected, and the *keyword's own* length is what rule 2
+ * compares, so pluralisation never changes which keyword wins.
+ */
+function wordForms(kw: string): string[] {
+  const forms = [kw];
+  forms.push(kw.endsWith("s") ? kw.slice(0, -1) : `${kw}s`);
+  return forms;
+}
+
 function contradicts(category: string, direction?: "inflow" | "outflow"): boolean {
   if (direction === undefined) return false;
   return direction === "outflow" ? INFLOW_ONLY.has(category) : OUTFLOW_ONLY.has(category);
@@ -75,10 +88,9 @@ export function categorize(
   for (const [category, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
     if (contradicts(category, direction)) continue;
     for (const kw of keywords) {
-      const needle = tokenized(kw);
-      if (!text.includes(needle)) continue;
-      // `needle` is padded on both sides, so its inner length is the keyword's own length.
-      const length = needle.length - 2;
+      if (!wordForms(kw).some((form) => text.includes(tokenized(form)))) continue;
+      // The declared keyword's own length decides precedence, not the form that matched.
+      const length = tokenized(kw).length - 2;
       if (best === undefined || length > best.length) best = { category, keyword: kw, length };
     }
   }

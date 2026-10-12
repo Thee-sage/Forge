@@ -85,3 +85,29 @@ describe("unchanged behaviour the rules must not disturb", () => {
     expect(cat("Zzyzx 4417")).toBe("uncategorized");
   });
 });
+
+describe("rule 1, corrected — a plural in the description matches a singular keyword (D24)", () => {
+  // D23's token-boundary rule removed the substring match that used to catch these, so they
+  // regressed to `uncategorized` between the D23 commit and D24. Each of these fails on e1dfa89.
+  it.each([
+    ["Bank charges", "fees"],
+    ["Monthly account fees", "fees"],
+    ["Overdraft charges", "fees"],
+    ["Cinema tickets for two movies", "entertainment"],
+  ])("categorizes %s as %s", (text, expected) => {
+    expect(cat(text, "outflow")).toBe(expected);
+  });
+
+  it("keeps a singular keyword working", () => {
+    expect(cat("Late payment fee", "outflow")).toBe("fees");
+  });
+
+  it("does not let pluralisation change which keyword wins", () => {
+    // "gas bill" must still outrank "gas" even when the text says "bills".
+    expect(cat("Quarterly gas bills", "outflow")).toBe("utilities");
+  });
+
+  it("does not mangle a keyword that simply ends in s", () => {
+    expect(cat("Filled up with gas", "outflow")).toBe("transport");
+  });
+});
