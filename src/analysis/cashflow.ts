@@ -16,6 +16,19 @@ export function analyzeCashflow(model: FinancialModel): AnalysisResult {
 
   const findings: Finding[] = [];
 
+  // The savings rate is net / income, which is undefined without income. The metric is reported
+  // as 0 (its key is part of the contract), so say plainly that 0 means "not measurable".
+  if (inflow === 0) {
+    findings.push({
+      severity: "info",
+      message:
+        outflow > 0
+          ? "Savings rate is undefined: no income was recorded in the period, so 0% here means not measurable, not break-even."
+          : "No transactions were provided; cash-flow measures are not available.",
+      evidence: outflow > 0 ? [{ label: "outflow", detail: formatMoney(outflow, cur), value: outflow }] : [],
+    });
+  }
+
   // Negative-net months.
   const negativeMonths = flows.filter((f) => f.net < 0);
   if (negativeMonths.length > 0) {

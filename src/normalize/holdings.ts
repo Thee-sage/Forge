@@ -1,6 +1,6 @@
 import type { AssetClass, Holding } from "../core/model.js";
 import { parseAmount } from "../core/money.js";
-import { normalizeCurrencyCode } from "../core/currency.js";
+import { currencyInAmountText, normalizeCurrencyCode } from "../core/currency.js";
 import type { RawTable } from "../ingestion/types.js";
 import { cellString, HOLDING_ALIASES, resolveColumns } from "./columns.js";
 import type { SkippedRow } from "./skipped.js";
@@ -12,16 +12,24 @@ export interface NormalizeHoldingResult {
   skippedDetails: SkippedRow[];
 }
 
-/** Map a free-text asset-class/sector label onto a canonical AssetClass. */
+/**
+ * Map a free-text asset-class/sector label onto a canonical AssetClass.
+ *
+ * Order matters. Specific classes are tested before the generic wrappers "fund" / "ETF", which
+ * only decide when nothing more specific matched: a "Money Market Fund" is cash, a "Bond ETF" is
+ * fixed income, a "Gold ETF" is a commodity and a "Hedge Fund" / "Private Equity" holding is
+ * alternative (none of them plain equity).
+ */
 export function classifyAssetClass(raw: string): AssetClass {
   const t = raw.toLowerCase();
-  if (/equit|stock|share|etf|fund/.test(t)) return "equity";
+  if (/hedge|private equity|private|venture|alternative/.test(t)) return "alternative";
+  if (/equit|stock|share/.test(t)) return "equity";
   if (/bond|fixed|treasur|gilt|debt|note/.test(t)) return "fixed_income";
   if (/cash|money market|savings|deposit/.test(t)) return "cash";
-  if (/real estate|reit|property/.test(t)) return "real_estate";
+  if (/real[ _-]?estate|reit|property/.test(t)) return "real_estate";
   if (/gold|silver|oil|commodit|metal/.test(t)) return "commodity";
   if (/crypto|bitcoin|btc|eth|token/.test(t)) return "crypto";
-  if (/hedge|private|alternative|venture/.test(t)) return "alternative";
+  if (/etf|fund/.test(t)) return "equity";
   return "unknown";
 }
 
@@ -52,6 +60,9 @@ export function normalizeHoldings(
     return { holdings, warnings, skipped: details.length, skippedDetails: details };
   }
 
+  const inconsistent: string[] = [];
+  const unrecognisedCurrencies = new Set<string>();
+
   table.rows.forEach((row, i) => {
     const symbol = cellString(row, cols.symbol);
     const name = cellString(row, cols.name) || symbol || "(unnamed)";
@@ -73,10 +84,25 @@ export function normalizeHoldings(
       return;
     }
 
+    // A stated value that disagrees with quantity x price is contradictory: the stated value is
+    // used (it is what the source calls the market value) but the conflict is reported.
+    if (parseAmount(row[cols.value ?? ""]) !== undefined && quantity > 0 && price > 0) {
+      const implied = quantity * price;
+      if (Math.abs(value - implied) > Math.max(0.01, 0.005 * Math.max(value, implied))) {
+        inconsistent.push(`${symbol || name} (value ${value} vs ${quantity} x ${price} = ${implied})`);
+      }
+    }
+
     const assetClassRaw = cellString(row, cols.assetClass);
     const assetClass = classifyAssetClass(assetClassRaw || name);
+    const currencyCell = cellString(row, cols.currency);
+    const cellCode = normalizeCurrencyCode(currencyCell);
+    if (currencyCell !== "" && cellCode === undefined) unrecognisedCurrencies.add(currencyCell);
     const currency =
-      normalizeCurrencyCode(cellString(row, cols.currency)) ?? defaultCurrency;
+      cellCode ??
+      currencyInAmountText(row[cols.value ?? ""]) ??
+      currencyInAmountText(row[cols.price ?? ""]) ??
+      defaultCurrency;
 
     holdings.push({
       id: `${table.name}#${i}`,
@@ -91,6 +117,17 @@ export function normalizeHoldings(
       raw: row,
     });
   });
+
+  if (inconsistent.length > 0) {
+    warnings.push(
+      `Table "${table.name}": ${inconsistent.length} holding(s) have a stated value that contradicts quantity x price (${inconsistent.slice(0, 3).join("; ")}); the stated value was used. Verify the source.`,
+    );
+  }
+  if (unrecognisedCurrencies.size > 0) {
+    warnings.push(
+      `Table "${table.name}": unrecognised currency value(s) ${[...unrecognisedCurrencies].slice(0, 3).map((c) => `"${c}"`).join(", ")}; those holdings are assumed to be ${defaultCurrency}. Verify the currency before relying on totals.`,
+    );
+  }
 
   if (skippedDetails.length > 0) {
     warnings.push(

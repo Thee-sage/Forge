@@ -1,5 +1,5 @@
 import { basename, extname } from "node:path";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import XLSX from "xlsx";
 import type { RawRecord } from "../core/model.js";
 import { ForgeError } from "../core/errors.js";
@@ -29,7 +29,15 @@ export function ingest(path: string): RawTable[] {
 
   let workbook: XLSX.WorkBook;
   try {
-    workbook = XLSX.readFile(path, { cellDates: true, raw: true });
+    if (ext === ".csv" || ext === ".tsv") {
+      // Delimited text is UTF-8. Letting SheetJS read the bytes itself decodes them as Latin-1,
+      // which turns "€" into "â¬" and silently corrupts currency symbols, merchant names and
+      // categories. Decode explicitly (dropping a BOM) and hand SheetJS the string.
+      const text = readFileSync(path, "utf8").replace(/^\uFEFF/, "");
+      workbook = XLSX.read(text, { type: "string", cellDates: true, raw: true, ...(ext === ".tsv" ? { FS: "\t" } : {}) });
+    } else {
+      workbook = XLSX.readFile(path, { cellDates: true, raw: true });
+    }
   } catch (err) {
     throw new IngestionError(
       `Failed to read ${path}: ${(err as Error).message}`,

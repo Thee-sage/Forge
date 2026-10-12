@@ -119,6 +119,10 @@ export function renderScenario(scenario: ScenarioResult, currency: string): stri
       `  ${d.label.padEnd(24)} ${fmt(d.baseline).padStart(14)} ${fmt(d.scenario).padStart(14)} ${colored.padStart(12)}`,
     );
   }
+  // A metric Forge could not compute on one side is shown as such, never as a zero.
+  for (const u of scenario.unavailable) {
+    lines.push(chalk.dim(`  ${u.label.padEnd(24)} ${"—".padStart(14)} ${"—".padStart(14)} ${"n/a".padStart(12)}  (${u.reason})`));
+  }
   return lines.join("\n");
 }
 

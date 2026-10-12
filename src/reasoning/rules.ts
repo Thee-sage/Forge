@@ -1,5 +1,7 @@
 import type { FinancialModel } from "../core/model.js";
 import { formatMoney, formatPercent } from "../core/money.js";
+import { monthlyFlows, periodHalves } from "../analysis/aggregates.js";
+import { dataAvailability } from "../analysis/validate.js";
 import {
   findMetric,
   type AnalysisResult,
@@ -36,29 +38,58 @@ function evidenceFrom(results: AnalysisResult[], moduleName: string, n = 3): Evi
 }
 
 export const RULES: ReasoningRule[] = [
-  // 1. Declining cash flow explained by a rising spend category.
+  // 1. Declining cash flow, attributed only to a cause the data shows.
   {
     id: "cashflow-decline-driver",
-    evaluate({ results }) {
+    evaluate({ results, model }) {
       const trendSlope = findMetric(results, "cashflow", "trendSlope") ?? 0;
       if (trendSlope >= -0.15) return null; // not meaningfully declining
+      // A "trend" needs at least four months of history (the cash-flow module's own rule).
+      if (dataAvailability(model).monthsCovered < 4) return null;
+
+      // What actually moved? Compare per-month income and spending between the two halves, so a
+      // decline caused by lower INCOME is never described as rising SPENDING (or vice versa).
+      const halves = periodHalves(monthlyFlows(model.transactions));
+      const perMonth = (w: { months: string[]; inflow: number; outflow: number }) => ({
+        inflow: w.inflow / w.months.length,
+        outflow: w.outflow / w.months.length,
+      });
+      const early = halves ? perMonth(halves.earlier) : undefined;
+      const recent = halves ? perMonth(halves.recent) : undefined;
+      const spendingUp = early !== undefined && recent !== undefined && recent.outflow > early.outflow + 1e-9;
+      const incomeDown = early !== undefined && recent !== undefined && recent.inflow < early.inflow - 1e-9;
 
       const trend = results.find((r) => r.module === "trend");
-      const topRise = trend?.evidence.find((e) => (e.value ?? 0) > 0);
+      const topRise = spendingUp ? trend?.evidence.find((e) => (e.value ?? 0) > 0) : undefined;
       const drivers: string[] = [];
-      let why = "Net cash flow is trending down.";
-      if (topRise) {
-        drivers.push(`rising ${topRise.label} spend`);
-        why = `Net cash flow is trending down, and the largest coincident change is rising "${topRise.label}" spending (${topRise.detail}).`;
+      const parts: string[] = ["Net cash flow is trending down."];
+      if (spendingUp) {
+        if (topRise) {
+          drivers.push(`rising ${topRise.label} spend`);
+          parts.push(`Average monthly spending rose, and the largest rising category is "${topRise.label}" (${topRise.detail}).`);
+        } else {
+          drivers.push("higher outflow in the recent period");
+          parts.push("Average monthly spending was higher in the recent period.");
+        }
       }
+      if (incomeDown) {
+        drivers.push("lower income in the recent period");
+        parts.push("Average monthly income was lower in the recent period.");
+      }
+      if (drivers.length === 0) drivers.push("net cash flow fell without a single identified driver");
+
+      // Evidence for the claim itself: the earlier-vs-recent comparison the cash-flow module published.
+      const cashflow = results.find((r) => r.module === "cashflow");
+      const trendFinding = cashflow?.findings.find((f) => /trending down/.test(f.message));
+      const decline = (trendFinding?.evidence ?? []).map((e) => ({ ...e, module: "cashflow" }));
       const evidence = [
-        ...evidenceFrom(results, "cashflow", 2),
+        ...(decline.length > 0 ? decline : evidenceFrom(results, "cashflow", 2)),
         ...(topRise ? [{ ...topRise, module: "trend" }] : []),
       ];
       return {
         headline: "Cash flow is weakening",
-        explanation: why,
-        drivers: drivers.length ? drivers : ["higher outflow in the recent period"],
+        explanation: parts.join(" "),
+        drivers,
         severity: "warning",
         evidence,
         basis: ["cashflow", "trend"],
@@ -97,19 +128,23 @@ export const RULES: ReasoningRule[] = [
   // 3. Concentration risk — based on non-cash (market-risk) concentration.
   {
     id: "portfolio-concentration",
-    evaluate({ results }) {
+    evaluate({ results, model }) {
       const riskHhi = findMetric(results, "concentration", "riskHhi") ?? 0;
       const topNonCash = findMetric(results, "concentration", "topNonCashWeight") ?? 0;
       if (riskHhi < 0.25 && topNonCash < 0.35) return null;
 
+      // Cash is excluded from market concentration (D10), so it can never be the "driver":
+      // the evidence list is ordered by weight and may lead with a cash position.
+      const cashLabels = new Set(model.holdings.filter((h) => h.assetClass === "cash").map((h) => h.symbol || h.name));
       const conc = results.find((r) => r.module === "concentration");
-      const top = conc?.evidence.find((e) => (e.value ?? 0) > 0);
+      const investments = (conc?.evidence ?? []).filter((e) => !cashLabels.has(e.label));
+      const top = investments.find((e) => (e.value ?? 0) > 0);
       return {
         headline: "Portfolio concentration is elevated",
         explanation: `Market concentration (non-cash HHI ${riskHhi.toFixed(2)}) is above the diversified range${top ? `, driven mainly by ${top.label} at ${top.detail}` : ""}. A shock to that position would move most of the portfolio.`,
         drivers: [top ? `oversized ${top.label} position` : "few large investments"],
         severity: riskHhi > 0.5 ? "critical" : "warning",
-        evidence: evidenceFrom(results, "concentration", 3),
+        evidence: investments.slice(0, 3).map((e) => ({ ...e, module: "concentration" })),
         basis: ["concentration"],
         confidence: 0.8,
       };
@@ -140,14 +175,17 @@ export const RULES: ReasoningRule[] = [
     id: "anomaly-impact",
     evaluate({ results, model }) {
       const count = findMetric(results, "anomaly", "anomalies") ?? 0;
-      const largest = findMetric(results, "anomaly", "largest") ?? 0;
+      // The charge in question is the largest FLAGGED outlier. The largest outflow overall is often
+      // a recurring commitment such as rent, which is by definition not a one-off.
+      const flagged = (results.find((r) => r.module === "anomaly")?.evidence ?? []).map((e) => e.value ?? 0);
+      const largest = flagged.length > 0 ? Math.max(...flagged) : 0;
       if (count === 0 || largest === 0) return null;
       const outflow = findMetric(results, "expenditure", "totalOutflow") ?? 0;
       const share = outflow > 0 ? largest / outflow : 0;
       if (share < 0.1) return null;
       return {
         headline: "A large one-off charge skews the period",
-        explanation: `The single largest outflow (${formatMoney(largest, model.currency)}) is ${formatPercent(share)} of all spending. Period averages and trends are sensitive to it; consider whether it is recurring or exceptional.`,
+        explanation: `The largest flagged outlier (${formatMoney(largest, model.currency)}) is ${formatPercent(share)} of all spending. Period averages and trends are sensitive to it; consider whether it is recurring or exceptional.`,
         drivers: ["outsized individual transaction"],
         severity: share > 0.25 ? "warning" : "notice",
         evidence: evidenceFrom(results, "anomaly", 2),
@@ -160,10 +198,12 @@ export const RULES: ReasoningRule[] = [
   // 6. Positive reinforcement — strong health.
   {
     id: "healthy-position",
-    evaluate({ results }) {
+    evaluate({ results, model }) {
       const score = findMetric(results, "health", "score");
       const savingsRate = findMetric(results, "cashflow", "savingsRate") ?? 0;
       if (score === undefined || score < 70 || savingsRate < 0.2) return null;
+      // One or two good months are not a "strong footing": require at least three months of data.
+      if (dataAvailability(model).monthsCovered < 3) return null;
       return {
         headline: "Finances are on a strong footing",
         explanation: `Health score is ${score}/100 with a ${formatPercent(savingsRate)} savings rate — income comfortably exceeds spending and reserves are being built.`,

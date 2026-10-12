@@ -55,7 +55,10 @@ export function analyzeTrends(model: FinancialModel): AnalysisResult {
     const rising = c.delta > 0;
     findings.push({
       severity: rising && c.pct > 0.5 ? "warning" : "notice",
-      message: `Monthly "${c.category}" spending ${rising ? "rose" : "fell"} ${formatPercent(Math.abs(c.pct))} (${formatMoney(c.early, cur)} → ${formatMoney(c.recent, cur)} per month).`,
+      message:
+        c.early === 0
+          ? `Monthly "${c.category}" spending rose from nothing to ${formatMoney(c.recent, cur)} per month (new category).`
+          : `Monthly "${c.category}" spending ${rising ? "rose" : "fell"} ${formatPercent(Math.abs(c.pct))} (${formatMoney(c.early, cur)} → ${formatMoney(c.recent, cur)} per month).`,
       evidence: [
         { label: "earlier avg", detail: formatMoney(c.early, cur), value: c.early },
         { label: "recent avg", detail: formatMoney(c.recent, cur), value: c.recent },
@@ -74,7 +77,7 @@ export function analyzeTrends(model: FinancialModel): AnalysisResult {
     findings,
     evidence: changes.slice(0, 8).map((c) => ({
       label: c.category,
-      detail: `${formatMoney(c.early, cur)} → ${formatMoney(c.recent, cur)} /mo (${formatPercent(c.pct)})`,
+      detail: `${formatMoney(c.early, cur)} → ${formatMoney(c.recent, cur)} /mo (${c.early === 0 ? "new" : formatPercent(c.pct)})`,
       value: c.delta,
     })),
   };

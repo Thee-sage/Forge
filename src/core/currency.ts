@@ -76,9 +76,34 @@ export function normalizeCurrencyCode(raw: unknown): string | undefined {
   // A bare 3-letter code (any — we don't hard-limit to a known list).
   if (/^[a-z]{3}$/i.test(s)) return s.toUpperCase();
 
-  // Symbol embedded in a longer string (e.g. "USD $").
-  for (const [sym, code] of Object.entries(SYMBOL_TO_CODE)) {
+  // Symbol embedded in a longer string (e.g. "USD $"). Longest symbol first so "A$" is AUD, not "$" = USD.
+  for (const [sym, code] of SYMBOLS_LONGEST_FIRST) {
     if (s.includes(sym)) return code;
+  }
+  return undefined;
+}
+
+const SYMBOLS_LONGEST_FIRST = Object.entries(SYMBOL_TO_CODE).sort((a, b) => b[0].length - a[0].length);
+
+/** ISO codes we accept when they appear next to an amount ("USD 500"); a stray 3-letter word is not a currency. */
+const KNOWN_CODES = new Set([...Object.values(SYMBOL_TO_CODE), ...Object.values(WORD_TO_CODE), "CHF", "CNY", "SGD", "NZD", "HKD"]);
+
+/**
+ * The currency an amount cell carries on its face ("€20.00", "USD 500", "Rs.500"), or
+ * undefined for a bare number. Lets a file with no currency column still declare its currency
+ * so differing symbols cannot be summed as if they were one currency.
+ */
+export function currencyInAmountText(raw: unknown): string | undefined {
+  if (typeof raw !== "string") return undefined;
+  const text = raw.trim();
+  if (text === "") return undefined;
+  const code = /(?<![A-Za-z])([A-Za-z]{3})(?![A-Za-z])/.exec(text);
+  if (code) {
+    const upper = code[1]!.toUpperCase();
+    if (KNOWN_CODES.has(upper)) return upper;
+  }
+  for (const [sym, iso] of SYMBOLS_LONGEST_FIRST) {
+    if (text.includes(sym)) return iso;
   }
   return undefined;
 }

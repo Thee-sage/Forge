@@ -44,8 +44,11 @@ export {
   simulate,
   applyScenario,
   describeScenario,
+  validateScenario,
+  ScenarioError,
   type ScenarioSpec,
   type ScenarioResult,
+  type UnavailableDelta,
 } from "./scenario/simulate.js";
 
 export interface ForgeReport {

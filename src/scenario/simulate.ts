@@ -5,6 +5,7 @@ import {
   type Transaction,
 } from "../core/model.js";
 import { findMetric, type AnalysisResult } from "../core/result.js";
+import { ForgeError } from "../core/errors.js";
 import { runAnalyses } from "../analysis/index.js";
 
 /**
@@ -32,10 +33,23 @@ export interface MetricDelta {
   unit?: string;
 }
 
+/** Thrown for a scenario that cannot be simulated (non-finite or out-of-range inputs). */
+export class ScenarioError extends ForgeError {}
+
+/** A tracked metric with no delta because it was not available on one side of the comparison. */
+export interface UnavailableDelta {
+  key: string;
+  label: string;
+  reason: string;
+}
+
 export interface ScenarioResult {
   spec: ScenarioSpec;
   description: string;
+  /** Only metrics that are available in BOTH the baseline and the scenario; see `unavailable`. */
   deltas: MetricDelta[];
+  /** Tracked metrics omitted from `deltas` because a value was missing (never reported as 0). */
+  unavailable: UnavailableDelta[];
   scenarioResults: AnalysisResult[];
   explanation: string;
 }
@@ -48,8 +62,30 @@ const TRACKED: { module: string; key: string; label: string; unit: string }[] = 
   { module: "health", key: "runwayMonths", label: "Cash runway (months)", unit: "count" },
 ];
 
+/**
+ * Reject scenario inputs that cannot describe a real change. A percentage below -100% would turn
+ * amounts negative (breaking "amount is always >= 0", DATA_MODEL C2) and a non-finite value would
+ * poison every total, so both fail clearly instead of producing a plausible-looking result.
+ */
+export function validateScenario(spec: ScenarioSpec): void {
+  const pct = (name: string, v: number | undefined): void => {
+    if (v === undefined) return;
+    if (!Number.isFinite(v)) throw new ScenarioError(`Invalid scenario: ${name} must be a finite number (got ${v}).`);
+    if (v < -1) throw new ScenarioError(`Invalid scenario: ${name} of ${v * 100}% would make amounts negative; the lowest allowed change is -100%.`);
+  };
+  pct("income change", spec.incomePct);
+  pct("expense change", spec.expensePct);
+  const amount = (name: string, e: { amount: number } | undefined): void => {
+    if (e === undefined) return;
+    if (!Number.isFinite(e.amount) || e.amount < 0) throw new ScenarioError(`Invalid scenario: ${name} must be a finite, non-negative amount (got ${e.amount}).`);
+  };
+  amount("recurring expense", spec.recurringExpense);
+  amount("one-off expense", spec.oneOffExpense);
+}
+
 /** Apply a scenario transform and return a new model (the original is untouched). */
 export function applyScenario(model: FinancialModel, spec: ScenarioSpec): FinancialModel {
+  validateScenario(spec);
   let transactions: Transaction[] = model.transactions.map((t) => {
     let amount = t.amount;
     if (t.direction === "inflow" && spec.incomePct) amount *= 1 + spec.incomePct;
@@ -91,19 +127,41 @@ export function simulate(
   const scenarioModel = applyScenario(model, spec);
   const scenarioResults = runAnalyses(scenarioModel);
 
-  const deltas: MetricDelta[] = TRACKED.map((t) => {
-    const b = findMetric(base, t.module, t.key) ?? 0;
-    const s = findMetric(scenarioResults, t.module, t.key) ?? 0;
-    return { key: `${t.module}.${t.key}`, label: t.label, baseline: b, scenario: s, delta: s - b, unit: t.unit };
-  });
+  // A metric Forge declined to compute is UNAVAILABLE, not zero: comparing against a fabricated
+  // 0 would report (for example) a runway "improvement" from nothing to twelve months.
+  const deltas: MetricDelta[] = [];
+  const unavailable: UnavailableDelta[] = [];
+  for (const t of TRACKED) {
+    const b = available(base, t.module, t.key);
+    const s = available(scenarioResults, t.module, t.key);
+    const key = `${t.module}.${t.key}`;
+    if (b === undefined || s === undefined) {
+      unavailable.push({
+        key,
+        label: t.label,
+        reason: b === undefined ? "was not available for the baseline, so no change can be reported" : "is not available for the scenario",
+      });
+      continue;
+    }
+    deltas.push({ key, label: t.label, baseline: b, scenario: s, delta: s - b, unit: t.unit });
+  }
 
   return {
     spec,
     description: describeScenario(spec),
     deltas,
+    unavailable,
     scenarioResults,
-    explanation: explain(deltas, spec),
+    explanation: explain(deltas, unavailable, spec),
   };
+}
+
+/** A tracked metric's value, or undefined when it is missing or not measurable (savings rate needs income). */
+function available(results: AnalysisResult[], module: string, key: string): number | undefined {
+  const value = findMetric(results, module, key);
+  if (value === undefined) return undefined;
+  if (key === "savingsRate" && (findMetric(results, "cashflow", "inflow") ?? 0) <= 0) return undefined;
+  return value;
 }
 
 function synthetic(
@@ -137,11 +195,13 @@ export function describeScenario(spec: ScenarioSpec): string {
   return parts.length ? parts.join(", ") : "no change";
 }
 
-function explain(deltas: MetricDelta[], spec: ScenarioSpec): string {
+function explain(deltas: MetricDelta[], unavailable: UnavailableDelta[], spec: ScenarioSpec): string {
   const score = deltas.find((d) => d.key === "health.score");
   const net = deltas.find((d) => d.key === "cashflow.net");
   const savings = deltas.find((d) => d.key === "cashflow.savingsRate");
   const bits: string[] = [];
+  const noScore = unavailable.find((u) => u.key === "health.score");
+  if (noScore) bits.push(`health score ${noScore.reason}`);
   if (score) {
     const dir = score.delta > 0 ? "improves" : score.delta < 0 ? "worsens" : "is unchanged";
     bits.push(`health score ${dir} by ${Math.abs(Math.round(score.delta))} point(s) to ${Math.round(score.scenario)}/100`);

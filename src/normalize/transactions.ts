@@ -1,6 +1,6 @@
 import type { Direction, Transaction } from "../core/model.js";
 import { parseAmount } from "../core/money.js";
-import { normalizeCurrencyCode } from "../core/currency.js";
+import { currencyInAmountText, normalizeCurrencyCode } from "../core/currency.js";
 import type { RawTable } from "../ingestion/types.js";
 import { categorize } from "./categorize.js";
 import { cellString, resolveColumns, TRANSACTION_ALIASES } from "./columns.js";
@@ -55,6 +55,7 @@ export function normalizeTransactions(
   // Infer the date field order once for the whole column, then report the assumption.
   const dateValues = cols.date ? table.rows.map((r) => r[cols.date as string]) : [];
   const dateOrder = inferDateOrder(dateValues);
+  const unrecognisedCurrencies = new Set<string>();
   if (cols.date && dateOrder.conflict) {
     warnings.push(
       `Table "${table.name}": date column mixes DD/MM and MM/DD styles; assuming DD/MM. Verify affected dates.`,
@@ -78,6 +79,12 @@ export function normalizeTransactions(
     if (hasDebitCredit) {
       const debit = parseAmount(row[cols.debit ?? ""]);
       const credit = parseAmount(row[cols.credit ?? ""]);
+      if (credit && debit && credit !== 0 && debit !== 0) {
+        // Both columns populated: which one is true? Keeping one and dropping the other would
+        // silently lose money, so the row is skipped and the reason recorded.
+        record("both debit and credit populated (contradictory)");
+        return;
+      }
       if (credit && credit !== 0) {
         amount = Math.abs(credit);
         direction = "inflow";
@@ -108,8 +115,16 @@ export function normalizeTransactions(
       ? explicitCategory.toLowerCase()
       : categorize(description).category;
 
-    const currency =
-      normalizeCurrencyCode(cellString(row, cols.currency)) ?? defaultCurrency;
+    // Currency: an explicit column wins; else the currency the amount cell carries on its face
+    // ("€20.00"); else the declared default. An unrecognised currency cell is never silently
+    // treated as the default: it is reported below.
+    const currencyCell = cellString(row, cols.currency);
+    const cellCode = normalizeCurrencyCode(currencyCell);
+    if (currencyCell !== "" && cellCode === undefined) unrecognisedCurrencies.add(currencyCell);
+    const faceCurrency = hasDebitCredit
+      ? currencyInAmountText(row[direction === "inflow" ? (cols.credit ?? "") : (cols.debit ?? "")])
+      : currencyInAmountText(row[cols.amount ?? ""]);
+    const currency = cellCode ?? faceCurrency ?? defaultCurrency;
     const account = cellString(row, cols.account) || undefined;
 
     transactions.push({
@@ -125,6 +140,12 @@ export function normalizeTransactions(
       raw: row,
     });
   });
+
+  if (unrecognisedCurrencies.size > 0) {
+    warnings.push(
+      `Table "${table.name}": unrecognised currency value(s) ${[...unrecognisedCurrencies].slice(0, 3).map((c) => `"${c}"`).join(", ")}; those rows are assumed to be ${defaultCurrency}. Verify the currency before relying on totals.`,
+    );
+  }
 
   if (skippedDetails.length > 0) {
     warnings.push(

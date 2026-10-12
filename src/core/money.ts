@@ -89,30 +89,65 @@ export function detectCurrency(raw: string): string | undefined {
   return undefined;
 }
 
+
 /**
- * Parse a loosely-formatted numeric cell into a number.
- * Handles currency symbols, thousands separators, and parenthesised negatives
- * (accounting convention, e.g. "(1,200.00)" -> -1200).
+ * Parse a loosely-formatted numeric cell into a number, or `undefined` when the cell is not
+ * unambiguously a number. Forge never guesses: a malformed or ambiguous cell is rejected (and
+ * the row is recorded as skipped with a reason) rather than turned into a plausible-looking
+ * wrong value (PROJECT_RULES §5, "no silent assumptions").
+ *
+ * Accepted: plain numbers, currency symbols/codes ("$", "€", "Rs.", "USD"), a leading "+"/"-",
+ * a trailing "-", accounting parentheses, the Unicode minus (U+2212), western (1,234.56) and
+ * Indian (12,34,567.00) digit grouping, and scientific notation (1.5E3).
+ * Rejected: multiple decimal points ("1.2.3"), embedded signs ("5-3"), decimal commas
+ * ("1.234,56", "1,5"), space-grouped digits, and anything non-finite ("Infinity", "1e999").
  */
 export function parseAmount(raw: unknown): number | undefined {
   if (typeof raw === "number") return Number.isFinite(raw) ? raw : undefined;
   if (typeof raw !== "string") return undefined;
 
-  let s = raw.trim();
+  // Unicode minus / figure dash / en dash / em dash are sign characters, not punctuation.
+  let s = raw.trim().replace(/[−‒–—]/g, "-");
   if (s === "") return undefined;
 
   let negative = false;
   if (/^\(.*\)$/.test(s)) {
     negative = true;
-    s = s.slice(1, -1);
+    s = s.slice(1, -1).trim();
   }
-  if (s.includes("-")) negative = true;
 
-  // Strip everything except digits and decimal points.
-  s = s.replace(/[^0-9.]/g, "");
-  if (s === "" || s === ".") return undefined;
+  // Strip currency symbols and 2-3 letter currency codes ("Rs.", "USD"). Single letters and
+  // longer words are NOT stripped, so "N/A" and "abc" stay non-numeric. A bare exponent
+  // marker is preserved for scientific notation.
+  s = s
+    .replace(/A\$|C\$|[$€£₹¥]/g, "")
+    .replace(/(?<![\d.])[A-Za-z]{2,3}\b\.?/g, "")
+    .trim();
 
-  const value = Number.parseFloat(s);
+  // Sign: one leading "+"/"-" (possibly after the currency symbol) or one trailing "-".
+  const lead = /^([+-])\s*/.exec(s);
+  if (lead) {
+    if (lead[1] === "-") negative = true;
+    s = s.slice(lead[0].length);
+  } else if (/-\s*$/.test(s)) {
+    negative = true;
+    s = s.replace(/\s*-\s*$/, "");
+  }
+  s = s.trim();
+
+  let value: number;
+  if (/^\d+(\.\d+)?[eE][+-]?\d+$/.test(s)) {
+    value = Number(s);
+  } else if (
+    /^\d+(\.\d+)?$/.test(s) ||
+    /^\.\d+$/.test(s) ||
+    /^\d{1,3}(,\d{3})+(\.\d+)?$/.test(s) ||
+    /^\d{1,2}(,\d{2})+,\d{3}(\.\d+)?$/.test(s)
+  ) {
+    value = Number(s.replace(/,/g, ""));
+  } else {
+    return undefined;
+  }
   if (!Number.isFinite(value)) return undefined;
   return negative ? -value : value;
 }
