@@ -1,0 +1,5374 @@
+{
+  "evaluator": {
+    "version": "1.0.3",
+    "oracleVersion": "1.1.0",
+    "rubricVersion": "1.1.0",
+    "datasetVersion": "1.2.0",
+    "targetRate": 0.98,
+    "label": "final"
+  },
+  "environment": {
+    "note": "Dataset 1.2.0 final: after the D24 plural fix. Measured from a clean checkout.",
+    "node": "v22.22.1",
+    "platform": "win32",
+    "forgeCommit": "f437a4c",
+    "forgeSourceModified": false,
+    "generatedAt": "2026-10-12T19:12:57.883Z",
+    "runtimeMs": 3791
+  },
+  "integrity": {
+    "ok": true,
+    "datasetVersion": "1.2.0",
+    "files": {
+      "dev/dataset.json": {
+        "expected": "cf182ec84aecea8f8b17be51e2f5962690adaf4b0d3a6bb6ea4a1db9faffc594",
+        "actual": "cf182ec84aecea8f8b17be51e2f5962690adaf4b0d3a6bb6ea4a1db9faffc594",
+        "ok": true
+      },
+      "heldout/dataset.json": {
+        "expected": "db1472aa3c28e2399119c2546c0f83b654b63833f4422b0e46212910972e0ab8",
+        "actual": "db1472aa3c28e2399119c2546c0f83b654b63833f4422b0e46212910972e0ab8",
+        "ok": true
+      }
+    },
+    "problems": []
+  },
+  "methods": {
+    "confidenceIntervals": "Wilson score interval, 95%, for every pass rate; bootstrap (percentile, 2000 resamples, fixed seed) for F1. Pass-rate intervals assume independent trials; checks within one case are correlated, so metric-level intervals are optimistic and case-level intervals should be preferred.",
+    "tolerances": "See evaluation/metrics.ts: currency abs 1e-6 + rel 1e-13; ratio abs 1e-10 + rel 1e-10; counts and scores exact."
+  },
+  "splits": [
+    {
+      "split": "dev",
+      "cases": {
+        "pipeline": 94,
+        "cells": 39,
+        "classify": 41
+      },
+      "headline": [
+        {
+          "id": "A1",
+          "name": "Numerical correctness - per comparison",
+          "definition": "Fraction of oracle-eligible metric comparisons within the predefined tolerance.",
+          "n": 2178,
+          "pass": 2166,
+          "rate": 0.9944903581267218,
+          "ci": {
+            "point": 0.9944903581267218,
+            "lower": 0.9903940414889837,
+            "upper": 0.9968454259947944,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": true
+        },
+        {
+          "id": "A2",
+          "name": "Numerical correctness - per case",
+          "definition": "Fraction of cases in which EVERY numeric and availability expectation is met.",
+          "n": 81,
+          "pass": 80,
+          "rate": 0.9876543209876543,
+          "ci": {
+            "point": 0.9876543209876543,
+            "lower": 0.9333311833302773,
+            "upper": 0.9978173499655849,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "A3",
+          "name": "Numerical correctness - per case, unambiguous cases only",
+          "definition": "As A2, excluding cases that rest on a documented interpretation where another is valid.",
+          "n": 71,
+          "pass": 70,
+          "rate": 0.9859154929577465,
+          "ci": {
+            "point": 0.9859154929577465,
+            "lower": 0.9244394940234428,
+            "upper": 0.997509396756987,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "A4",
+          "name": "Cell parsing - correct or safely rejected",
+          "definition": "Fraction of raw amount/date cells read correctly or rejected with a recorded reason.",
+          "n": 39,
+          "pass": 39,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9103331450047065,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "A5",
+          "name": "Categorisation (keyword heuristic)",
+          "definition": "Fraction of descriptions mapped to the human-labelled category.",
+          "n": 22,
+          "pass": 21,
+          "rate": 0.9545454545454546,
+          "ci": {
+            "point": 0.9545454545454546,
+            "lower": 0.7820195397089796,
+            "upper": 0.991930572468161,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": false,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "A6",
+          "name": "Asset-class mapping (keyword heuristic)",
+          "definition": "Fraction of asset-class labels mapped to the human-labelled class.",
+          "n": 19,
+          "pass": 19,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.8318207737404363,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "B1",
+          "name": "Insight correctness - micro F1",
+          "definition": "F1 over every graded finding-type label (rules, anomalies, trend rises, cash-flow and spending findings).",
+          "n": 78,
+          "pass": 78,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 1,
+            "upper": 1,
+            "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "B2",
+          "name": "Insight labels - accuracy",
+          "definition": "(TP+TN) / graded labels. Reported with a Wilson interval because the F1 bootstrap interval collapses to a point when every label is correct.",
+          "n": 78,
+          "pass": 78,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9530621895820832,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "C1",
+          "name": "Evidence grounding - observed facts",
+          "definition": "Fraction of insight evidence items that exist in the report AND whose entity, period and value match the source data, plus numbers quoted in insight text.",
+          "n": 456,
+          "pass": 456,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9916461232298593,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": true
+        },
+        {
+          "id": "C2",
+          "name": "Evidence grounding - attribution claims",
+          "definition": "Fraction of heuristic attributions (driver, one-off, reserves) that the source data supports.",
+          "n": 30,
+          "pass": 30,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.886486605238548,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "D1",
+          "name": "Data safety and abstention",
+          "definition": "Fraction of safety expectations met (errors, warnings, skipped rows with reasons, refusal to guess, unavailable measures).",
+          "n": 273,
+          "pass": 273,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.986123975444938,
+            "upper": 0.9999999999999998,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": true
+        },
+        {
+          "id": "D2",
+          "name": "Invariants",
+          "definition": "Fraction of invariant checks holding across every successfully analysed case.",
+          "n": 1228,
+          "pass": 1228,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9968815314230576,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": true
+        }
+      ],
+      "numeric": {
+        "comparisons": {
+          "n": 2178,
+          "pass": 2166,
+          "fail": 12,
+          "na": 0,
+          "rate": 0.9944903581267218,
+          "ci": {
+            "point": 0.9944903581267218,
+            "lower": 0.9903940414889837,
+            "upper": 0.9968454259947944,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "comparisonsUnambiguous": {
+          "n": 1932,
+          "pass": 1920,
+          "fail": 12,
+          "na": 0,
+          "rate": 0.9937888198757764,
+          "ci": {
+            "point": 0.9937888198757764,
+            "lower": 0.9891745366980229,
+            "upper": 0.9964433666929988,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "cases": {
+          "n": 81,
+          "pass": 80,
+          "fail": 1,
+          "na": 0,
+          "rate": 0.9876543209876543,
+          "ci": {
+            "point": 0.9876543209876543,
+            "lower": 0.9333311833302773,
+            "upper": 0.9978173499655849,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "casesUnambiguous": {
+          "n": 71,
+          "pass": 70,
+          "fail": 1,
+          "na": 0,
+          "rate": 0.9859154929577465,
+          "ci": {
+            "point": 0.9859154929577465,
+            "lower": 0.9244394940234428,
+            "upper": 0.997509396756987,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "byMetric": {
+          "cashflow.inflow": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 3.637978807091713e-12
+          },
+          "cashflow.outflow": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 3.637978807091713e-12
+          },
+          "cashflow.net": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 3.637978807091713e-12
+          },
+          "cashflow.savingsRate": {
+            "n": 69,
+            "pass": 69,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9472627410228545,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.6132928326584306e-16
+          },
+          "cashflow.avgMonthlyNet": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 4.547473508864641e-13
+          },
+          "cashflow.months": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "cashflow.trendSlope": {
+            "n": 46,
+            "pass": 46,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.92292643579224,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.220446049250313e-16
+          },
+          "expenditure.totalOutflow": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 3.637978807091713e-12
+          },
+          "expenditure.categories": {
+            "n": 81,
+            "pass": 80,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9876543209876543,
+            "ci": {
+              "point": 0.9876543209876543,
+              "lower": 0.9333311833302773,
+              "upper": 0.9978173499655849,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1
+          },
+          "expenditure.top1_amount": {
+            "n": 62,
+            "pass": 62,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9416559270319074,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1920928955078125e-7
+          },
+          "expenditure.top1_share": {
+            "n": 62,
+            "pass": 62,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9416559270319074,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.220446049250313e-16
+          },
+          "expenditure.top2_amount": {
+            "n": 47,
+            "pass": 46,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9787234042553191,
+            "ci": {
+              "point": 0.9787234042553191,
+              "lower": 0.8888701884870314,
+              "upper": 0.9962342320030542,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 18.340000000000032
+          },
+          "expenditure.top2_share": {
+            "n": 47,
+            "pass": 46,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9787234042553191,
+            "ci": {
+              "point": 0.9787234042553191,
+              "lower": 0.8888701884870314,
+              "upper": 0.9962342320030542,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0.004216208263216462
+          },
+          "expenditure.top3_amount": {
+            "n": 24,
+            "pass": 23,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9583333333333334,
+            "ci": {
+              "point": 0.9583333333333334,
+              "lower": 0.7975819334115467,
+              "upper": 0.9926065439164028,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 9.849999999999994
+          },
+          "expenditure.top3_share": {
+            "n": 24,
+            "pass": 23,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9583333333333334,
+            "ci": {
+              "point": 0.9583333333333334,
+              "lower": 0.7975819334115467,
+              "upper": 0.9926065439164028,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0.002264430283134243
+          },
+          "expenditure.top4_amount": {
+            "n": 15,
+            "pass": 14,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9333333333333333,
+            "ci": {
+              "point": 0.9333333333333333,
+              "lower": 0.7018346989112435,
+              "upper": 0.9881331046384677,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 20.009999999999998
+          },
+          "expenditure.top4_share": {
+            "n": 15,
+            "pass": 14,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9333333333333333,
+            "ci": {
+              "point": 0.9333333333333333,
+              "lower": 0.7018346989112435,
+              "upper": 0.9881331046384677,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0.004600126900052416
+          },
+          "trend.categoriesChanged": {
+            "n": 46,
+            "pass": 45,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9782608695652174,
+            "ci": {
+              "point": 0.9782608695652174,
+              "lower": 0.8866470536689368,
+              "upper": 0.99615214578451,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1
+          },
+          "trend.biggestRise": {
+            "n": 46,
+            "pass": 45,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9782608695652174,
+            "ci": {
+              "point": 0.9782608695652174,
+              "lower": 0.8866470536689368,
+              "upper": 0.99615214578451,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 17.495
+          },
+          "trend.biggestDrop": {
+            "n": 46,
+            "pass": 45,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9782608695652174,
+            "ci": {
+              "point": 0.9782608695652174,
+              "lower": 0.8866470536689368,
+              "upper": 0.99615214578451,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 6.724999999999994
+          },
+          "anomaly.largest": {
+            "n": 37,
+            "pass": 37,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9059421728185313,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 7.105427357601002e-15
+          },
+          "anomaly.medianOutflow": {
+            "n": 29,
+            "pass": 29,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8830301998708162,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 5.684341886080802e-14
+          },
+          "allocation.portfolioValue": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.4551915228366852e-11
+          },
+          "health.savingsScore": {
+            "n": 69,
+            "pass": 69,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9472627410228545,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 8.049116928532385e-16
+          },
+          "health.expenseScore": {
+            "n": 69,
+            "pass": 69,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9472627410228545,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 3.7816971776294395e-16
+          },
+          "health.stabilityScore": {
+            "n": 46,
+            "pass": 46,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.92292643579224,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 5.551115123125783e-17
+          },
+          "health.assessedDimensions": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "health.score": {
+            "n": 69,
+            "pass": 69,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9472627410228545,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "anomaly.flaggedSet": {
+            "n": 78,
+            "pass": 78,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9530621895820832,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "expenditure.top5_amount": {
+            "n": 11,
+            "pass": 10,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9090909090909091,
+            "ci": {
+              "point": 0.9090909090909091,
+              "lower": 0.6226415608917041,
+              "upper": 0.9837678272946745,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 15.51
+          },
+          "expenditure.top5_share": {
+            "n": 11,
+            "pass": 10,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9090909090909091,
+            "ci": {
+              "point": 0.9090909090909091,
+              "lower": 0.6226415608917041,
+              "upper": 0.9837678272946745,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0.0035656156031890532
+          },
+          "allocation.assetClasses": {
+            "n": 28,
+            "pass": 28,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8793566935605293,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "allocation.cashWeight": {
+            "n": 28,
+            "pass": 28,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8793566935605293,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "allocation.weight_equity": {
+            "n": 26,
+            "pass": 26,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.871271076371412,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 5.551115123125783e-17
+          },
+          "concentration.hhi": {
+            "n": 28,
+            "pass": 28,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8793566935605293,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "concentration.effectivePositions": {
+            "n": 28,
+            "pass": 28,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8793566935605293,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 8.881784197001252e-16
+          },
+          "concentration.topWeight": {
+            "n": 28,
+            "pass": 28,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8793566935605293,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "concentration.top3Weight": {
+            "n": 28,
+            "pass": 28,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8793566935605293,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "concentration.positions": {
+            "n": 28,
+            "pass": 28,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8793566935605293,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "concentration.riskHhi": {
+            "n": 26,
+            "pass": 26,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.871271076371412,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "concentration.topNonCashWeight": {
+            "n": 28,
+            "pass": 28,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8793566935605293,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "health.diversificationScore": {
+            "n": 28,
+            "pass": 28,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8793566935605293,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.220446049250313e-16
+          },
+          "allocation.weight_cash": {
+            "n": 21,
+            "pass": 21,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8453609790128563,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "allocation.weight_fixed_income": {
+            "n": 15,
+            "pass": 15,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7961166964035129,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 5.551115123125783e-17
+          },
+          "allocation.weight_real_estate": {
+            "n": 3,
+            "pass": 3,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.43850296436068037,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.7755575615628914e-17
+          },
+          "allocation.weight_commodity": {
+            "n": 10,
+            "pass": 10,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7224671969739421,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.7755575615628914e-17
+          },
+          "allocation.weight_crypto": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "health.runwayMonths": {
+            "n": 16,
+            "pass": 16,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8063923170025951,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 4.440892098500626e-16
+          },
+          "health.liquidityScore": {
+            "n": 16,
+            "pass": 16,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8063923170025951,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "scenario.cashflow.net": {
+            "n": 10,
+            "pass": 10,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7224671969739421,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "scenario.delta.cashflow.net": {
+            "n": 10,
+            "pass": 10,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7224671969739421,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "scenario.cashflow.savingsRate": {
+            "n": 9,
+            "pass": 9,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.700854948272956,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 5.551115123125783e-17
+          },
+          "scenario.delta.cashflow.savingsRate": {
+            "n": 9,
+            "pass": 9,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.700854948272956,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 5.551115123125783e-17
+          },
+          "scenario.cashflow.avgMonthlyNet": {
+            "n": 10,
+            "pass": 10,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7224671969739421,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 4.547473508864641e-13
+          },
+          "scenario.delta.cashflow.avgMonthlyNet": {
+            "n": 10,
+            "pass": 10,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7224671969739421,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 4.547473508864641e-13
+          },
+          "scenario.health.score": {
+            "n": 9,
+            "pass": 9,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.700854948272956,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "scenario.delta.health.score": {
+            "n": 9,
+            "pass": 9,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.700854948272956,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "scenario.health.runwayMonths": {
+            "n": 10,
+            "pass": 10,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7224671969739421,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 4.440892098500626e-16
+          },
+          "scenario.delta.health.runwayMonths": {
+            "n": 9,
+            "pass": 9,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.700854948272956,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 4.440892098500626e-16
+          }
+        },
+        "byFamily": {
+          "cashflow": {
+            "n": 419,
+            "pass": 419,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9909151318996505,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "format": {
+            "n": 228,
+            "pass": 228,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.983430664645434,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "expenditure": {
+            "n": 132,
+            "pass": 132,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9717210127678851,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "trend": {
+            "n": 230,
+            "pass": 230,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9835723789114484,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "anomaly": {
+            "n": 433,
+            "pass": 433,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9912062859346421,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "realworld": {
+            "n": 109,
+            "pass": 97,
+            "fail": 12,
+            "na": 0,
+            "rate": 0.8899082568807339,
+            "ci": {
+              "point": 0.8899082568807339,
+              "lower": 0.8173772793973142,
+              "upper": 0.9358919608507763,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "portfolio": {
+            "n": 375,
+            "pass": 375,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9898599828734697,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health": {
+            "n": 319,
+            "pass": 319,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.988101097998357,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario": {
+            "n": 547,
+            "pass": 547,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9930261987013511,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "safety": {
+            "n": 117,
+            "pass": 117,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.96821075385171,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        },
+        "failuresBySeverity": {
+          "critical": 0,
+          "major": 12,
+          "minor": 0
+        },
+        "magnitude": {
+          "comparisons": 2100,
+          "maxAbsErrorAmongPassing": 1.1920928955078125e-7,
+          "failing": 12,
+          "medianRelErrorAmongFailing": 0.2,
+          "maxAbsErrorAmongFailing": 20.009999999999998
+        }
+      },
+      "availability": {
+        "n": 731,
+        "pass": 731,
+        "fail": 0,
+        "na": 0,
+        "rate": 1,
+        "ci": {
+          "point": 1,
+          "lower": 0.9947723977262467,
+          "upper": 0.9999999999999999,
+          "method": "Wilson score interval, 95%"
+        },
+        "byMetric": {
+          "allocation.assetClasses": {
+            "n": 53,
+            "pass": 53,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9324180104293549,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "allocation.cashWeight": {
+            "n": 53,
+            "pass": 53,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9324180104293549,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "concentration.hhi": {
+            "n": 53,
+            "pass": 53,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9324180104293549,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "concentration.riskHhi": {
+            "n": 55,
+            "pass": 55,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9347150979202339,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "concentration.effectivePositions": {
+            "n": 53,
+            "pass": 53,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9324180104293549,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.runwayMonths": {
+            "n": 65,
+            "pass": 65,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.944198467845955,
+              "upper": 0.9999999999999998,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.liquidityScore": {
+            "n": 65,
+            "pass": 65,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.944198467845955,
+              "upper": 0.9999999999999998,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.diversificationScore": {
+            "n": 53,
+            "pass": 53,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9324180104293549,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "trend.categoriesChanged": {
+            "n": 35,
+            "pass": 35,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.901099006269668,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "trend.biggestRise": {
+            "n": 35,
+            "pass": 35,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.901099006269668,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "trend.biggestDrop": {
+            "n": 35,
+            "pass": 35,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.901099006269668,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "anomaly.medianOutflow": {
+            "n": 44,
+            "pass": 44,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9197043950765086,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "anomaly.largest": {
+            "n": 44,
+            "pass": 44,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9197043950765086,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.stabilityScore": {
+            "n": 35,
+            "pass": 35,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.901099006269668,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "cashflow.savingsRate": {
+            "n": 12,
+            "pass": 12,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7575059904469021,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.savingsScore": {
+            "n": 12,
+            "pass": 12,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7575059904469021,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.expenseScore": {
+            "n": 12,
+            "pass": 12,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7575059904469021,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.score": {
+            "n": 12,
+            "pass": 12,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7575059904469021,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.cashflow.savingsRate": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.delta.cashflow.savingsRate": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.health.score": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.delta.health.score": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.delta.health.runwayMonths": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        }
+      },
+      "cells": {
+        "overall": {
+          "n": 39,
+          "pass": 39,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9103331450047065,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "byKind": {
+          "amount": {
+            "n": 22,
+            "pass": 22,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8513451233948545,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "date": {
+            "n": 17,
+            "pass": 17,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8156818626193445,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        },
+        "silentCorruption": 0,
+        "falseRejections": 0
+      },
+      "classify": {
+        "byKind": {
+          "category": {
+            "n": 22,
+            "pass": 21,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9545454545454546,
+            "ci": {
+              "point": 0.9545454545454546,
+              "lower": 0.7820195397089796,
+              "upper": 0.991930572468161,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "assetClass": {
+            "n": 19,
+            "pass": 19,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8318207737404363,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        }
+      },
+      "insight": {
+        "rows": [
+          {
+            "type": "insight:cashflow-decline-driver",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "tn": 2,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 4
+          },
+          {
+            "type": "insight:low-savings-driver",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "tn": 5,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 7
+          },
+          {
+            "type": "insight:portfolio-concentration",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "tn": 3,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 5
+          },
+          {
+            "type": "insight:thin-liquidity",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "tn": 3,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 5
+          },
+          {
+            "type": "insight:anomaly-impact",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "tn": 8,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 11
+          },
+          {
+            "type": "insight:healthy-position",
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "tn": 4,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 5
+          },
+          {
+            "type": "anomaly",
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "tn": 23,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 30
+          },
+          {
+            "type": "trend-rise",
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "tn": 3,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 7
+          },
+          {
+            "type": "finding:cashflow.negative-months",
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "tn": 1,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 2
+          },
+          {
+            "type": "finding:expenditure.concentrated",
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "tn": 1,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 2
+          }
+        ],
+        "micro": {
+          "type": "ALL (micro)",
+          "tp": 25,
+          "fp": 0,
+          "fn": 0,
+          "tn": 53,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1,
+          "f1Ci": {
+            "point": 1,
+            "lower": 1,
+            "upper": 1,
+            "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+          },
+          "labelled": 78
+        },
+        "falsePositives": [],
+        "falseNegatives": [],
+        "ungradedEmissions": {
+          "insight:healthy-position": 29,
+          "insight:cashflow-decline-driver": 7,
+          "insight:low-savings-driver": 4,
+          "insight:anomaly-impact": 4,
+          "anomaly:Rent": 1,
+          "anomaly:Monthly rent payment": 1,
+          "anomaly:Whole Foods Market": 1,
+          "insight:portfolio-concentration": 23,
+          "insight:thin-liquidity": 1
+        }
+      },
+      "grounding": {
+        "evidenceExists": {
+          "n": 139,
+          "pass": 139,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9731068352887076,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "evidenceValue": {
+          "n": 137,
+          "pass": 137,
+          "fail": 0,
+          "na": 2,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9727249425573357,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "findingEvidenceValue": {
+          "n": 484,
+          "pass": 484,
+          "fail": 0,
+          "na": 96,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9921255998001788,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "observedClaims": {
+          "n": 287,
+          "pass": 287,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9867919144125054,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "heuristicClaims": {
+          "n": 30,
+          "pass": 30,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.886486605238548,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "hypotheticalClaims": 27,
+        "unsupportedObserved": "0/287",
+        "unsupportedHeuristic": "0/30",
+        "byCheck": {
+          "evidence-exists": {
+            "n": 139,
+            "pass": 139,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9731068352887076,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "evidence-value": {
+            "n": 137,
+            "pass": 137,
+            "fail": 0,
+            "na": 2,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9727249425573357,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:number": {
+            "n": 180,
+            "pass": 180,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.979104501755633,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:income-exceeds-spending": {
+            "n": 30,
+            "pass": 30,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.886486605238548,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:reserves-being-built": {
+            "n": 30,
+            "pass": 30,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.886486605238548,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "finding-evidence-value": {
+            "n": 484,
+            "pass": 484,
+            "fail": 0,
+            "na": 96,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9921255998001788,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:top-category": {
+            "n": 6,
+            "pass": 6,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.6096657083436265,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:spending-exceeds-income": {
+            "n": 3,
+            "pass": 3,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.43850296436068037,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:net-trending-down": {
+            "n": 9,
+            "pass": 9,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.700854948272956,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:driver-is-top-investment": {
+            "n": 24,
+            "pass": 24,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.862023793448672,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:shock-would-move-portfolio": {
+            "n": 0,
+            "pass": 0,
+            "fail": 0,
+            "na": 24,
+            "rate": null,
+            "ci": {
+              "point": null,
+              "lower": null,
+              "upper": null,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:forced-selling": {
+            "n": 0,
+            "pass": 0,
+            "fail": 0,
+            "na": 3,
+            "rate": null,
+            "ci": {
+              "point": null,
+              "lower": null,
+              "upper": null,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario-labelled-hypothetical": {
+            "n": 10,
+            "pass": 10,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7224671969739421,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:scenario-score": {
+            "n": 9,
+            "pass": 9,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.700854948272956,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:scenario-score-delta": {
+            "n": 9,
+            "pass": 9,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.700854948272956,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:scenario-net": {
+            "n": 9,
+            "pass": 9,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.700854948272956,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:scenario-savings": {
+            "n": 8,
+            "pass": 8,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.6755924316585924,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        }
+      },
+      "safety": {
+        "overall": {
+          "n": 273,
+          "pass": 273,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.986123975444938,
+            "upper": 0.9999999999999998,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "byCheck": {
+          "currency-label": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "rows-accepted": {
+            "n": 162,
+            "pass": 162,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9768365588001393,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "no-warning": {
+            "n": 2,
+            "pass": 2,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.3423802239546494,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "warning": {
+            "n": 5,
+            "pass": 5,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.5655175313406071,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario0-rejected": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario1-rejected": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario2-rejected": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario3-rejected": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "expected-error": {
+            "n": 4,
+            "pass": 4,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.5101091596030786,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "abstain": {
+            "n": 3,
+            "pass": 3,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.43850296436068037,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "skipped": {
+            "n": 12,
+            "pass": 12,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7575059904469021,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        },
+        "declaredUnsupported": [
+          {
+            "caseId": "D-sf-013",
+            "split": "dev",
+            "family": "safety",
+            "category": "safety",
+            "check": "declared-unsupported",
+            "status": "na",
+            "severity": "minor",
+            "ambiguous": false,
+            "detail": "Duplicate-transaction detection is a documented limitation (PROJECT_STATE: 'No duplicate-transaction detection'). Reported, never scored.",
+            "actual": "Forge did not warn"
+          }
+        ]
+      },
+      "invariants": {
+        "overall": {
+          "n": 1228,
+          "pass": 1228,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9968815314230576,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "byName": {
+          "finite-values": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "amount-sign-discipline": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "single-currency": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "insights-traceable": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "row-conservation": {
+            "n": 106,
+            "pass": 106,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9650272408941015,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health-score-range": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "savings-rate-bound": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "net-equals-inflow-minus-outflow": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "net-equals-sum-of-signed-transactions": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "baseline-scenario-equals-baseline": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario-does-not-mutate-model": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "order-invariance": {
+            "n": 89,
+            "pass": 89,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9586234541380101,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "hhi-bounds": {
+            "n": 29,
+            "pass": 29,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8830301998708162,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "effective-positions-formula": {
+            "n": 29,
+            "pass": 29,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8830301998708162,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "weights-ordering": {
+            "n": 29,
+            "pass": 29,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8830301998708162,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "risk-hhi-bounds": {
+            "n": 27,
+            "pass": 27,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8754449685379289,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "class-weights-sum-to-one": {
+            "n": 29,
+            "pass": 29,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8830301998708162,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        }
+      },
+      "criticalFailures": []
+    },
+    {
+      "split": "heldout",
+      "cases": {
+        "pipeline": 159,
+        "cells": 34,
+        "classify": 43
+      },
+      "headline": [
+        {
+          "id": "A1",
+          "name": "Numerical correctness - per comparison",
+          "definition": "Fraction of oracle-eligible metric comparisons within the predefined tolerance.",
+          "n": 5777,
+          "pass": 5769,
+          "rate": 0.9986151981997576,
+          "ci": {
+            "point": 0.9986151981997576,
+            "lower": 0.9972695961339141,
+            "upper": 0.9992981251878991,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": true
+        },
+        {
+          "id": "A2",
+          "name": "Numerical correctness - per case",
+          "definition": "Fraction of cases in which EVERY numeric and availability expectation is met.",
+          "n": 148,
+          "pass": 147,
+          "rate": 0.9932432432432432,
+          "ci": {
+            "point": 0.9932432432432432,
+            "lower": 0.9627229540265916,
+            "upper": 0.9988062691227815,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "A3",
+          "name": "Numerical correctness - per case, unambiguous cases only",
+          "definition": "As A2, excluding cases that rest on a documented interpretation where another is valid.",
+          "n": 140,
+          "pass": 139,
+          "rate": 0.9928571428571429,
+          "ci": {
+            "point": 0.9928571428571429,
+            "lower": 0.9606516065191311,
+            "upper": 0.9987379955696756,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "A4",
+          "name": "Cell parsing - correct or safely rejected",
+          "definition": "Fraction of raw amount/date cells read correctly or rejected with a recorded reason.",
+          "n": 34,
+          "pass": 34,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.8984854444077807,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "A5",
+          "name": "Categorisation (keyword heuristic)",
+          "definition": "Fraction of descriptions mapped to the human-labelled category.",
+          "n": 24,
+          "pass": 24,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.862023793448672,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "A6",
+          "name": "Asset-class mapping (keyword heuristic)",
+          "definition": "Fraction of asset-class labels mapped to the human-labelled class.",
+          "n": 19,
+          "pass": 19,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.8318207737404363,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "B1",
+          "name": "Insight correctness - micro F1",
+          "definition": "F1 over every graded finding-type label (rules, anomalies, trend rises, cash-flow and spending findings).",
+          "n": 70,
+          "pass": 70,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 1,
+            "upper": 1,
+            "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "B2",
+          "name": "Insight labels - accuracy",
+          "definition": "(TP+TN) / graded labels. Reported with a Wilson interval because the F1 bootstrap interval collapses to a point when every label is correct.",
+          "n": 70,
+          "pass": 70,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9479769368117258,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "C1",
+          "name": "Evidence grounding - observed facts",
+          "definition": "Fraction of insight evidence items that exist in the report AND whose entity, period and value match the source data, plus numbers quoted in insight text.",
+          "n": 1318,
+          "pass": 1318,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.997093858075425,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": true
+        },
+        {
+          "id": "C2",
+          "name": "Evidence grounding - attribution claims",
+          "definition": "Fraction of heuristic attributions (driver, one-off, reserves) that the source data supports.",
+          "n": 44,
+          "pass": 44,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9197043950765086,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": false
+        },
+        {
+          "id": "D1",
+          "name": "Data safety and abstention",
+          "definition": "Fraction of safety expectations met (errors, warnings, skipped rows with reasons, refusal to guess, unavailable measures).",
+          "n": 467,
+          "pass": 467,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9918412900800555,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": true
+        },
+        {
+          "id": "D2",
+          "name": "Invariants",
+          "definition": "Fraction of invariant checks holding across every successfully analysed case.",
+          "n": 2310,
+          "pass": 2310,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9983397916626694,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          },
+          "meetsTarget": true,
+          "lowerBoundMeetsTarget": true
+        }
+      ],
+      "numeric": {
+        "comparisons": {
+          "n": 5777,
+          "pass": 5769,
+          "fail": 8,
+          "na": 0,
+          "rate": 0.9986151981997576,
+          "ci": {
+            "point": 0.9986151981997576,
+            "lower": 0.9972695961339141,
+            "upper": 0.9992981251878991,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "comparisonsUnambiguous": {
+          "n": 5599,
+          "pass": 5591,
+          "fail": 8,
+          "na": 0,
+          "rate": 0.9985711734238257,
+          "ci": {
+            "point": 0.9985711734238257,
+            "lower": 0.9971828729032511,
+            "upper": 0.9992758063174784,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "cases": {
+          "n": 148,
+          "pass": 147,
+          "fail": 1,
+          "na": 0,
+          "rate": 0.9932432432432432,
+          "ci": {
+            "point": 0.9932432432432432,
+            "lower": 0.9627229540265916,
+            "upper": 0.9988062691227815,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "casesUnambiguous": {
+          "n": 140,
+          "pass": 139,
+          "fail": 1,
+          "na": 0,
+          "rate": 0.9928571428571429,
+          "ci": {
+            "point": 0.9928571428571429,
+            "lower": 0.9606516065191311,
+            "upper": 0.9987379955696756,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "byMetric": {
+          "cashflow.inflow": {
+            "n": 148,
+            "pass": 148,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9747008563432001,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 7.275957614183426e-12
+          },
+          "cashflow.outflow": {
+            "n": 148,
+            "pass": 148,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9747008563432001,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.4551915228366852e-11
+          },
+          "cashflow.net": {
+            "n": 148,
+            "pass": 148,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9747008563432001,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.0378365661599673e-11
+          },
+          "cashflow.savingsRate": {
+            "n": 132,
+            "pass": 132,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9717210127678851,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.4210854715202004e-14
+          },
+          "cashflow.avgMonthlyNet": {
+            "n": 148,
+            "pass": 148,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9747008563432001,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.263078613395919e-12
+          },
+          "cashflow.months": {
+            "n": 148,
+            "pass": 148,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9747008563432001,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "cashflow.trendSlope": {
+            "n": 113,
+            "pass": 113,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9671224673324331,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 7.460698725481052e-14
+          },
+          "expenditure.totalOutflow": {
+            "n": 148,
+            "pass": 148,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9747008563432001,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.4551915228366852e-11
+          },
+          "expenditure.categories": {
+            "n": 148,
+            "pass": 148,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9747008563432001,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "expenditure.top1_amount": {
+            "n": 133,
+            "pass": 133,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9719276678814986,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.8189894035458565e-12
+          },
+          "expenditure.top1_share": {
+            "n": 133,
+            "pass": 133,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9719276678814986,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.220446049250313e-16
+          },
+          "expenditure.top2_amount": {
+            "n": 119,
+            "pass": 118,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9915966386554622,
+            "ci": {
+              "point": 0.9915966386554622,
+              "lower": 0.9539321140806404,
+              "upper": 0.9985150569763176,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 42.849999999999994
+          },
+          "expenditure.top2_share": {
+            "n": 119,
+            "pass": 118,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9915966386554622,
+            "ci": {
+              "point": 0.9915966386554622,
+              "lower": 0.9539321140806404,
+              "upper": 0.9985150569763176,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0.011185682326621926
+          },
+          "expenditure.top3_amount": {
+            "n": 99,
+            "pass": 98,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.98989898989899,
+            "ci": {
+              "point": 0.98989898989899,
+              "lower": 0.9449846847785951,
+              "upper": 0.9982146927405587,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 3.8499999999999943
+          },
+          "expenditure.top3_share": {
+            "n": 99,
+            "pass": 98,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.98989898989899,
+            "ci": {
+              "point": 0.98989898989899,
+              "lower": 0.9449846847785951,
+              "upper": 0.9982146927405587,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0.0010050146314467719
+          },
+          "expenditure.top4_amount": {
+            "n": 86,
+            "pass": 85,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9883720930232558,
+            "ci": {
+              "point": 0.9883720930232558,
+              "lower": 0.9370359334536809,
+              "upper": 0.9979444313574684,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 46.7
+          },
+          "expenditure.top4_share": {
+            "n": 86,
+            "pass": 85,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9883720930232558,
+            "ci": {
+              "point": 0.9883720930232558,
+              "lower": 0.9370359334536809,
+              "upper": 0.9979444313574684,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0.012190696958068702
+          },
+          "expenditure.top5_amount": {
+            "n": 78,
+            "pass": 78,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9530621895820832,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 9.094947017729282e-13
+          },
+          "expenditure.top5_share": {
+            "n": 78,
+            "pass": 78,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9530621895820832,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 4.163336342344337e-17
+          },
+          "trend.categoriesChanged": {
+            "n": 113,
+            "pass": 113,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9671224673324331,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "trend.biggestRise": {
+            "n": 113,
+            "pass": 112,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9911504424778761,
+            "ci": {
+              "point": 0.9911504424778761,
+              "lower": 0.9515691315723988,
+              "upper": 0.998436123948841,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 7.674999999999997
+          },
+          "trend.biggestDrop": {
+            "n": 113,
+            "pass": 112,
+            "fail": 1,
+            "na": 0,
+            "rate": 0.9911504424778761,
+            "ci": {
+              "point": 0.9911504424778761,
+              "lower": 0.9515691315723988,
+              "upper": 0.998436123948841,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.125
+          },
+          "anomaly.largest": {
+            "n": 109,
+            "pass": 109,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9659570257299043,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 4.547473508864641e-13
+          },
+          "anomaly.medianOutflow": {
+            "n": 96,
+            "pass": 96,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9615244115586972,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.2737367544323206e-13
+          },
+          "allocation.portfolioValue": {
+            "n": 148,
+            "pass": 148,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9747008563432001,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1641532182693481e-10
+          },
+          "health.savingsScore": {
+            "n": 132,
+            "pass": 132,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9717210127678851,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 9.992007221626409e-16
+          },
+          "health.expenseScore": {
+            "n": 132,
+            "pass": 132,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9717210127678851,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 4.996003610813204e-16
+          },
+          "health.stabilityScore": {
+            "n": 113,
+            "pass": 113,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9671224673324331,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "health.assessedDimensions": {
+            "n": 148,
+            "pass": 148,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9747008563432001,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "health.score": {
+            "n": 132,
+            "pass": 132,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9717210127678851,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "anomaly.flaggedSet": {
+            "n": 145,
+            "pass": 145,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9741909350380686,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "allocation.assetClasses": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "allocation.cashWeight": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "allocation.weight_equity": {
+            "n": 56,
+            "pass": 56,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9358060623335392,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "concentration.hhi": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "concentration.effectivePositions": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 3.552713678800501e-15
+          },
+          "concentration.topWeight": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "concentration.top3Weight": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.220446049250313e-16
+          },
+          "concentration.positions": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "concentration.riskHhi": {
+            "n": 79,
+            "pass": 79,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9536287876484593,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.220446049250313e-16
+          },
+          "concentration.topNonCashWeight": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "health.diversificationScore": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.220446049250313e-16
+          },
+          "allocation.weight_cash": {
+            "n": 54,
+            "pass": 54,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.933586410930963,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "allocation.weight_fixed_income": {
+            "n": 49,
+            "pass": 49,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9273021797160157,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.220446049250313e-16
+          },
+          "allocation.weight_real_estate": {
+            "n": 34,
+            "pass": 34,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8984854444077807,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "allocation.weight_commodity": {
+            "n": 31,
+            "pass": 31,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.889744602991977,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 5.551115123125783e-17
+          },
+          "health.runwayMonths": {
+            "n": 69,
+            "pass": 69,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9472627410228545,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 7.105427357601002e-15
+          },
+          "health.liquidityScore": {
+            "n": 69,
+            "pass": 69,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9472627410228545,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "allocation.weight_crypto": {
+            "n": 45,
+            "pass": 45,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.921348400123914,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "allocation.weight_alternative": {
+            "n": 33,
+            "pass": 33,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8957300009841286,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.1102230246251565e-16
+          },
+          "scenario.cashflow.net": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 3.54702933691442e-11
+          },
+          "scenario.delta.cashflow.net": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 3.092281986027956e-11
+          },
+          "scenario.cashflow.savingsRate": {
+            "n": 74,
+            "pass": 74,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9506502198635047,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.842170943040401e-14
+          },
+          "scenario.delta.cashflow.savingsRate": {
+            "n": 74,
+            "pass": 74,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9506502198635047,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.842170943040401e-14
+          },
+          "scenario.cashflow.avgMonthlyNet": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 4.433786671143025e-12
+          },
+          "scenario.delta.cashflow.avgMonthlyNet": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 3.865352482534945e-12
+          },
+          "scenario.health.score": {
+            "n": 74,
+            "pass": 74,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9506502198635047,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "scenario.delta.health.score": {
+            "n": 74,
+            "pass": 74,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9506502198635047,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 0
+          },
+          "scenario.health.runwayMonths": {
+            "n": 59,
+            "pass": 59,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9388706285678009,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 2.1316282072803006e-14
+          },
+          "scenario.delta.health.runwayMonths": {
+            "n": 58,
+            "pass": 58,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9378821432937142,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            },
+            "maxAbsError": 1.7763568394002505e-14
+          }
+        },
+        "byFamily": {
+          "cashflow": {
+            "n": 481,
+            "pass": 481,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9920768762428863,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "trend": {
+            "n": 199,
+            "pass": 199,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9810617666502585,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "anomaly": {
+            "n": 400,
+            "pass": 400,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9904877055170676,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "realworld": {
+            "n": 109,
+            "pass": 101,
+            "fail": 8,
+            "na": 0,
+            "rate": 0.926605504587156,
+            "ci": {
+              "point": 0.926605504587156,
+              "lower": 0.8618222513812482,
+              "upper": 0.9623429173607804,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "portfolio": {
+            "n": 344,
+            "pass": 344,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.98895629378496,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health": {
+            "n": 297,
+            "pass": 297,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9872309524904552,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario": {
+            "n": 511,
+            "pass": 511,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9925385595603682,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "safety": {
+            "n": 147,
+            "pass": 147,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9745331362492389,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "random": {
+            "n": 4205,
+            "pass": 4205,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.999087288290893,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        },
+        "failuresBySeverity": {
+          "critical": 0,
+          "major": 8,
+          "minor": 0
+        },
+        "magnitude": {
+          "comparisons": 5632,
+          "maxAbsErrorAmongPassing": 1.1641532182693481e-10,
+          "failing": 8,
+          "medianRelErrorAmongFailing": 0.18993794326241137,
+          "maxAbsErrorAmongFailing": 46.7
+        }
+      },
+      "availability": {
+        "n": 916,
+        "pass": 916,
+        "fail": 0,
+        "na": 0,
+        "rate": 1,
+        "ci": {
+          "point": 1,
+          "lower": 0.9958237815395188,
+          "upper": 1,
+          "method": "Wilson score interval, 95%"
+        },
+        "byMetric": {
+          "allocation.assetClasses": {
+            "n": 68,
+            "pass": 68,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9465286626814852,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "allocation.cashWeight": {
+            "n": 68,
+            "pass": 68,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9465286626814852,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "concentration.hhi": {
+            "n": 68,
+            "pass": 68,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9465286626814852,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "concentration.riskHhi": {
+            "n": 69,
+            "pass": 69,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9472627410228545,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "concentration.effectivePositions": {
+            "n": 68,
+            "pass": 68,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9465286626814852,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.runwayMonths": {
+            "n": 79,
+            "pass": 79,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9536287876484593,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.liquidityScore": {
+            "n": 79,
+            "pass": 79,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9536287876484593,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.diversificationScore": {
+            "n": 68,
+            "pass": 68,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9465286626814852,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "anomaly.medianOutflow": {
+            "n": 39,
+            "pass": 39,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9103331450047065,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "anomaly.largest": {
+            "n": 39,
+            "pass": 39,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9103331450047065,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "cashflow.savingsRate": {
+            "n": 16,
+            "pass": 16,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8063923170025951,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "trend.categoriesChanged": {
+            "n": 35,
+            "pass": 35,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.901099006269668,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "trend.biggestRise": {
+            "n": 35,
+            "pass": 35,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.901099006269668,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "trend.biggestDrop": {
+            "n": 35,
+            "pass": 35,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.901099006269668,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.savingsScore": {
+            "n": 16,
+            "pass": 16,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8063923170025951,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.expenseScore": {
+            "n": 16,
+            "pass": 16,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8063923170025951,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.stabilityScore": {
+            "n": 35,
+            "pass": 35,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.901099006269668,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health.score": {
+            "n": 16,
+            "pass": 16,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8063923170025951,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.cashflow.savingsRate": {
+            "n": 6,
+            "pass": 6,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.6096657083436265,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.delta.cashflow.savingsRate": {
+            "n": 6,
+            "pass": 6,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.6096657083436265,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.health.score": {
+            "n": 6,
+            "pass": 6,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.6096657083436265,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.delta.health.score": {
+            "n": 6,
+            "pass": 6,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.6096657083436265,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.delta.health.runwayMonths": {
+            "n": 22,
+            "pass": 22,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8513451233948545,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario.health.runwayMonths": {
+            "n": 21,
+            "pass": 21,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8453609790128563,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        }
+      },
+      "cells": {
+        "overall": {
+          "n": 34,
+          "pass": 34,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.8984854444077807,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "byKind": {
+          "amount": {
+            "n": 18,
+            "pass": 18,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8241207740667156,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "date": {
+            "n": 16,
+            "pass": 16,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8063923170025951,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        },
+        "silentCorruption": 0,
+        "falseRejections": 0
+      },
+      "classify": {
+        "byKind": {
+          "category": {
+            "n": 24,
+            "pass": 24,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.862023793448672,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "assetClass": {
+            "n": 19,
+            "pass": 19,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8318207737404363,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        }
+      },
+      "insight": {
+        "rows": [
+          {
+            "type": "insight:cashflow-decline-driver",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "tn": 2,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 4
+          },
+          {
+            "type": "insight:low-savings-driver",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "tn": 5,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 7
+          },
+          {
+            "type": "insight:portfolio-concentration",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "tn": 3,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 5
+          },
+          {
+            "type": "insight:thin-liquidity",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "tn": 2,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 4
+          },
+          {
+            "type": "insight:anomaly-impact",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "tn": 7,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 9
+          },
+          {
+            "type": "insight:healthy-position",
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "tn": 4,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 5
+          },
+          {
+            "type": "anomaly",
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "tn": 21,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 27
+          },
+          {
+            "type": "trend-rise",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "tn": 3,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 6
+          },
+          {
+            "type": "finding:cashflow.negative-months",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "tn": 1,
+            "precision": 1,
+            "recall": 1,
+            "f1": 1,
+            "f1Ci": {
+              "point": 1,
+              "lower": 1,
+              "upper": 1,
+              "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+            },
+            "labelled": 3
+          }
+        ],
+        "micro": {
+          "type": "ALL (micro)",
+          "tp": 22,
+          "fp": 0,
+          "fn": 0,
+          "tn": 48,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1,
+          "f1Ci": {
+            "point": 1,
+            "lower": 1,
+            "upper": 1,
+            "method": "Percentile bootstrap, 2000 resamples, seed 20261004, 95%"
+          },
+          "labelled": 70
+        },
+        "falsePositives": [],
+        "falseNegatives": [],
+        "ungradedEmissions": {
+          "insight:healthy-position": 43,
+          "insight:cashflow-decline-driver": 27,
+          "insight:low-savings-driver": 35,
+          "insight:anomaly-impact": 3,
+          "anomaly:Winter clothing": 1,
+          "insight:portfolio-concentration": 46,
+          "insight:thin-liquidity": 32,
+          "anomaly:Item 57-0-0": 1
+        }
+      },
+      "grounding": {
+        "evidenceExists": {
+          "n": 442,
+          "pass": 442,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9913838006655213,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "evidenceValue": {
+          "n": 440,
+          "pass": 440,
+          "fail": 0,
+          "na": 2,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9913449750931823,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "findingEvidenceValue": {
+          "n": 1211,
+          "pass": 1211,
+          "fail": 0,
+          "na": 839,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9968378928351412,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "observedClaims": {
+          "n": 897,
+          "pass": 897,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9957356992804635,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "heuristicClaims": {
+          "n": 44,
+          "pass": 44,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9197043950765086,
+            "upper": 0.9999999999999999,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "hypotheticalClaims": 81,
+        "unsupportedObserved": "0/897",
+        "unsupportedHeuristic": "0/44",
+        "byCheck": {
+          "evidence-exists": {
+            "n": 442,
+            "pass": 442,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9913838006655213,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "evidence-value": {
+            "n": 440,
+            "pass": 440,
+            "fail": 0,
+            "na": 2,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9913449750931823,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:number": {
+            "n": 436,
+            "pass": 436,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9912662646875843,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:income-exceeds-spending": {
+            "n": 44,
+            "pass": 44,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9197043950765086,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:reserves-being-built": {
+            "n": 44,
+            "pass": 44,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9197043950765086,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "finding-evidence-value": {
+            "n": 1211,
+            "pass": 1211,
+            "fail": 0,
+            "na": 839,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9968378928351412,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:top-category": {
+            "n": 37,
+            "pass": 37,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9059421728185313,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:spending-exceeds-income": {
+            "n": 26,
+            "pass": 26,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.871271076371412,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:net-trending-down": {
+            "n": 29,
+            "pass": 29,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.8830301998708162,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:driver-is-top-investment": {
+            "n": 47,
+            "pass": 47,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9244423947340892,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:shock-would-move-portfolio": {
+            "n": 0,
+            "pass": 0,
+            "fail": 0,
+            "na": 47,
+            "rate": null,
+            "ci": {
+              "point": null,
+              "lower": null,
+              "upper": null,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:forced-selling": {
+            "n": 0,
+            "pass": 0,
+            "fail": 0,
+            "na": 34,
+            "rate": null,
+            "ci": {
+              "point": null,
+              "lower": null,
+              "upper": null,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario-labelled-hypothetical": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:scenario-score": {
+            "n": 74,
+            "pass": 74,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9506502198635047,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:scenario-score-delta": {
+            "n": 74,
+            "pass": 74,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9506502198635047,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:scenario-net": {
+            "n": 68,
+            "pass": 68,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9465286626814852,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "claim:scenario-savings": {
+            "n": 62,
+            "pass": 62,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9416559270319074,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        }
+      },
+      "safety": {
+        "overall": {
+          "n": 467,
+          "pass": 467,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9918412900800555,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "byCheck": {
+          "currency-label": {
+            "n": 148,
+            "pass": 148,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9747008563432001,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "rows-accepted": {
+            "n": 296,
+            "pass": 296,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.987188366493318,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario0-rejected": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario1-rejected": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario2-rejected": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario3-rejected": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "expected-error": {
+            "n": 5,
+            "pass": 5,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.5655175313406071,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "abstain": {
+            "n": 3,
+            "pass": 3,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.43850296436068037,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "skipped": {
+            "n": 10,
+            "pass": 10,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.7224671969739421,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "warning": {
+            "n": 1,
+            "pass": 1,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.2065493117918027,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        },
+        "declaredUnsupported": [
+          {
+            "caseId": "H-sf-010",
+            "split": "heldout",
+            "family": "safety",
+            "category": "safety",
+            "check": "declared-unsupported",
+            "status": "na",
+            "severity": "minor",
+            "ambiguous": false,
+            "detail": "Duplicate-transaction detection is a documented limitation. Reported, never scored.",
+            "actual": "Forge did not warn"
+          }
+        ]
+      },
+      "invariants": {
+        "overall": {
+          "n": 2310,
+          "pass": 2310,
+          "fail": 0,
+          "na": 0,
+          "rate": 1,
+          "ci": {
+            "point": 1,
+            "lower": 0.9983397916626694,
+            "upper": 1,
+            "method": "Wilson score interval, 95%"
+          }
+        },
+        "byName": {
+          "finite-values": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "amount-sign-discipline": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "single-currency": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "insights-traceable": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "row-conservation": {
+            "n": 223,
+            "pass": 223,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9830654462361478,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "health-score-range": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "savings-rate-bound": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "net-equals-inflow-minus-outflow": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "net-equals-sum-of-signed-transactions": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "baseline-scenario-equals-baseline": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "scenario-does-not-mutate-model": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "order-invariance": {
+            "n": 153,
+            "pass": 153,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9755073759916798,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "hhi-bounds": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "effective-positions-formula": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "weights-ordering": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "risk-hhi-bounds": {
+            "n": 80,
+            "pass": 80,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9541818697747756,
+              "upper": 0.9999999999999999,
+              "method": "Wilson score interval, 95%"
+            }
+          },
+          "class-weights-sum-to-one": {
+            "n": 81,
+            "pass": 81,
+            "fail": 0,
+            "na": 0,
+            "rate": 1,
+            "ci": {
+              "point": 1,
+              "lower": 0.9547219138856311,
+              "upper": 1,
+              "method": "Wilson score interval, 95%"
+            }
+          }
+        }
+      },
+      "criticalFailures": []
+    }
+  ],
+  "failures": [
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.categories",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 6,
+      "actual": 5,
+      "absError": 1,
+      "detail": "tolerance 0",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top2_amount",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 257.15,
+      "actual": 275.49,
+      "absError": 18.340000000000032,
+      "detail": "tolerance 0.000001000025715",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top2_share",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 0.05911657333075855,
+      "actual": 0.06333278159397501,
+      "absError": 0.004216208263216462,
+      "detail": "tolerance 1.0591165733307586e-10",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top3_amount",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 96.25,
+      "actual": 86.4,
+      "absError": 9.849999999999994,
+      "detail": "tolerance 0.000001000009625",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top3_share",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 0.02212704718291079,
+      "actual": 0.019862616899776548,
+      "absError": 0.002264430283134243,
+      "detail": "tolerance 1.0221270471829109e-10",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top4_amount",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 34.99,
+      "actual": 55,
+      "absError": 20.009999999999998,
+      "detail": "tolerance 0.000001000003499",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top4_share",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 0.008043900061610895,
+      "actual": 0.01264402696166331,
+      "absError": 0.004600126900052416,
+      "detail": "tolerance 1.0080439000616109e-10",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top5_amount",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 28.5,
+      "actual": 12.99,
+      "absError": 15.51,
+      "detail": "tolerance 0.00000100000285",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top5_share",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 0.006551904880134624,
+      "actual": 0.0029862892769455707,
+      "absError": 0.0035656156031890532,
+      "detail": "tolerance 1.0065519048801347e-10",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "trend.categoriesChanged",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 5,
+      "actual": 4,
+      "absError": 1,
+      "detail": "tolerance 0",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "trend.biggestRise",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 17.495,
+      "actual": 0,
+      "absError": 17.495,
+      "detail": "tolerance 0.0000010000017495",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-rl-001",
+      "split": "dev",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "trend.biggestDrop",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": -49.925,
+      "actual": -43.2,
+      "absError": 6.724999999999994,
+      "detail": "tolerance 0.0000010000049925",
+      "reproduce": "npm run validate:accuracy -- --case D-rl-001"
+    },
+    {
+      "caseId": "D-cat-18",
+      "split": "dev",
+      "family": "classify",
+      "category": "classify",
+      "check": "category",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": "shopping",
+      "actual": "utilities",
+      "detail": "Phone case",
+      "reproduce": "npm run validate:accuracy -- --case D-cat-18"
+    },
+    {
+      "caseId": "H-rl-001",
+      "split": "heldout",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top2_amount",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 225.6,
+      "actual": 182.75,
+      "absError": 42.849999999999994,
+      "detail": "tolerance 0.00000100002256",
+      "reproduce": "npm run validate:accuracy -- --case H-rl-001"
+    },
+    {
+      "caseId": "H-rl-001",
+      "split": "heldout",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top2_share",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 0.058891246975167004,
+      "actual": 0.04770556464854508,
+      "absError": 0.011185682326621926,
+      "detail": "tolerance 1.0588912469751671e-10",
+      "reproduce": "npm run validate:accuracy -- --case H-rl-001"
+    },
+    {
+      "caseId": "H-rl-001",
+      "split": "heldout",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top3_amount",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 85.3,
+      "actual": 81.45,
+      "absError": 3.8499999999999943,
+      "detail": "tolerance 0.00000100000853",
+      "reproduce": "npm run validate:accuracy -- --case H-rl-001"
+    },
+    {
+      "caseId": "H-rl-001",
+      "split": "heldout",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top3_share",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 0.022266947548677946,
+      "actual": 0.021261932917231174,
+      "absError": 0.0010050146314467719,
+      "detail": "tolerance 1.022266947548678e-10",
+      "reproduce": "npm run validate:accuracy -- --case H-rl-001"
+    },
+    {
+      "caseId": "H-rl-001",
+      "split": "heldout",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top4_amount",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 27.5,
+      "actual": 74.2,
+      "absError": 46.7,
+      "detail": "tolerance 0.00000100000275",
+      "reproduce": "npm run validate:accuracy -- --case H-rl-001"
+    },
+    {
+      "caseId": "H-rl-001",
+      "split": "heldout",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "expenditure.top4_share",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 0.007178675938905552,
+      "actual": 0.019369372896974255,
+      "absError": 0.012190696958068702,
+      "detail": "tolerance 1.0071786759389056e-10",
+      "reproduce": "npm run validate:accuracy -- --case H-rl-001"
+    },
+    {
+      "caseId": "H-rl-001",
+      "split": "heldout",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "trend.biggestRise",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": 13.75,
+      "actual": 6.075000000000003,
+      "absError": 7.674999999999997,
+      "detail": "tolerance 0.000001000001375",
+      "reproduce": "npm run validate:accuracy -- --case H-rl-001"
+    },
+    {
+      "caseId": "H-rl-001",
+      "split": "heldout",
+      "family": "realworld",
+      "category": "numeric",
+      "check": "trend.biggestDrop",
+      "severity": "major",
+      "ambiguous": false,
+      "expected": -42.85,
+      "actual": -40.725,
+      "absError": 2.125,
+      "detail": "tolerance 0.000001000004285",
+      "reproduce": "npm run validate:accuracy -- --case H-rl-001"
+    }
+  ]
+}
